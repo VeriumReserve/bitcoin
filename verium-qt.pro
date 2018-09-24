@@ -96,6 +96,7 @@ contains(RELEASE, 1) {
     !windows:!macx {
         # Linux: static link
         LIBS += -Wl,-Bstatic
+        QMAKE_CXXFLAGS += -std=c++11
     }
 }
 

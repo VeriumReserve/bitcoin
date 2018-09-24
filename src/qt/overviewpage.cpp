@@ -196,11 +196,6 @@ OverviewPage::OverviewPage(QWidget *parent) :
     // set initial state of mining button
     miningMovie = new QMovie(":/movies/miningonMovie", "gif", this);
 
-    connect(miningMovie, &QMovie::frameChanged, [this](int frame) {
-      if(mining)
-        ui->mineButton->setIcon(QIcon(miningMovie->currentPixmap()));
-    });
-
     // if movie doesn't loop forever, force it to.
     if (miningMovie->loopCount() != -1)
         connect(miningMovie, SIGNAL(finished()), miningMovie, SLOT(start()));
