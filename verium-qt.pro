@@ -47,21 +47,18 @@ LIBS += $$UNWIND_LIB_PATH $$PROFILER_LIB_PATH
 
 # win build dependencies
 windows {
-  lessThan(QT_VERSION, 5.4) {
-  BOOST_LIB_SUFFIX=-mgw48-mt-s-1_55
-  } else {
-  BOOST_LIB_SUFFIX=-mgw49-mt-s-1_57
-  }
-BOOST_INCLUDE_PATH=C:/deps/boost_1_57_0
-BOOST_LIB_PATH=C:/deps/boost_1_57_0/stage/lib
-BDB_INCLUDE_PATH=C:/deps/db-4.8.30.NC/build_unix
-BDB_LIB_PATH=C:/deps/db-4.8.30.NC/build_unix
-OPENSSL_INCLUDE_PATH=C:/deps/openssl-1.0.1l/include
-OPENSSL_LIB_PATH=C:/deps/openssl-1.0.1l
-MINIUPNPC_INCLUDE_PATH=C:/deps
-MINIUPNPC_LIB_PATH=C:/deps/miniupnpc
-QRENCODE_INCLUDE_PATH=C:/deps/qrencode-3.4.4
-QRENCODE_LIB_PATH=C:/deps/qrencode-3.4.4/.libs
+QMAKE_CXXFLAGS += -fpermissive
+BOOST_LIB_SUFFIX=-mgw73-mt-s-1_59
+BOOST_INCLUDE_PATH=E:/VericoinVerium/deps/boost_1_59_0
+BOOST_LIB_PATH=E:/VericoinVerium/deps/boost_1_59_0/stage/lib
+BDB_INCLUDE_PATH=E:/VericoinVerium/deps/db-4.8.30.NC/build_unix
+BDB_LIB_PATH=E:/VericoinVerium/deps/db-4.8.30.NC/build_unix/
+OPENSSL_INCLUDE_PATH=E:/openssl-1.0.2o_x64/dist/include
+OPENSSL_LIB_PATH=E:/openssl-1.0.2o_x64/dist/lib
+MINIUPNPC_INCLUDE_PATH=E:/VericoinVerium/deps/miniupnpc-1.9
+MINIUPNPC_LIB_PATH=E:/VericoinVerium/deps/miniupnpc-1.9
+QRENCODE_INCLUDE_PATH=E:/VericoinVerium/deps/qrencode-4.0.2
+QRENCODE_LIB_PATH=E:/VericoinVerium/deps/qrencode-4.0.2/.libs
 }
 
 unix: contains(TARGET_BIT, m32) {
@@ -108,8 +105,8 @@ QMAKE_LFLAGS *= -fstack-protector-all --param ssp-buffer-size=1 -Wl,-rpath,./lib
 # This can be enabled for Windows, when we switch to MinGW >= 4.4.x.
 }
 # for extra security on Windows: enable ASLR and DEP via GCC linker flags
-windows:QMAKE_LFLAGS *= -Wl,--dynamicbase -Wl,--nxcompat -Wl, -static
-windows:QMAKE_LFLAGS += -static-libgcc -static-libstdc++
+#windows:QMAKE_LFLAGS *= -Wl,--dynamicbase -Wl,--nxcompat -Wl, -static
+#windows:QMAKE_LFLAGS += -static-libgcc -static-libstdc++
 
 # use: qmake "USE_QRCODE=1"
 # libqrencode (http://fukuchi.org/works/qrencode/index.en.html) must be installed for support
