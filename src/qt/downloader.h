@@ -41,7 +41,6 @@ private:
     QTimer remainTimer;
     QTime downloadTime;
     QFile *file;
-    qint64 downloadProgress;
     qint64 fileSize;
 
     //these variables are used to calculate download speed and estimated time to
