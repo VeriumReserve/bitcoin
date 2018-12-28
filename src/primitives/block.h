@@ -61,6 +61,7 @@ public:
     }
 
     uint256 GetHash() const;
+    uint256 GetWorkHash() const;
 
     int64_t GetBlockTime() const
     {
