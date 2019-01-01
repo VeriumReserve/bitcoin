@@ -36,6 +36,10 @@
 #include <mutex>
 #include <condition_variable>
 
+
+double dminDifficulty = 0.00000048; //standard scrypt^2 difficulty minimum
+
+
 struct CUpdatedBlock
 {
     uint256 hash;
@@ -56,9 +60,13 @@ double GetDifficulty(const CChain& chain, const CBlockIndex* blockindex)
     if (blockindex == nullptr)
     {
         if (chain.Tip() == nullptr)
-            return 1.0;
+            return dminDifficulty;
+        else if (chain.Tip()->pprev == nullptr)
+            return dminDifficulty;
+        else if (chain.Tip()->pprev->pprev == nullptr)
+            return dminDifficulty;
         else
-            blockindex = chain.Tip();
+            blockindex = chain.Tip()->pprev;
     }
 
     int nShift = (blockindex->nBits >> 24) & 0xff;
