@@ -9,65 +9,60 @@
 #include <chain.h>
 #include <primitives/block.h>
 #include <uint256.h>
+#include <math.h>
+#include <bignum.h>
 
-unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHeader *pblock, const Consensus::Params& params)
+/////////////////
+extern arith_uint256 bnProofOfWorkLimit;
+extern arith_uint256 bnProofOfWorkLimitTestNet;
+static const int64_t nTargetTimespan = 2 * 60 * 60;  // 2 hours
+double GetDifficulty(const CBlockIndex* blockindex = nullptr);
+
+unsigned int calculateBlocktime(const CBlockIndex* pindex)
 {
-    assert(pindexLast != nullptr);
-    unsigned int nProofOfWorkLimit = UintToArith256(params.powLimit).GetCompact();
-
-    // Only change once per difficulty adjustment interval
-    if ((pindexLast->nHeight+1) % params.DifficultyAdjustmentInterval() != 0)
+    unsigned int nBlockTime;
+    double diff = GetDifficulty(pindex);
+    double dBlockTime = -13.03*log(diff)+180;
+    if (dBlockTime < 15)
     {
-        if (params.fPowAllowMinDifficultyBlocks)
-        {
-            // Special difficulty rule for testnet:
-            // If the new block's timestamp is more than 2* 10 minutes
-            // then allow mining of a min-difficulty block.
-            if (pblock->GetBlockTime() > pindexLast->GetBlockTime() + params.nPowTargetSpacing*2)
-                return nProofOfWorkLimit;
-            else
-            {
-                // Return the last non-special-min-difficulty-rules-block
-                const CBlockIndex* pindex = pindexLast;
-                while (pindex->pprev && pindex->nHeight % params.DifficultyAdjustmentInterval() != 0 && pindex->nBits == nProofOfWorkLimit)
-                    pindex = pindex->pprev;
-                return pindex->nBits;
-            }
-        }
-        return pindexLast->nBits;
+        nBlockTime = 15;
     }
-
-    // Go back by what we want to be 14 days worth of blocks
-    int nHeightFirst = pindexLast->nHeight - (params.DifficultyAdjustmentInterval()-1);
-    assert(nHeightFirst >= 0);
-    const CBlockIndex* pindexFirst = pindexLast->GetAncestor(nHeightFirst);
-    assert(pindexFirst);
-
-    return CalculateNextWorkRequired(pindexLast, pindexFirst->GetBlockTime(), params);
+    else
+    {
+        nBlockTime = dBlockTime;
+    }
+    return nBlockTime;
 }
 
-unsigned int CalculateNextWorkRequired(const CBlockIndex* pindexLast, int64_t nFirstBlockTime, const Consensus::Params& params)
+unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast)
 {
-    if (params.fPowNoRetargeting)
-        return pindexLast->nBits;
-
-    // Limit adjustment step
-    int64_t nActualTimespan = pindexLast->GetBlockTime() - nFirstBlockTime;
-    if (nActualTimespan < params.nPowTargetTimespan/4)
-        nActualTimespan = params.nPowTargetTimespan/4;
-    if (nActualTimespan > params.nPowTargetTimespan*4)
-        nActualTimespan = params.nPowTargetTimespan*4;
-
-    // Retarget
-    const arith_uint256 bnPowLimit = UintToArith256(params.powLimit);
-    arith_uint256 bnNew;
-    bnNew.SetCompact(pindexLast->nBits);
-    bnNew *= nActualTimespan;
-    bnNew /= params.nPowTargetTimespan;
-
-    if (bnNew > bnPowLimit)
-        bnNew = bnPowLimit;
-
+    CBigNum bnTargetLimit ( ArithToUint256( bnProofOfWorkLimit ) );
+    if (pindexLast->nHeight <= 2)
+        return bnTargetLimit.GetCompact(); // first few blocks
+    const CBlockIndex* pindexPrev = pindexLast->pprev;
+    const CBlockIndex* pindexPrevPrev = pindexPrev->pprev;
+    unsigned int nTargetSpacing = calculateBlocktime(pindexPrev);
+    int64_t nActualSpacing = pindexPrev->GetBlockTime() - pindexPrevPrev->GetBlockTime();
+    int64_t targetTimespan;
+    if (pindexLast->nHeight+1 > 2394)
+    {
+        targetTimespan = nTargetTimespan * 24;
+    }
+    else
+    {
+        targetTimespan = nTargetTimespan;
+    }
+    // ppcoin: target change every block
+    // ppcoin: retarget with exponential moving toward target spacing
+    CBigNum bnNew;
+    bnNew.SetCompact(pindexPrev->nBits);
+    int64_t nInterval = targetTimespan / nTargetSpacing;
+    bnNew *= ((nInterval - 1) * nTargetSpacing + nActualSpacing + nActualSpacing);
+    bnNew /= ((nInterval + 1) * nTargetSpacing);
+    if (bnNew > bnTargetLimit)
+    {
+        bnNew = bnTargetLimit;
+    }
     return bnNew.GetCompact();
 }
 
