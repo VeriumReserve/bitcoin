@@ -11,6 +11,9 @@
 #include <uint256.h>
 #include <math.h>
 #include <bignum.h>
+#include <util.h>
+
+#include <inttypes.h>
 
 /////////////////
 extern arith_uint256 bnProofOfWorkLimit;
@@ -68,19 +71,50 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast)
 
 bool CheckProofOfWork(uint256 hash, unsigned int nBits, const Consensus::Params& params)
 {
-    bool fNegative;
-    bool fOverflow;
-    arith_uint256 bnTarget;
-
-    bnTarget.SetCompact(nBits, &fNegative, &fOverflow);
+    CBigNum bnTarget;
+    bnTarget.SetCompact(nBits);
 
     // Check range
-    if (fNegative || bnTarget == 0 || fOverflow || bnTarget > UintToArith256(params.powLimit))
-        return false;
+    if (bnTarget <= 0 || bnTarget > CBigNum(ArithToUint256(bnProofOfWorkLimit)))
+        return error("CheckProofOfWork() : nBits below minimum work");
 
     // Check proof of work matches claimed amount
-    if (UintToArith256(hash) > bnTarget)
-        return false;
+    if (UintToArith256(hash) > UintToArith256(bnTarget.getuint256()))
+        return error("CheckProofOfWork() : hash doesn't match nBits");
 
     return true;
 }
+
+static int64_t calculateMinerReward(const CBlockIndex* pindex)
+{
+    int64_t nReward;
+    unsigned int nBlockTime = calculateBlocktime(pindex);
+    int height = pindex->nHeight+1;
+    if (height == 1)
+    {
+        nReward = 564705 * COIN; // Verium purchased in presale ICO
+    }
+    else if ((pindex->nMoneySupply/COIN) > 2899999)
+    {
+        double dReward = 0.04*exp(0.0116*nBlockTime); // Reward schedule after 10x VRC supply parity
+        nReward = dReward * COIN;
+    }
+    else
+    {
+        double dReward = 0.25*exp(0.0116*nBlockTime); // Reward schedule up to 10x VRC supply parity
+        nReward = dReward * COIN;
+    }
+    return nReward;
+}
+
+// miner's coin base reward
+int64_t GetProofOfWorkReward(int64_t nFees,const CBlockIndex* pindex)
+{
+    bool fDebug = true;
+    int64_t nSubsidy;
+    nSubsidy = calculateMinerReward(pindex);
+    if (fDebug && gArgs.GetBoolArg("-printcreation", false))
+        printf("GetProofOfWorkReward() : create=%s nSubsidy=%" PRId64 "\n", FormatMoney(nSubsidy).c_str(), nSubsidy);
+    return nSubsidy + nFees;
+}
+

@@ -287,9 +287,14 @@ bool CBlockTreeDB::LoadBlockIndexGuts(const Consensus::Params& consensusParams, 
                 pindexNew->nStatus        = diskindex.nStatus;
                 pindexNew->nTx            = diskindex.nTx;
 
-                if (!CheckProofOfWork(pindexNew->GetBlockHash(), pindexNew->nBits, consensusParams))
+                /* Verium:
+                 *   We're not going to run the check here, as it takes a very long time at client startup.
+                 * Instead, we will assume that the local client data is valid.
+                 */
+#if 0
+                if (!CheckProofOfWork(pindexNew->GetBlockHeader().GetWorkHash(), pindexNew->nBits, consensusParams))
                     return error("%s: CheckProofOfWork failed: %s", __func__, pindexNew->ToString());
-
+#endif
                 pcursor->Next();
             } else {
                 return error("%s: failed to read value", __func__);

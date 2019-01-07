@@ -18,5 +18,6 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast);
 
 /** Check whether a block hash satisfies the proof-of-work requirement specified by nBits */
 bool CheckProofOfWork(uint256 hash, unsigned int nBits, const Consensus::Params&);
+int64_t GetProofOfWorkReward(int64_t nFees,const CBlockIndex* pindex);
 
 #endif // BITCOIN_POW_H
