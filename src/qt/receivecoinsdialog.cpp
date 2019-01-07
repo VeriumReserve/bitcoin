@@ -94,7 +94,7 @@ void ReceiveCoinsDialog::setModel(WalletModel *_model)
         // Last 2 columns are set by the columnResizingFixer, when the table geometry is ready.
         columnResizingFixer = new GUIUtil::TableViewLastColumnResizingFixer(tableView, AMOUNT_MINIMUM_COLUMN_WIDTH, DATE_COLUMN_WIDTH, this);
 
-        if (model->getDefaultAddressType() == OUTPUT_TYPE_BECH32) {
+        if (0) {
             ui->useBech32->setCheckState(Qt::Checked);
         } else {
             ui->useBech32->setCheckState(Qt::Unchecked);
@@ -142,14 +142,7 @@ void ReceiveCoinsDialog::on_receiveButton_clicked()
     QString label = ui->reqLabel->text();
     /* Generate new receiving address */
     OutputType address_type;
-    if (ui->useBech32->isChecked()) {
-        address_type = OUTPUT_TYPE_BECH32;
-    } else {
-        address_type = model->getDefaultAddressType();
-        if (address_type == OUTPUT_TYPE_BECH32) {
-            address_type = OUTPUT_TYPE_P2SH_SEGWIT;
-        }
-    }
+    address_type = model->getDefaultAddressType();
     address = model->getAddressTableModel()->addRow(AddressTableModel::Receive, label, "", address_type);
     SendCoinsRecipient info(address, label,
         ui->reqAmount->value(), ui->reqMessage->text());
