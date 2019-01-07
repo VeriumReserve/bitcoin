@@ -302,7 +302,7 @@ enum ServiceFlags : uint64_t {
  * should be updated appropriately to filter for the same nodes.
  */
 static ServiceFlags GetDesirableServiceFlags(ServiceFlags services) {
-    return ServiceFlags(NODE_NETWORK | NODE_WITNESS);
+    return ServiceFlags(NODE_NETWORK);
 }
 
 /**
