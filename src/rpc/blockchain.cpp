@@ -102,6 +102,7 @@ UniValue getsubsidy(const JSONRPCRequest& request)
             "getsubsidy\n"
             "Returns proof-of-work subsidy value for current block."
         );
+
     return (uint64_t)GetProofOfWorkReward(0, chainActive.Tip()->pprev);
 }
 
