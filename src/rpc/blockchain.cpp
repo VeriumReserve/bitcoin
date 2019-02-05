@@ -99,22 +99,9 @@ UniValue getsubsidy(const JSONRPCRequest& request)
 {
     if (request.fHelp || request.params.size() != 0)
         throw std::runtime_error(
-            "getsubsidy [nTarget]\n"
-            "Returns proof-of-work subsidy value for the specified value of target."
+            "getsubsidy\n"
+            "Returns proof-of-work subsidy value for current block."
         );
-
-    unsigned int nBits = 0;
-
-    if (request.params.size() != 0)
-    {
-        CBigNum bnTarget(uint256S(request.params[0].get_str()));
-        nBits = bnTarget.GetCompact();
-    }
-    else
-    {
-        nBits = GetNextTargetRequired(chainActive.Tip());
-    }
-
     return (uint64_t)GetProofOfWorkReward(0, chainActive.Tip()->pprev);
 }
 
