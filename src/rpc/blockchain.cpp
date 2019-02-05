@@ -12,6 +12,7 @@
 #include <coins.h>
 #include <consensus/validation.h>
 #include <validation.h>
+#include <pow.h>
 #include <core_io.h>
 #include <policy/feerate.h>
 #include <policy/policy.h>
@@ -26,6 +27,7 @@
 #include <hash.h>
 #include <validationinterface.h>
 #include <warnings.h>
+#include <bignum.h>
 
 #include <stdint.h>
 
@@ -91,6 +93,40 @@ double GetDifficulty(const CChain& chain, const CBlockIndex* blockindex)
 double GetDifficulty(const CBlockIndex* blockindex)
 {
     return GetDifficulty(chainActive, blockindex);
+}
+
+UniValue getsubsidy(const JSONRPCRequest& request)
+{
+    if (request.fHelp || request.params.size() != 0)
+        throw std::runtime_error(
+            "getsubsidy [nTarget]\n"
+            "Returns proof-of-work subsidy value for the specified value of target."
+        );
+
+    unsigned int nBits = 0;
+
+    if (request.params.size() != 0)
+    {
+        CBigNum bnTarget(uint256S(request.params[0].get_str()));
+        nBits = bnTarget.GetCompact();
+    }
+    else
+    {
+        nBits = GetNextTargetRequired(chainActive.Tip());
+    }
+
+    return (uint64_t)GetProofOfWorkReward(0, chainActive.Tip()->pprev);
+}
+
+UniValue getblocktime(const JSONRPCRequest& request)
+{
+    if (request.fHelp || request.params.size() != 0)
+        throw std::runtime_error(
+            "getblocktime\n"
+            "Returns an integer of current blocktime in seconds."
+        );
+
+    return (uint64_t)calculateBlocktime(chainActive.Tip()->pprev);
 }
 
 UniValue blockheaderToJSON(const CBlockIndex* blockindex)
@@ -1636,6 +1672,8 @@ static const CRPCCommand commands[] =
     { "blockchain",         "getblock",               &getblock,               {"blockhash","verbosity|verbose"} },
     { "blockchain",         "getblockhash",           &getblockhash,           {"height"} },
     { "blockchain",         "getblockheader",         &getblockheader,         {"blockhash","verbose"} },
+    { "blockchain",         "getblocktime",           &getblocktime,           {} },
+    { "blockchain",         "getsubsidy",             &getsubsidy,             {} },
     { "blockchain",         "getchaintips",           &getchaintips,           {} },
     { "blockchain",         "getdifficulty",          &getdifficulty,          {} },
     { "blockchain",         "getmempoolancestors",    &getmempoolancestors,    {"txid","verbose"} },
