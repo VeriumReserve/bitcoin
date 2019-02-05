@@ -1,5 +1,8 @@
 *.tar.gz
-
+*.config
+*.include
+*.files
+*.creator
 *.exe
 src/bitcoin
 src/bitcoind
