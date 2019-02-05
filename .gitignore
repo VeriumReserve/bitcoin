@@ -4,6 +4,7 @@
 *.files
 *.creator
 *.exe
+src/nohup.out
 src/bitcoin
 src/bitcoind
 src/bitcoin-cli
