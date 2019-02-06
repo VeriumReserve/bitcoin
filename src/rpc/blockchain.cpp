@@ -102,6 +102,7 @@ UniValue getsubsidy(const JSONRPCRequest& request)
             "getsubsidy\n"
             "Returns proof-of-work subsidy value for current block."
         );
+
     return (uint64_t)GetProofOfWorkReward(0, chainActive.Tip()->pprev);
 }
 
@@ -158,6 +159,7 @@ UniValue blockToJSON(const CBlock& block, const CBlockIndex* blockindex, bool tx
     result.push_back(Pair("confirmations", confirmations));
     result.push_back(Pair("strippedsize", (int)::GetSerializeSize(block, SER_NETWORK, PROTOCOL_VERSION | SERIALIZE_TRANSACTION_NO_WITNESS)));
     result.push_back(Pair("size", (int)::GetSerializeSize(block, SER_NETWORK, PROTOCOL_VERSION)));
+    result.push_back(Pair("mint", ValueFromAmount(blockindex->nMint)));
     result.push_back(Pair("weight", (int)::GetBlockWeight(block)));
     result.push_back(Pair("height", blockindex->nHeight));
     result.push_back(Pair("version", block.nVersion));
@@ -1240,6 +1242,7 @@ UniValue getblockchaininfo(const JSONRPCRequest& request)
     UniValue obj(UniValue::VOBJ);
     obj.push_back(Pair("chain",                 Params().NetworkIDString()));
     obj.push_back(Pair("blocks",                (int)chainActive.Height()));
+    obj.push_back(Pair("totalsupply",           (double)chainActive.Tip()->nMoneySupply/COIN));
     obj.push_back(Pair("headers",               pindexBestHeader ? pindexBestHeader->nHeight : -1));
     obj.push_back(Pair("bestblockhash",         chainActive.Tip()->GetBlockHash().GetHex()));
     obj.push_back(Pair("difficulty",            (double)GetDifficulty()));

@@ -286,6 +286,8 @@ bool CBlockTreeDB::LoadBlockIndexGuts(const Consensus::Params& consensusParams, 
                 pindexNew->nNonce         = diskindex.nNonce;
                 pindexNew->nStatus        = diskindex.nStatus;
                 pindexNew->nTx            = diskindex.nTx;
+                pindexNew->nMoneySupply   = diskindex.nMoneySupply;
+                pindexNew->nMint          = diskindex.nMint;
 
                 /* Verium:
                  *   We're not going to run the check here, as it takes a very long time at client startup.
