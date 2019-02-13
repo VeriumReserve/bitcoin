@@ -281,18 +281,15 @@ void Shutdown()
 			boost::filesystem::remove_all(GetDataDir() / "chainstate");
 			boost::filesystem::rename(GetDataDir() / "bootstrap" / "blocks", GetDataDir() / "blocks");
 			boost::filesystem::rename(GetDataDir() / "bootstrap" / "chainstate", GetDataDir() / "chainstate");
-			/*boost::filesystem::remove_all(GetDataDir() / "bootstrap");
-
+			boost::filesystem::remove_all(GetDataDir() / "bootstrap");
 			boost::filesystem::path pathBootstrapTurbo(GetDataDir() / "bootstrap_VRM.zip");
 			boost::filesystem::path pathBootstrap(GetDataDir() / "bootstrap.dat");
-			if (boost::filesystem::exists(pathBootstrapTurbo))
-			{
+			if (boost::filesystem::exists(pathBootstrapTurbo)){
 				boost::filesystem::remove(pathBootstrapTurbo);
 			}
-			if (boost::filesystem::exists(pathBootstrap))
-			{
+			if (boost::filesystem::exists(pathBootstrap)){
 				boost::filesystem::remove(pathBootstrap);
-			}*/
+			}
 		}
 		catch (std::exception &e) {
 			LogPrintf("%s: Unable to change databse: %s\n",__func__,e.what());
