@@ -22,4 +22,6 @@ int64_t GetProofOfWorkReward(int64_t nFees,const CBlockIndex* pindex);
 
 unsigned int calculateBlocktime(const CBlockIndex *pindex);
 
+int GetBlockRatePerHour();
+
 #endif // BITCOIN_POW_H

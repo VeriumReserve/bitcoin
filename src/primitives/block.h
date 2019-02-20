@@ -122,6 +122,11 @@ public:
     }
 
     std::string ToString() const;
+
+    void print() const
+    {
+        printf("%s", ToString().c_str());
+    }
 };
 
 /** Describes a place in the block chain to another node such that if the

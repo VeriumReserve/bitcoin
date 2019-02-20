@@ -25,11 +25,23 @@
 #include <util.h>
 #include <utilmoneystr.h>
 #include <validationinterface.h>
+#include <crypto/scrypt.h>
+#include <wallet/wallet.h>
+#include <checkpoints.h>
+#include <chainparams.h>
+#include <bignum.h>
+#include <txdb.h>
+#include <init.h>
+#include <chainparams.h>
 
 #include <algorithm>
 #include <memory>
 #include <queue>
 #include <utility>
+#include <thread>
+#include <boost/thread/thread.hpp>
+
+#include "openssl/sha.h"
 
 //////////////////////////////////////////////////////////////////////////////
 //
@@ -141,13 +153,7 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
                        ? nMedianTimePast
                        : pblock->GetBlockTime();
 
-    // Decide whether to include witness transactions
-    // This is only needed in case the witness softfork activation is reverted
-    // (which would require a very deep reorganization) or when
-    // -promiscuousmempoolflags is used.
-    // TODO: replace this with a call to main to assess validity of a mempool
-    // transaction (which in most cases can be a no-op).
-    fIncludeWitness = IsWitnessEnabled(pindexPrev, chainparams.GetConsensus()) && fMineWitnessTx;
+    fIncludeWitness = false;
 
     int nPackagesSelected = 0;
     int nDescendantsUpdated = 0;
@@ -171,6 +177,7 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
     pblocktemplate->vTxFees[0] = -nFees;
 
     LogPrintf("CreateNewBlock(): block weight: %u txs: %u fees: %ld sigops %d\n", GetBlockWeight(*pblock), nBlockTx, nFees, nBlockSigOpsCost);
+    coinbaseTx.print(); // XXX
 
     // Fill in header
     pblock->hashPrevBlock  = pindexPrev->GetBlockHash();
@@ -458,3 +465,299 @@ void IncrementExtraNonce(CBlock* pblock, const CBlockIndex* pindexPrev, unsigned
     pblock->vtx[0] = MakeTransactionRef(std::move(txCoinbase));
     pblock->hashMerkleRoot = BlockMerkleRoot(*pblock);
 }
+
+//////////////////////////////////////////////////////////////////////////////
+////////////////////////// Verium Miner /////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+double hashrate = 0.;
+bool fGenerateVerium = false;
+static int64_t timeElapsed = 30000;
+double dHashesPerMin = 0.0;
+int64_t nHPSTimerStart = 0;
+unsigned int nExtraNonce = 0;
+
+static const unsigned int pSHA256InitState[8] =
+{0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a, 0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19};
+
+int static FormatHashBlocks(void* pbuffer, unsigned int len)
+{
+    unsigned char* pdata = (unsigned char*)pbuffer;
+    unsigned int blocks = 1 + ((len + 8) / 64);
+    unsigned char* pend = pdata + 64 * blocks;
+    memset(pdata + len, 0, 64 * blocks - len);
+    pdata[len] = 0x80;
+    unsigned int bits = len * 8;
+    pend[-1] = (bits >> 0) & 0xff;
+    pend[-2] = (bits >> 8) & 0xff;
+    pend[-3] = (bits >> 16) & 0xff;
+    pend[-4] = (bits >> 24) & 0xff;
+    return blocks;
+}
+
+void FormatHashBuffers(CBlock* pblock, char* pmidstate, char* pdata, char* phash1)
+{
+    //
+    // Pre-build hash buffers
+    //
+    struct
+    {
+        struct unnamed2
+        {
+            int nVersion;
+            uint256 hashPrevBlock;
+            uint256 hashMerkleRoot;
+            unsigned int nTime;
+            unsigned int nBits;
+            unsigned int nNonce;
+        }
+        block;
+        unsigned char pchPadding0[64];
+        uint256 hash1;
+        unsigned char pchPadding1[64];
+    }
+    tmp;
+    memset(&tmp, 0, sizeof(tmp));
+
+    tmp.block.nVersion       = pblock->nVersion;
+    tmp.block.hashPrevBlock  = pblock->hashPrevBlock;
+    tmp.block.hashMerkleRoot = pblock->hashMerkleRoot;
+    tmp.block.nTime          = pblock->nTime;
+    tmp.block.nBits          = pblock->nBits;
+    tmp.block.nNonce         = pblock->nNonce;
+
+    FormatHashBlocks(&tmp.block, sizeof(tmp.block));
+    FormatHashBlocks(&tmp.hash1, sizeof(tmp.hash1));
+
+    // Byte swap all the input buffer
+    for (unsigned int i = 0; i < sizeof(tmp)/4; i++)
+        ((unsigned int*)&tmp)[i] = ByteReverse(((unsigned int*)&tmp)[i]);
+
+    // Precalc the first half of the first hash, which stays constant
+    SHA256Transform(pmidstate, &tmp.block, pSHA256InitState);
+
+    memcpy(pdata, &tmp.block, 128);
+    memcpy(phash1, &tmp.hash1, 64);
+}
+
+bool CheckWork(CBlock* pblock, CWallet& wallet, CReserveKey& reservekey)
+{
+    arith_uint256 hashBlock = UintToArith256( pblock->GetWorkHash() );
+    arith_uint256 hashTarget = UintToArith256( CBigNum().SetCompact(pblock->nBits).getuint256() );
+
+    printf("CheckWork() : new proof-of-work block found  \n  hash: %s  \ntarget: %s\n", hashBlock.GetHex().c_str(), hashTarget.GetHex().c_str());
+
+    if (hashBlock > hashTarget)
+        return error("CheckWork() : proof-of-work not meeting target");
+
+    //// debug print
+    pblock->print();
+    // XXX printf("generated %s\n", FormatMoney(pblock->vtx[0].vout[0].nValue).c_str());
+
+    // Found a solution
+    {
+        LOCK(cs_main);
+        auto hashBestChain = pcoinsdbview->GetBestBlock();
+        if (pblock->hashPrevBlock != hashBestChain)
+            return error("CheckWork() : generated block is stale");
+
+        // Remove key from key pool
+        reservekey.KeepKey();
+
+        // Track how many getdata requests this block gets
+        {
+            LOCK(wallet.cs_wallet);
+            // XXX wallet.mapRequestCount[hashBlock] = 0;
+        }
+
+        // Process this block the same as if we had received it from another node
+        // XXX ???
+        std::shared_ptr<const CBlock> shared_pblock = std::make_shared<const CBlock>(*pblock);
+        if (!ProcessNewBlock(Params(), shared_pblock, true, nullptr))
+            return error("CheckWork() : ProcessBlock, block not accepted");
+    }
+
+    return true;
+}
+
+void SHA256Transform(void* pstate, void* pinput, const void* pinit)
+{
+    SHA256_CTX ctx;
+    unsigned char data[64];
+
+    SHA256_Init(&ctx);
+
+    for (int i = 0; i < 16; i++)
+        ((uint32_t*)data)[i] = ByteReverse(((uint32_t*)pinput)[i]);
+
+    for (int i = 0; i < 8; i++)
+        ctx.h[i] = ((uint32_t*)pinit)[i];
+
+    SHA256_Update(&ctx, data, sizeof(data));
+    for (int i = 0; i < 8; i++)
+        ((uint32_t*)pstate)[i] = ctx.h[i];
+}
+
+static // Return maximum amount of blocks that other nodes claim to have
+int GetNumBlocksOfPeers()
+{
+//    return std::max(cPeerBlockCounts.median(), Checkpoints::GetTotalBlocksEstimate()); XXX
+    return Checkpoints::GetTotalBlocksEstimate(Params().Checkpoints());
+}
+
+void Miner(CWallet *pwallet)
+{
+    printf("Miner started\n");
+    SetThreadPriority(THREAD_PRIORITY_LOWEST);
+    RenameThread("verium-miner");
+
+    //Build buffer and check for memory availability
+    bool memory = true;
+    unsigned char *scratchbuf = scrypt_buffer_alloc();
+    if(!scratchbuf){memory = false;}
+
+    // Each thread has it's own nonce
+    CReserveKey reservekey(pwallet);
+    nExtraNonce += 1;
+    try
+    {
+        while (fGenerateVerium && memory)
+        {
+            auto vNodes = g_connman->vNodes;
+            auto nBestHeight = g_connman->nBestHeight.load(std::memory_order_relaxed);
+
+            while ((vNodes.size() < 2) || IsInitialBlockDownload() || nBestHeight < GetNumBlocksOfPeers())
+            {
+                MilliSleep(5000);
+            }
+
+            // Create new block
+            unsigned int nTransactionsUpdatedLast = mempool.GetTransactionsUpdated();
+            CBlockIndex* pindexPrev = chainActive.Tip();
+            int64_t nFees;
+            // XXX auto_ptr<CBlock> pblock(CreateNewBlock(pwallet, &nFees));
+            // XXX What to do with the fees.???
+            std::shared_ptr<CReserveScript> coinbaseScript = std::make_shared<CReserveScript>();
+            std::unique_ptr<CBlockTemplate> pblocktemplate = BlockAssembler(Params()).CreateNewBlock(coinbaseScript->reserveScript, false);
+            if (!pblocktemplate.get())
+                return;
+            CBlock *pblock = &pblocktemplate->block;
+            IncrementExtraNonce(pblock, pindexPrev, nExtraNonce);
+            printf("Running Miner with \%" PRIszu " transactions in block (%u bytes)\n", pblock->vtx.size(),
+                   ::GetSerializeSize(*pblock, SER_NETWORK, PROTOCOL_VERSION));
+
+            // Pre-build hash buffers
+            char pmidstatebuf[32+16]; char* pmidstate = alignup<16>(pmidstatebuf);
+            char pdatabuf[128+16];    char* pdata     = alignup<16>(pdatabuf);
+            char phash1buf[64+16];    char* phash1    = alignup<16>(phash1buf);
+            FormatHashBuffers(pblock, pmidstate, pdata, phash1);
+            unsigned int& nBlockTime = *(unsigned int*)(pdata + 64 + 4);
+
+            // Search
+            int64_t nStart = GetTime();
+            uint256 hashTarget = CBigNum().SetCompact(pblock->nBits).getuint256();
+            while (fGenerateVerium)
+            {
+                unsigned int nHashesDone = 0;
+                if (fGenerateVerium)
+                {
+                    // scrypt^2
+                    int nHashes = 0;
+                    if (scrypt_N_1_1_256_multi(BEGIN(pblock->nVersion), hashTarget, &nHashes, scratchbuf))
+                    {
+                        // Found a solution
+                        printf("Miner found a solution\n");
+                        SetThreadPriority(THREAD_PRIORITY_NORMAL);
+                        CheckWork(pblock, *pwallet, reservekey);
+                        SetThreadPriority(THREAD_PRIORITY_LOWEST);
+                    }
+                    nHashesDone += nHashes;
+                    pblock->nNonce += nHashes;
+                }
+
+                // Hash meter
+                static int64_t nHashCounter;
+                {
+                    static CCriticalSection cs;
+                    {
+                        LOCK(cs);
+                        if (nHPSTimerStart == 0)
+                        {
+                            nHPSTimerStart = GetTimeMillis();
+                            nHashCounter = 0;
+                        }
+                        else
+                            nHashCounter += nHashesDone;
+
+                        if (GetTimeMillis() - nHPSTimerStart > timeElapsed)
+                        {
+                            dHashesPerMin = 60000.0 * nHashCounter / (GetTimeMillis() - nHPSTimerStart);
+                            nHPSTimerStart = GetTimeMillis();
+                            nHashCounter = 0;
+                            updateHashrate(dHashesPerMin);
+                            printf("Total local hashrate %6.0f hashes/min\n", hashrate);
+                        }
+                    }
+                }
+
+                // Check for stop or if block needs to be rebuilt
+                boost::this_thread::interruption_point();
+                if (!fGenerateVerium)
+                    break;
+                if (ShutdownRequested())
+                    return;
+                if (/* XXX !fTestNet && */ vNodes.size() < 2)
+                    break;
+                if (pblock->nNonce >= 0xffff0000)
+                    break;
+                if (mempool.GetTransactionsUpdated() != nTransactionsUpdatedLast && GetTime() - nStart > 60)
+                    break;
+                if (pindexPrev != chainActive.Tip())
+                    break;
+
+                // Update nTime every few seconds
+                UpdateTime(pblock, Params().GetConsensus(), pindexPrev);
+                nBlockTime = ByteReverse(pblock->nTime);
+            }
+        }
+    }
+    catch (boost::thread_interrupted)
+    {
+        free(scratchbuf);
+        hashrate = 0;
+        nExtraNonce = 0;
+        printf("Miner terminated\n");
+        throw;
+    }
+}
+
+void GenerateVerium(bool fGenerate, CWallet* pwallet)
+{
+    fGenerateVerium = fGenerate;
+    static boost::thread_group* minerThreads = NULL;
+
+    int nThreads = gArgs.GetArg("-genproclimit", -1);
+    if (nThreads < 0)
+        nThreads = std::thread::hardware_concurrency();
+
+    if (minerThreads != NULL)
+    {
+        minerThreads->interrupt_all();
+        delete minerThreads;
+        minerThreads = NULL;
+    }
+
+    if (nThreads == 0 || !fGenerate)
+        return;
+
+    minerThreads = new boost::thread_group();
+    for (int i = 0; i < nThreads; i++)
+        minerThreads->create_thread(std::bind(&Miner, pwallet));
+}
+
+void updateHashrate(double nHashrate)
+{
+    hashrate = nHashrate;
+}
+
+
+

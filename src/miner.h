@@ -17,6 +17,7 @@
 class CBlockIndex;
 class CChainParams;
 class CScript;
+class CWallet;
 
 namespace Consensus { struct Params; };
 
@@ -195,5 +196,16 @@ private:
 /** Modify the extranonce in a block */
 void IncrementExtraNonce(CBlock* pblock, const CBlockIndex* pindexPrev, unsigned int& nExtraNonce);
 int64_t UpdateTime(CBlockHeader* pblock, const Consensus::Params& consensusParams, const CBlockIndex* pindexPrev);
+
+/** Base sha256 mining transform */
+void SHA256Transform(void* pstate, void* pinput, const void* pinit);
+
+void GenerateVerium(bool fGenerate, CWallet* pwallet);
+
+void Miner(CWallet *pwallet);
+
+void updateHashrate(double nHashrate);
+
+extern double hashrate;
 
 #endif // BITCOIN_MINER_H

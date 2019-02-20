@@ -20,6 +20,7 @@
 #include <rpc/blockchain.h>
 #include <rpc/mining.h>
 #include <rpc/server.h>
+#include <wallet/rpcwallet.h>
 #include <txmempool.h>
 #include <util.h>
 #include <utilstrencodings.h>
@@ -191,33 +192,36 @@ UniValue getmininginfo(const JSONRPCRequest& request)
         throw std::runtime_error(
             "getmininginfo\n"
             "\nReturns a json object containing mining-related information."
-            "\nResult:\n"
-            "{\n"
-            "  \"blocks\": nnn,             (numeric) The current block\n"
-            "  \"currentblockweight\": nnn, (numeric) The last block weight\n"
-            "  \"currentblocktx\": nnn,     (numeric) The last block transaction\n"
-            "  \"difficulty\": xxx.xxxxx    (numeric) The current difficulty\n"
-            "  \"networkhashps\": nnn,      (numeric) The network hashes per second\n"
-            "  \"pooledtx\": n              (numeric) The size of the mempool\n"
-            "  \"chain\": \"xxxx\",           (string) current network name as defined in BIP70 (main, test, regtest)\n"
-            "  \"warnings\": \"...\"          (string) any network and blockchain warnings\n"
-            "  \"errors\": \"...\"            (string) DEPRECATED. Same as warnings. Only shown when bitcoind is started with -deprecatedrpc=getmininginfo\n"
-            "}\n"
-            "\nExamples:\n"
-            + HelpExampleCli("getmininginfo", "")
-            + HelpExampleRpc("getmininginfo", "")
         );
-
 
     LOCK(cs_main);
 
+    auto GetPoWKHashPM = [](){ return 0.; };  // XXX XXX XXX XXX
+    double minerate;
+    double nethashrate = GetPoWKHashPM();
+    double blocktime = (double)calculateBlocktime(chainActive.Tip())/60;
+    double totalhashrate = hashrate;
+    if (totalhashrate == 0.0)
+    {
+        minerate = 0.0;
+    }
+    else
+    {
+        minerate = 16.666667*(nethashrate*blocktime)/(totalhashrate);  //((100/((totalhashrate_Hpm/(nethashrate_kHpm*1000))*100))*blocktime_min)/60
+    }
+
     UniValue obj(UniValue::VOBJ);
     obj.push_back(Pair("blocks",           (int)chainActive.Height()));
-    obj.push_back(Pair("currentblockweight", (uint64_t)nLastBlockWeight));
+    //obj.push_back(Pair("currentblocksize", (uint64_t)nLastBlockSize)); // XXX what is this?
     obj.push_back(Pair("currentblocktx",   (uint64_t)nLastBlockTx));
     obj.push_back(Pair("difficulty",       (double)GetDifficulty()));
-    obj.push_back(Pair("networkhashps",    getnetworkhashps(request)));
+    obj.push_back(Pair("blocktime (min)",  (double)blocktime));
+    obj.push_back(Pair("blockreward (VRM)", (double)GetProofOfWorkReward(0,chainActive.Tip()->pprev)/COIN));
+    obj.push_back(Pair("nethashrate (kH/m)", nethashrate));
+    obj.push_back(Pair("hashrate (H/m)",   (double)totalhashrate));
+    obj.push_back(Pair("est. block rate (hrs)", (double)minerate));
     obj.push_back(Pair("pooledtx",         (uint64_t)mempool.size()));
+    obj.push_back(Pair("blocksperhour",    GetBlockRatePerHour()));
     obj.push_back(Pair("chain",            Params().NetworkIDString()));
     if (IsDeprecatedRPCEnabled("getmininginfo")) {
         obj.push_back(Pair("errors",       GetWarnings("statusbar")));
@@ -227,6 +231,37 @@ UniValue getmininginfo(const JSONRPCRequest& request)
     return obj;
 }
 
+UniValue minerstart(const JSONRPCRequest& request)
+{
+    if (request.fHelp || request.params.size() != 1)
+        throw std::runtime_error(
+                "minerstart\n"
+                "\nUsed to start mining Verium."
+                );
+
+    LOCK(cs_main);
+
+    CWallet * const pwallet = GetWalletForJSONRPCRequest(request);
+    GenerateVerium(true, pwallet);
+    UniValue obj(UniValue::VOBJ);
+    return obj;
+}
+
+UniValue minerstop(const JSONRPCRequest& request)
+{
+    if (request.fHelp || request.params.size() != 1)
+        throw std::runtime_error(
+                "minerstop\n"
+                "\nUsed to stop mining Verium."
+                );
+
+    LOCK(cs_main);
+
+    CWallet * const pwallet = GetWalletForJSONRPCRequest(request);
+    GenerateVerium(false, pwallet);
+    UniValue obj(UniValue::VOBJ);
+    return obj;
+}
 
 // NOTE: Unlike wallet RPC (which use BTC values), mining RPCs follow GBT (BIP 22) in using satoshi amounts
 UniValue prioritisetransaction(const JSONRPCRequest& request)
@@ -982,6 +1017,9 @@ static const CRPCCommand commands[] =
     { "mining",             "prioritisetransaction",  &prioritisetransaction,  {"txid","dummy","fee_delta"} },
     { "mining",             "getblocktemplate",       &getblocktemplate,       {"template_request"} },
     { "mining",             "submitblock",            &submitblock,            {"hexdata","dummy"} },
+    { "mining",             "getmininginfo",          &getmininginfo,          {} },
+    { "mining",             "minerstop",              &minerstop,              {} },
+    { "mining",             "minerstart",             &minerstart,             {} },
 
 
     { "generating",         "generatetoaddress",      &generatetoaddress,      {"nblocks","address","maxtries"} },
