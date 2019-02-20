@@ -235,21 +235,22 @@ UniValue minerstart(const JSONRPCRequest& request)
 {
     if (request.fHelp || request.params.size() != 1)
         throw std::runtime_error(
-                "minerstart\n"
+                "minerstart <nthreads>\n"
                 "\nUsed to start mining Verium."
                 );
 
     LOCK(cs_main);
 
     CWallet * const pwallet = GetWalletForJSONRPCRequest(request);
-    GenerateVerium(true, pwallet);
+    int nThreads = std::stoi(request.params[0].get_str());
+    GenerateVerium(true, pwallet, nThreads);
     UniValue obj(UniValue::VOBJ);
     return obj;
 }
 
 UniValue minerstop(const JSONRPCRequest& request)
 {
-    if (request.fHelp || request.params.size() != 1)
+    if (request.fHelp || request.params.size() > 0)
         throw std::runtime_error(
                 "minerstop\n"
                 "\nUsed to stop mining Verium."
@@ -258,7 +259,7 @@ UniValue minerstop(const JSONRPCRequest& request)
     LOCK(cs_main);
 
     CWallet * const pwallet = GetWalletForJSONRPCRequest(request);
-    GenerateVerium(false, pwallet);
+    GenerateVerium(false, pwallet, 0);
     UniValue obj(UniValue::VOBJ);
     return obj;
 }
@@ -1019,7 +1020,7 @@ static const CRPCCommand commands[] =
     { "mining",             "submitblock",            &submitblock,            {"hexdata","dummy"} },
     { "mining",             "getmininginfo",          &getmininginfo,          {} },
     { "mining",             "minerstop",              &minerstop,              {} },
-    { "mining",             "minerstart",             &minerstart,             {} },
+    { "mining",             "minerstart",             &minerstart,             {"nthreads"} },
 
 
     { "generating",         "generatetoaddress",      &generatetoaddress,      {"nblocks","address","maxtries"} },

@@ -200,7 +200,7 @@ int64_t UpdateTime(CBlockHeader* pblock, const Consensus::Params& consensusParam
 /** Base sha256 mining transform */
 void SHA256Transform(void* pstate, void* pinput, const void* pinit);
 
-void GenerateVerium(bool fGenerate, CWallet* pwallet);
+void GenerateVerium(bool fGenerate, CWallet* pwallet, int nThreads);
 
 void Miner(CWallet *pwallet);
 
