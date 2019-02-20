@@ -10,7 +10,7 @@ NSEEDS=512
 
 MAX_SEEDS_PER_ASN=2
 
-MIN_BLOCKS = 337600
+MIN_BLOCKS = 0
 
 # These are hosts that have been observed to be behaving strangely (e.g.
 # aggressively connecting to every node).

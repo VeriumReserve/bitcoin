@@ -70,7 +70,7 @@ public:
     CMainParams() {
         strNetworkID = "main";
         consensus.nSubsidyHalvingInterval = 210000;
-        consensus.BIP16Height = 0; // 00000000000000ce80a7e057163a4db1d5ad7b20fb6f598c9597b9665c8fb0d4 - April 1, 2012
+        consensus.BIP16Height = 0;
         consensus.BIP34Height = 0;
         consensus.BIP34Hash = uint256S("0x000000000000024b89b42a942fe0d9fea3bb44ab7bd1b19115dd6a759c0808b8");
         consensus.BIP65Height = 388381; // 000000000000000004c2b624ed5d7756c508d90fd0da2c7c679febfa6c4735f0
@@ -147,9 +147,9 @@ public:
 
         chainTxData = ChainTxData{
             1499513240, // * UNIX timestamp of last known number of transactions
-            36544669,   // * total number of transactions between genesis and that timestamp
+            36540,      // * total number of transactions between genesis and that timestamp
                         //   (the tx=... number in the SetBestChain debug.log lines)
-            0.5         // * estimated number of transactions per second after that timestamp
+            0.0013      // * estimated number of transactions per second after that timestamp
         };
     }
 };

@@ -20,4 +20,6 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast);
 bool CheckProofOfWork(uint256 hash, unsigned int nBits, const Consensus::Params&);
 int64_t GetProofOfWorkReward(int64_t nFees,const CBlockIndex* pindex);
 
+unsigned int calculateBlocktime(const CBlockIndex *pindex);
+
 #endif // BITCOIN_POW_H

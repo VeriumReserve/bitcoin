@@ -12,6 +12,7 @@
 #include <coins.h>
 #include <consensus/validation.h>
 #include <validation.h>
+#include <pow.h>
 #include <core_io.h>
 #include <policy/feerate.h>
 #include <policy/policy.h>
@@ -26,7 +27,10 @@
 #include <hash.h>
 #include <validationinterface.h>
 #include <warnings.h>
-
+#include <bignum.h>
+#include <init.h>
+#include <rpc/miniunz.h>
+#include <curl/curl.h>
 #include <stdint.h>
 
 #include <univalue.h>
@@ -93,6 +97,28 @@ double GetDifficulty(const CBlockIndex* blockindex)
     return GetDifficulty(chainActive, blockindex);
 }
 
+UniValue getsubsidy(const JSONRPCRequest& request)
+{
+    if (request.fHelp || request.params.size() != 0)
+        throw std::runtime_error(
+            "getsubsidy\n"
+            "Returns proof-of-work subsidy value for current block."
+        );
+
+    return (uint64_t)GetProofOfWorkReward(0, chainActive.Tip()->pprev);
+}
+
+UniValue getblocktime(const JSONRPCRequest& request)
+{
+    if (request.fHelp || request.params.size() != 0)
+        throw std::runtime_error(
+            "getblocktime\n"
+            "Returns an integer of current blocktime in seconds."
+        );
+
+    return (uint64_t)calculateBlocktime(chainActive.Tip()->pprev);
+}
+
 UniValue blockheaderToJSON(const CBlockIndex* blockindex)
 {
     AssertLockHeld(cs_main);
@@ -135,6 +161,7 @@ UniValue blockToJSON(const CBlock& block, const CBlockIndex* blockindex, bool tx
     result.push_back(Pair("confirmations", confirmations));
     result.push_back(Pair("strippedsize", (int)::GetSerializeSize(block, SER_NETWORK, PROTOCOL_VERSION | SERIALIZE_TRANSACTION_NO_WITNESS)));
     result.push_back(Pair("size", (int)::GetSerializeSize(block, SER_NETWORK, PROTOCOL_VERSION)));
+    result.push_back(Pair("mint", ValueFromAmount(blockindex->nMint)));
     result.push_back(Pair("weight", (int)::GetBlockWeight(block)));
     result.push_back(Pair("height", blockindex->nHeight));
     result.push_back(Pair("version", block.nVersion));
@@ -1217,6 +1244,7 @@ UniValue getblockchaininfo(const JSONRPCRequest& request)
     UniValue obj(UniValue::VOBJ);
     obj.push_back(Pair("chain",                 Params().NetworkIDString()));
     obj.push_back(Pair("blocks",                (int)chainActive.Height()));
+    obj.push_back(Pair("totalsupply",           (double)chainActive.Tip()->nMoneySupply/COIN));
     obj.push_back(Pair("headers",               pindexBestHeader ? pindexBestHeader->nHeight : -1));
     obj.push_back(Pair("bestblockhash",         chainActive.Tip()->GetBlockHash().GetHex()));
     obj.push_back(Pair("difficulty",            (double)GetDifficulty()));
@@ -1626,16 +1654,143 @@ UniValue savemempool(const JSONRPCRequest& request)
     return NullUniValue;
 }
 
+//bootstrap 
+static size_t write_data(void *ptr, size_t size, size_t nmemb, void *stream)
+{
+  size_t written = fwrite(ptr, size, nmemb, (FILE *)stream);
+  return written;
+}
+
+int DownloadFile(std::string url, boost::filesystem::path target_file_path)
+{
+    int err = 0;
+
+    LogPrintf("bootstrap: Downloading blockchain from %s. \n", url.c_str());
+
+    CURL *curlHandle = curl_easy_init();
+    curl_easy_setopt(curlHandle, CURLOPT_URL, url.c_str());
+    curl_easy_setopt(curlHandle, CURLOPT_NOPROGRESS, 1L);
+    curl_easy_setopt(curlHandle, CURLOPT_WRITEFUNCTION, write_data);
+    curl_easy_setopt(curlHandle, CURLOPT_FOLLOWLOCATION, 1L);
+
+    FILE *file = fopen(target_file_path.c_str(), "wb");
+    if(file)
+    {
+        curl_easy_setopt(curlHandle, CURLOPT_WRITEDATA, file);
+        CURLcode curl_err = curl_easy_perform(curlHandle);
+        if (curl_err != CURLE_OK)
+            LogPrintf("bootstrap: Error downloading from %s. Error: %s.\n", url.c_str(), curl_easy_strerror(curl_err));
+        fclose(file);
+        err = (int)curl_err;
+    }
+    else
+    {
+        LogPrintf("bootstrap: Download error: Unable to open output file for writing: %s.\n", target_file_path.c_str());
+        err = -1;
+    }
+
+    curl_easy_cleanup(curlHandle);
+
+    return err;
+}
+
+int ExtractBootstrapFile(boost::filesystem::path& pathBootstrap)
+{
+    LogPrintf("bootstrap: Extracting bootstrap file\n");
+    if (!boost::filesystem::exists(pathBootstrap)) {
+        LogPrintf("bootstrap: Bootstrap file doesn't exist!\n");
+        return -1;
+    }
+
+    const char * zipfilename = pathBootstrap.c_str();
+    unzFile uf;
+#ifdef USEWIN32IOAPI
+    zlib_filefunc64_def ffunc;
+    fill_win32_filefunc64A(&ffunc);
+    uf = unzOpen2_64(zipfilename, &ffunc);
+#else
+    uf = unzOpen64(zipfilename);
+#endif
+
+    if (uf == NULL)
+    {
+        LogPrintf("bootstrap: Cannot open downloaded file: %s\n", zipfilename);
+        return -2;
+    }
+
+    int unzip_err = zip_extract_all(uf, GetDataDir(), "bootstrap");
+    if (unzip_err != UNZ_OK)
+    {
+        LogPrintf("bootstrap: Unzip failed\n");
+        return -3;
+    }
+
+    LogPrintf("bootstrap: Unzip successful\n");
+
+    if (!boost::filesystem::exists(GetDataDir() / "bootstrap" / "chainstate") ||
+        !boost::filesystem::exists(GetDataDir() / "bootstrap" / "blocks"))
+    {
+        LogPrintf("bootstrap: Downloaded zip file did not contain all necessary files!\n");
+        return -4;
+    }
+
+    return 0;
+}
+
+UniValue bootstrap(const JSONRPCRequest& request)
+{
+    if (request.fHelp || request.params.size() != 0)
+        throw std::runtime_error(
+            "bootstrap \n"
+            "Download blockchain from www.vericoin.info.\n"
+            "Daemon exits when finished."
+        );
+
+    UniValue result(UniValue::VOBJ);
+    boost::filesystem::path pathBootstrapZip = GetDataDir() / "bootstrap_VRM.zip";
+    int err = DownloadFile("https://cdn.vericonomy.com/016-bootstrap/bootstrap_VRM.zip", pathBootstrapZip);
+    if (err != 0)
+    {
+        LogPrintf("bootstrap: Download failed!\n");
+        result.push_back(Pair("success", false));
+        result.push_back(Pair("error", "Download failed"));
+        result.push_back(Pair("error_code", err));
+        return result;
+    }
+    LogPrintf("bootstrap: Download successful\n");
+
+    err = ExtractBootstrapFile(pathBootstrapZip);
+    if (err != 0)
+    {
+        LogPrintf("bootstrap: Extracting failed!\n");
+        result.push_back(Pair("success", false));
+        result.push_back(Pair("error", "Extracting failed"));
+        result.push_back(Pair("error_code", err));
+        return result;
+    }
+
+    fBootstrap = true;
+    StartShutdown();
+	
+    result.push_back(Pair("success", true));
+    result.push_back(Pair("comment", "Bootstrap successful; veriumd has been stopped, please restart."));
+
+    return result;
+}
+
 static const CRPCCommand commands[] =
 { //  category              name                      actor (function)         argNames
   //  --------------------- ------------------------  -----------------------  ----------
     { "blockchain",         "getblockchaininfo",      &getblockchaininfo,      {} },
+    { "blockchain",         "bootstrap",              &bootstrap,              {} },
     { "blockchain",         "getchaintxstats",        &getchaintxstats,        {"nblocks", "blockhash"} },
     { "blockchain",         "getbestblockhash",       &getbestblockhash,       {} },
     { "blockchain",         "getblockcount",          &getblockcount,          {} },
     { "blockchain",         "getblock",               &getblock,               {"blockhash","verbosity|verbose"} },
     { "blockchain",         "getblockhash",           &getblockhash,           {"height"} },
     { "blockchain",         "getblockheader",         &getblockheader,         {"blockhash","verbose"} },
+    { "blockchain",         "getblocktime",           &getblocktime,           {} },
+    { "blockchain",         "getsubsidy",             &getsubsidy,             {} },
     { "blockchain",         "getchaintips",           &getchaintips,           {} },
     { "blockchain",         "getdifficulty",          &getdifficulty,          {} },
     { "blockchain",         "getmempoolancestors",    &getmempoolancestors,    {"txid","verbose"} },

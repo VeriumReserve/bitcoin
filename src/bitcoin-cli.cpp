@@ -14,7 +14,7 @@
 #include <rpc/protocol.h>
 #include <util.h>
 #include <utilstrencodings.h>
-
+#include <curl/curl.h>
 #include <memory>
 #include <stdio.h>
 
@@ -82,6 +82,7 @@ static int AppInitRPC(int argc, char* argv[])
     //
     // Parameters
     //
+    curl_global_init(CURL_GLOBAL_ALL);
     gArgs.ParseParameters(argc, argv);
     if (argc<2 || gArgs.IsArgSet("-?") || gArgs.IsArgSet("-h") || gArgs.IsArgSet("-help") || gArgs.IsArgSet("-version")) {
         std::string strUsage = strprintf(_("%s RPC client version"), _(PACKAGE_NAME)) + " " + FormatFullVersion() + "\n";

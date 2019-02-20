@@ -66,5 +66,6 @@ enum HelpMessageMode {
 std::string HelpMessage(HelpMessageMode mode);
 /** Returns licensing information (for -version) */
 std::string LicenseInfo();
+extern bool fBootstrap;
 
 #endif // BITCOIN_INIT_H

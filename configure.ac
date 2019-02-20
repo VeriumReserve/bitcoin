@@ -117,9 +117,9 @@ AC_ARG_ENABLE([upnp-default],
   [use_upnp_default=no])
 
 AC_ARG_ENABLE(tests,
-    AS_HELP_STRING([--disable-tests],[do not compile tests (default is to compile)]),
+    AS_HELP_STRING([--disable-tests],[do not compile tests (default is to not compile)]),
     [use_tests=$enableval],
-    [use_tests=yes])
+    [use_tests=no])
 
 AC_ARG_ENABLE(gui-tests,
     AS_HELP_STRING([--disable-gui-tests],[do not compile GUI tests (default is to compile if GUI and tests enabled)]),
@@ -127,9 +127,9 @@ AC_ARG_ENABLE(gui-tests,
     [use_gui_tests=$use_tests])
 
 AC_ARG_ENABLE(bench,
-    AS_HELP_STRING([--disable-bench],[do not compile benchmarks (default is to compile)]),
+    AS_HELP_STRING([--disable-bench],[do not compile benchmarks (default is to not compile)]),
     [use_bench=$enableval],
-    [use_bench=yes])
+    [use_bench=no])
 
 AC_ARG_ENABLE([extended-functional-tests],
     AS_HELP_STRING([--enable-extended-functional-tests],[enable expensive functional tests when using lcov (default no)]),
@@ -929,6 +929,10 @@ if test x$boost_sleep != xyes; then
 fi
 
 fi
+AC_CHECK_HEADER([curl/curl.h],, AC_MSG_ERROR(curl headers missing),)
+AC_CHECK_LIB([curl],         [main],CURL_LIBS=-lcurl, AC_MSG_ERROR(libcurl missing))
+AC_CHECK_HEADER([minizip/unzip.h],, AC_MSG_ERROR(minizip headers missing),)
+AC_CHECK_LIB([minizip],         [main],MINIZIP_LIBS=-lminizip, AC_MSG_ERROR(libminizip missing))
 
 if test x$use_pkgconfig = xyes; then
   : dnl
@@ -1254,6 +1258,8 @@ AC_SUBST(MINIUPNPC_CPPFLAGS)
 AC_SUBST(MINIUPNPC_LIBS)
 AC_SUBST(CRYPTO_LIBS)
 AC_SUBST(SSL_LIBS)
+AC_SUBST(MINIZIP_LIBS)
+AC_SUBST(CURL_LIBS)
 AC_SUBST(EVENT_LIBS)
 AC_SUBST(EVENT_PTHREADS_LIBS)
 AC_SUBST(ZMQ_LIBS)
