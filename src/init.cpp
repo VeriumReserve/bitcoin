@@ -117,6 +117,7 @@ static const char* FEE_ESTIMATES_FILENAME="fee_estimates.dat";
 
 std::atomic<bool> fRequestShutdown(false);
 std::atomic<bool> fDumpMempoolLater(false);
+bool fBootstrap = false;
 
 void StartShutdown()
 {
@@ -210,7 +211,6 @@ void Shutdown()
     if (fDumpMempoolLater && gArgs.GetArg("-persistmempool", DEFAULT_PERSIST_MEMPOOL)) {
         DumpMempool();
     }
-
     if (fFeeEstimatesInitialized)
     {
         ::feeEstimator.FlushUnconfirmed(::mempool);
@@ -273,6 +273,28 @@ void Shutdown()
 #ifdef ENABLE_WALLET
     CloseWallets();
 #endif
+	if (fBootstrap && boost::filesystem::exists(GetDataDir() / "bootstrap" / "blocks"))
+	{
+		try
+		{
+			boost::filesystem::remove_all(GetDataDir() / "blocks");
+			boost::filesystem::remove_all(GetDataDir() / "chainstate");
+			boost::filesystem::rename(GetDataDir() / "bootstrap" / "blocks", GetDataDir() / "blocks");
+			boost::filesystem::rename(GetDataDir() / "bootstrap" / "chainstate", GetDataDir() / "chainstate");
+			boost::filesystem::remove_all(GetDataDir() / "bootstrap");
+			boost::filesystem::path pathBootstrapTurbo(GetDataDir() / "bootstrap_VRM.zip");
+			boost::filesystem::path pathBootstrap(GetDataDir() / "bootstrap.dat");
+			if (boost::filesystem::exists(pathBootstrapTurbo)){
+				boost::filesystem::remove(pathBootstrapTurbo);
+			}
+			if (boost::filesystem::exists(pathBootstrap)){
+				boost::filesystem::remove(pathBootstrap);
+			}
+		}
+		catch (std::exception &e) {
+			LogPrintf("%s: Unable to change databse: %s\n",__func__,e.what());
+		}
+	}
     globalVerifyHandle.reset();
     ECC_Stop();
     LogPrintf("%s: done\n", __func__);
