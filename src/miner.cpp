@@ -730,12 +730,11 @@ void Miner(CWallet *pwallet)
     }
 }
 
-void GenerateVerium(bool fGenerate, CWallet* pwallet)
+void GenerateVerium(bool fGenerate, CWallet* pwallet, int nThreads)
 {
     fGenerateVerium = fGenerate;
     static boost::thread_group* minerThreads = NULL;
-
-    int nThreads = gArgs.GetArg("-genproclimit", -1);
+    
     if (nThreads < 0)
         nThreads = std::thread::hardware_concurrency();
 
