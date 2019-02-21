@@ -27,7 +27,6 @@
 #include <hash.h>
 #include <validationinterface.h>
 #include <warnings.h>
-#include <bignum.h>
 #include <init.h>
 #include <rpc/miniunz.h>
 #include <curl/curl.h>

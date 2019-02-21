@@ -29,7 +29,6 @@
 #include <wallet/wallet.h>
 #include <checkpoints.h>
 #include <chainparams.h>
-#include <bignum.h>
 #include <txdb.h>
 #include <init.h>
 #include <chainparams.h>
@@ -542,7 +541,7 @@ void FormatHashBuffers(CBlock* pblock, char* pmidstate, char* pdata, char* phash
 bool CheckWork(CBlock* pblock, CWallet& wallet, CReserveKey& reservekey)
 {
     arith_uint256 hashBlock = UintToArith256( pblock->GetWorkHash() );
-    arith_uint256 hashTarget = UintToArith256( CBigNum().SetCompact(pblock->nBits).getuint256() );
+    arith_uint256 hashTarget = arith_uint256().SetCompact(pblock->nBits);
 
     printf("CheckWork() : new proof-of-work block found  \n  hash: %s  \ntarget: %s\n", hashBlock.GetHex().c_str(), hashTarget.GetHex().c_str());
 
@@ -654,7 +653,7 @@ void Miner(CWallet *pwallet)
 
             // Search
             int64_t nStart = GetTime();
-            uint256 hashTarget = CBigNum().SetCompact(pblock->nBits).getuint256();
+            uint256 hashTarget = ArithToUint256(arith_uint256().SetCompact(pblock->nBits));
             while (fGenerateVerium)
             {
                 unsigned int nHashesDone = 0;
