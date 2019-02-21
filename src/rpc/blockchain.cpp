@@ -97,6 +97,26 @@ double GetDifficulty(const CBlockIndex* blockindex)
     return GetDifficulty(chainActive, blockindex);
 }
 
+double GetPoWKHashPM()
+{
+    int nPoWInterval = 72;
+    int64_t nTargetSpacingWorkMin = 30, nTargetSpacingWork = 30;
+    CBlockIndex* pindex = chainActive.Genesis();
+    CBlockIndex* pindexPrevWork = chainActive.Genesis();
+     while (pindex)
+    {
+        int64_t nActualSpacingWork = pindex->GetBlockTime() - pindexPrevWork->GetBlockTime();
+        nTargetSpacingWork = ((nPoWInterval - 1) * nTargetSpacingWork + nActualSpacingWork + nActualSpacingWork) / (nPoWInterval + 1);
+        nTargetSpacingWork = std::max(nTargetSpacingWork, nTargetSpacingWorkMin);
+        pindexPrevWork = pindex;
+        pindex = chainActive[pindex->nHeight+1];
+    }
+
+    return (GetDifficulty() * 1024 * 4294.967296  / nTargetSpacingWork) * 60;  // 60= sec to min, 1024= standard scrypt work to scrypt^2
+
+}
+
+
 UniValue getsubsidy(const JSONRPCRequest& request)
 {
     if (request.fHelp || request.params.size() != 0)
