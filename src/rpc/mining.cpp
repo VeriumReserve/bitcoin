@@ -176,6 +176,8 @@ UniValue minerstart(const JSONRPCRequest& request)
     int nThreads = std::stoi(request.params[0].get_str());
     GenerateVerium(true, pwallet, nThreads);
     UniValue obj(UniValue::VOBJ);
+    obj.push_back(Pair("Miner status", "active"));
+	obj.push_back(Pair("Mining with number of threads", nThreads));
     return obj;
 }
 
@@ -192,6 +194,7 @@ UniValue minerstop(const JSONRPCRequest& request)
     CWallet * const pwallet = GetWalletForJSONRPCRequest(request);
     GenerateVerium(false, pwallet, 0);
     UniValue obj(UniValue::VOBJ);
+    obj.push_back(Pair("Miner status","stopped"));
     return obj;
 }
 
