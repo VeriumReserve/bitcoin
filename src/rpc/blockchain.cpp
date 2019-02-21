@@ -116,7 +116,6 @@ double GetPoWKHashPM()
 
 }
 
-
 UniValue getsubsidy(const JSONRPCRequest& request)
 {
     if (request.fHelp || request.params.size() != 0)
