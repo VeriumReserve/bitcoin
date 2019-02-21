@@ -196,17 +196,12 @@ UniValue getmininginfo(const JSONRPCRequest& request)
 
     LOCK(cs_main);
 
-    auto GetPoWKHashPM = [](){ return 0.; };  // XXX XXX XXX XXX
     double minerate;
     double nethashrate = GetPoWKHashPM();
     double blocktime = (double)calculateBlocktime(chainActive.Tip())/60;
     double totalhashrate = hashrate;
-    if (totalhashrate == 0.0)
-    {
-        minerate = 0.0;
-    }
-    else
-    {
+    if (totalhashrate == 0.0){minerate = 0.0;}
+    else{
         minerate = 16.666667*(nethashrate*blocktime)/(totalhashrate);  //((100/((totalhashrate_Hpm/(nethashrate_kHpm*1000))*100))*blocktime_min)/60
     }
 
