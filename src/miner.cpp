@@ -603,7 +603,7 @@ int GetNumBlocksOfPeers()
     return Checkpoints::GetTotalBlocksEstimate(Params().Checkpoints());
 }
 
-void Miner(CWallet *pwallet)
+void Miner(std::shared_ptr<CReserveScript> coinbaseScript, CWallet* pwallet)
 {
     printf("Miner started\n");
     SetThreadPriority(THREAD_PRIORITY_LOWEST);
@@ -621,8 +621,8 @@ void Miner(CWallet *pwallet)
     {
         while (fGenerateVerium && memory)
         {
-            auto vNodes = g_connman->vNodes;
-            auto nBestHeight = g_connman->nBestHeight.load(std::memory_order_relaxed);
+            //auto vNodes = g_connman->vNodes;
+            //auto nBestHeight = g_connman->nBestHeight.load(std::memory_order_relaxed);
 
             /*while ((vNodes.size() < 1) || IsInitialBlockDownload() || nBestHeight < GetNumBlocksOfPeers())
             {
@@ -635,13 +635,12 @@ void Miner(CWallet *pwallet)
             int64_t nFees;
             // XXX auto_ptr<CBlock> pblock(CreateNewBlock(pwallet, &nFees));
             // XXX What to do with the fees.???
-            std::shared_ptr<CReserveScript> coinbaseScript = std::make_shared<CReserveScript>();
             std::unique_ptr<CBlockTemplate> pblocktemplate = BlockAssembler(Params()).CreateNewBlock(coinbaseScript->reserveScript, false);
             if (!pblocktemplate.get())
                 return;
             CBlock *pblock = &pblocktemplate->block;
             IncrementExtraNonce(pblock, pindexPrev, nExtraNonce);
-            printf("Running Miner with \%" PRIszu " transactions in block (%u bytes)\n", pblock->vtx.size(),
+            printf("Running Miner with \%" PRIszu " transactions in block (%lu bytes)\n", pblock->vtx.size(),
                    ::GetSerializeSize(*pblock, SER_NETWORK, PROTOCOL_VERSION));
 
             // Pre-build hash buffers
@@ -708,10 +707,10 @@ void Miner(CWallet *pwallet)
                 //    break;
                 if (pblock->nNonce >= 0xffff0000)
                     break;
-               // if (mempool.GetTransactionsUpdated() != nTransactionsUpdatedLast && GetTime() - nStart > 60)
-               //     break;
-                //if (pindexPrev != chainActive.Tip())
-                 //   break;
+                if (mempool.GetTransactionsUpdated() != nTransactionsUpdatedLast && GetTime() - nStart > 60)
+                    break;
+                if (pindexPrev != chainActive.Tip())
+                    break;
 
                 // Update nTime every few seconds
                 UpdateTime(pblock, Params().GetConsensus(), pindexPrev);
@@ -732,6 +731,8 @@ void Miner(CWallet *pwallet)
 void GenerateVerium(bool fGenerate, CWallet* pwallet, int nThreads)
 {
     fGenerateVerium = fGenerate;
+    std::shared_ptr<CReserveScript> coinbaseScript;
+	pwallet->GetScriptForMining(coinbaseScript);
     static boost::thread_group* minerThreads = NULL;
     
     if (nThreads < 0)
@@ -749,7 +750,7 @@ void GenerateVerium(bool fGenerate, CWallet* pwallet, int nThreads)
 
     minerThreads = new boost::thread_group();
     for (int i = 0; i < nThreads; i++)
-        minerThreads->create_thread(std::bind(&Miner, pwallet));
+        minerThreads->create_thread(std::bind(&Miner, coinbaseScript, pwallet));
 }
 
 void updateHashrate(double nHashrate)

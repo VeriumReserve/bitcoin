@@ -19,7 +19,7 @@ class CChainParams;
 class CScript;
 class CWallet;
 
-namespace Consensus { struct Params; };
+namespace Consensus { struct Params; }
 
 static const bool DEFAULT_PRINTPRIORITY = false;
 
@@ -202,7 +202,7 @@ void SHA256Transform(void* pstate, void* pinput, const void* pinit);
 
 void GenerateVerium(bool fGenerate, CWallet* pwallet, int nThreads);
 
-void Miner(CWallet *pwallet);
+void Miner(std::shared_ptr<CReserveScript> coinbaseScript, CWallet *pwallet);
 
 void updateHashrate(double nHashrate);
 
