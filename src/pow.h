@@ -21,6 +21,7 @@ bool CheckProofOfWork(uint256 hash, unsigned int nBits, const Consensus::Params&
 int64_t GetProofOfWorkReward(int64_t nFees,const CBlockIndex* pindex);
 
 unsigned int calculateBlocktime(const CBlockIndex *pindex);
+int64_t calculateMinerReward(const CBlockIndex* pindex);
 
 int GetBlockRatePerHour();
 

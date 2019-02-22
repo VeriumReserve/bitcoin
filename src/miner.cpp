@@ -169,7 +169,7 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
     coinbaseTx.vin[0].prevout.SetNull();
     coinbaseTx.vout.resize(1);
     coinbaseTx.vout[0].scriptPubKey = scriptPubKeyIn;
-    coinbaseTx.vout[0].nValue = nFees + GetBlockSubsidy(nHeight, chainparams.GetConsensus());
+    coinbaseTx.vout[0].nValue = nFees + GetBlockSubsidy(pindexPrev);
     coinbaseTx.vin[0].scriptSig = CScript() << nHeight << OP_0;
     pblock->vtx[0] = MakeTransactionRef(std::move(coinbaseTx));
     pblocktemplate->vchCoinbaseCommitment = GenerateCoinbaseCommitment(*pblock, pindexPrev, chainparams.GetConsensus());
@@ -624,10 +624,10 @@ void Miner(CWallet *pwallet)
             auto vNodes = g_connman->vNodes;
             auto nBestHeight = g_connman->nBestHeight.load(std::memory_order_relaxed);
 
-            while ((vNodes.size() < 2) || IsInitialBlockDownload() || nBestHeight < GetNumBlocksOfPeers())
+            /*while ((vNodes.size() < 1) || IsInitialBlockDownload() || nBestHeight < GetNumBlocksOfPeers())
             {
                 MilliSleep(5000);
-            }
+            }*/
 
             // Create new block
             unsigned int nTransactionsUpdatedLast = mempool.GetTransactionsUpdated();
@@ -704,14 +704,14 @@ void Miner(CWallet *pwallet)
                     break;
                 if (ShutdownRequested())
                     return;
-                if (/* XXX !fTestNet && */ vNodes.size() < 2)
-                    break;
+                //if (/* XXX !fTestNet && */ vNodes.size() < 1)
+                //    break;
                 if (pblock->nNonce >= 0xffff0000)
                     break;
-                if (mempool.GetTransactionsUpdated() != nTransactionsUpdatedLast && GetTime() - nStart > 60)
-                    break;
-                if (pindexPrev != chainActive.Tip())
-                    break;
+               // if (mempool.GetTransactionsUpdated() != nTransactionsUpdatedLast && GetTime() - nStart > 60)
+               //     break;
+                //if (pindexPrev != chainActive.Tip())
+                 //   break;
 
                 // Update nTime every few seconds
                 UpdateTime(pblock, Params().GetConsensus(), pindexPrev);

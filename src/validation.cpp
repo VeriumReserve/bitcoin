@@ -1140,16 +1140,9 @@ bool ReadBlockFromDisk(CBlock& block, const CBlockIndex* pindex, const Consensus
     return true;
 }
 
-CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
+CAmount GetBlockSubsidy(CBlockIndex *pindexPrev)
 {
-    int halvings = nHeight / consensusParams.nSubsidyHalvingInterval;
-    // Force block reward to zero when right shift is undefined.
-    if (halvings >= 64)
-        return 0;
-
-    CAmount nSubsidy = 50 * COIN;
-    // Subsidy is cut in half every 210,000 blocks which will occur approximately every 4 years.
-    nSubsidy >>= halvings;
+    CAmount nSubsidy = calculateMinerReward(pindexPrev);
     return nSubsidy;
 }
 
@@ -1921,6 +1914,9 @@ bool CChainState::ConnectBlock(const CBlock& block, CValidationState& state, CBl
 
         if (tx.IsCoinBase())
         {
+			if (tx.GetValueOut() > calculateMinerReward(pindex->pprev)) {
+				return state.DoS(100, error("%s: reward in the block out of range.", __func__), REJECT_INVALID, "reward-outofrange");
+			}
             nValueOut += tx.GetValueOut();
         } else
         {
