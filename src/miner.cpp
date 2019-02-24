@@ -175,8 +175,7 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
     pblocktemplate->vchCoinbaseCommitment = GenerateCoinbaseCommitment(*pblock, pindexPrev, chainparams.GetConsensus());
     pblocktemplate->vTxFees[0] = -nFees;
 
-    //LogPrintf("CreateNewBlock(): block weight: %u txs: %u fees: %ld sigops %d\n", GetBlockWeight(*pblock), nBlockTx, nFees, nBlockSigOpsCost);
-    //coinbaseTx.print(); // XXX
+    LogPrintf("CreateNewBlock(): block weight: %u txs: %u fees: %ld sigops %d\n", GetBlockWeight(*pblock), nBlockTx, nFees, nBlockSigOpsCost);
 
     // Fill in header
     pblock->hashPrevBlock  = pindexPrev->GetBlockHash();
@@ -562,14 +561,7 @@ bool CheckWork(CBlock* pblock, CWallet& wallet, CReserveKey& reservekey)
         // Remove key from key pool
         reservekey.KeepKey();
 
-        // Track how many getdata requests this block gets
-        {
-            LOCK(wallet.cs_wallet);
-            // XXX wallet.mapRequestCount[hashBlock] = 0;
-        }
-
         // Process this block the same as if we had received it from another node
-        // XXX ???
         std::shared_ptr<const CBlock> shared_pblock = std::make_shared<const CBlock>(*pblock);
         if (!ProcessNewBlock(Params(), shared_pblock, true, nullptr))
             return error("CheckWork() : ProcessBlock, block not accepted");
@@ -632,9 +624,6 @@ void Miner(std::shared_ptr<CReserveScript> coinbaseScript, CWallet* pwallet)
             // Create new block
             unsigned int nTransactionsUpdatedLast = mempool.GetTransactionsUpdated();
             CBlockIndex* pindexPrev = chainActive.Tip();
-            int64_t nFees;
-            // XXX auto_ptr<CBlock> pblock(CreateNewBlock(pwallet, &nFees));
-            // XXX What to do with the fees.???
             std::unique_ptr<CBlockTemplate> pblocktemplate = BlockAssembler(Params()).CreateNewBlock(coinbaseScript->reserveScript, false);
             if (!pblocktemplate.get())
                 return;
