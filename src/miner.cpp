@@ -550,7 +550,7 @@ bool CheckWork(CBlock* pblock, CWallet& wallet, CReserveKey& reservekey)
 
     //// debug print
     pblock->print();
-    // XXX printf("generated %s\n", FormatMoney(pblock->vtx[0].vout[0].nValue).c_str());
+    printf("generated %s\n", FormatMoney(pblock->vtx[0]->vout[0].nValue).c_str());
 
     // Found a solution
     {
