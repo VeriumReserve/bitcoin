@@ -537,30 +537,26 @@ void FormatHashBuffers(CBlock* pblock, char* pmidstate, char* pdata, char* phash
     memcpy(phash1, &tmp.hash1, 64);
 }
 
-bool CheckWork(CBlock* pblock, CWallet& wallet, CReserveKey& reservekey)
+bool CheckWork(CBlock* pblock)
 {
     arith_uint256 hashBlock = UintToArith256( pblock->GetWorkHash() );
     arith_uint256 hashTarget = arith_uint256().SetCompact(pblock->nBits);
+    CBlockIndex* pindexPrev = chainActive.Tip();
 
-    printf("CheckWork() : new proof-of-work block found  \n  hash: %s  \ntarget: %s\n", hashBlock.GetHex().c_str(), hashTarget.GetHex().c_str());
+    LogPrintf("CheckWork() : new proof-of-work block found  \n  hash: %s  \ntarget: %s\n", hashBlock.GetHex().c_str(), hashTarget.GetHex().c_str());
 
-    if (hashBlock > hashTarget)
+    if (hashBlock > hashTarget){
         return error("CheckWork() : proof-of-work not meeting target");
-
-    //// debug print
-    pblock->print();
-    printf("generated %s\n", FormatMoney(pblock->vtx[0]->vout[0].nValue).c_str());
-
-    // Found a solution
-    {
+    }
+	else{
+		//// debug print
+		pblock->print();
+		LogPrintf("generated %s\n", FormatMoney(pblock->vtx[0]->vout[0].nValue).c_str());
         LOCK(cs_main);
-        auto hashBestChain = pcoinsdbview->GetBestBlock();
-        if (pblock->hashPrevBlock != hashBestChain)
-            return error("CheckWork() : generated block is stale");
-
-        // Remove key from key pool
-        reservekey.KeepKey();
-
+        if (pblock->hashPrevBlock != pindexPrev->GetBlockHash()){
+			return error("CheckWork() : generated block is stale");
+		}
+		
         // Process this block the same as if we had received it from another node
         std::shared_ptr<const CBlock> shared_pblock = std::make_shared<const CBlock>(*pblock);
         if (!ProcessNewBlock(Params(), shared_pblock, true, nullptr))
@@ -595,7 +591,7 @@ int GetNumBlocksOfPeers()
     return Checkpoints::GetTotalBlocksEstimate(Params().Checkpoints());
 }
 
-void Miner(std::shared_ptr<CReserveScript> coinbaseScript, CWallet* pwallet)
+void Miner(std::shared_ptr<CReserveScript> coinbaseScript)
 {
     printf("Miner started\n");
     SetThreadPriority(THREAD_PRIORITY_LOWEST);
@@ -607,7 +603,6 @@ void Miner(std::shared_ptr<CReserveScript> coinbaseScript, CWallet* pwallet)
     if(!scratchbuf){memory = false;}
 
     // Each thread has it's own nonce
-    CReserveKey reservekey(pwallet);
     nExtraNonce += 1;
     try
     {
@@ -654,7 +649,7 @@ void Miner(std::shared_ptr<CReserveScript> coinbaseScript, CWallet* pwallet)
                         // Found a solution
                         printf("Miner found a solution\n");
                         SetThreadPriority(THREAD_PRIORITY_NORMAL);
-                        CheckWork(pblock, *pwallet, reservekey);
+                        CheckWork(pblock);
                         SetThreadPriority(THREAD_PRIORITY_LOWEST);
                     }
                     nHashesDone += nHashes;
@@ -739,7 +734,7 @@ void GenerateVerium(bool fGenerate, CWallet* pwallet, int nThreads)
 
     minerThreads = new boost::thread_group();
     for (int i = 0; i < nThreads; i++)
-        minerThreads->create_thread(std::bind(&Miner, coinbaseScript, pwallet));
+        minerThreads->create_thread(std::bind(&Miner, coinbaseScript));
 }
 
 void updateHashrate(double nHashrate)
