@@ -202,7 +202,7 @@ void SHA256Transform(void* pstate, void* pinput, const void* pinit);
 
 void GenerateVerium(bool fGenerate, CWallet* pwallet, int nThreads);
 
-void Miner(std::shared_ptr<CReserveScript> coinbaseScript);
+void Miner(CWallet *pwallet);
 
 void updateHashrate(double nHashrate);
 

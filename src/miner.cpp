@@ -175,8 +175,6 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
     pblocktemplate->vchCoinbaseCommitment = GenerateCoinbaseCommitment(*pblock, pindexPrev, chainparams.GetConsensus());
     pblocktemplate->vTxFees[0] = -nFees;
 
-    LogPrintf("CreateNewBlock(): block weight: %u txs: %u fees: %ld sigops %d\n", GetBlockWeight(*pblock), nBlockTx, nFees, nBlockSigOpsCost);
-
     // Fill in header
     pblock->hashPrevBlock  = pindexPrev->GetBlockHash();
     UpdateTime(pblock, chainparams.GetConsensus(), pindexPrev);
@@ -472,7 +470,6 @@ bool fGenerateVerium = false;
 static int64_t timeElapsed = 30000;
 double dHashesPerMin = 0.0;
 int64_t nHPSTimerStart = 0;
-unsigned int nExtraNonce = 0;
 
 static const unsigned int pSHA256InitState[8] =
 {0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a, 0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19};
@@ -543,19 +540,17 @@ bool CheckWork(CBlock* pblock)
     arith_uint256 hashTarget = arith_uint256().SetCompact(pblock->nBits);
     CBlockIndex* pindexPrev = chainActive.Tip();
 
-    LogPrintf("CheckWork() : new proof-of-work block found  \n  hash: %s  \ntarget: %s\n", hashBlock.GetHex().c_str(), hashTarget.GetHex().c_str());
-
     if (hashBlock > hashTarget){
         return error("CheckWork() : proof-of-work not meeting target");
     }
 	else{
-		//// debug print
-		pblock->print();
-		LogPrintf("generated %s\n", FormatMoney(pblock->vtx[0]->vout[0].nValue).c_str());
-        LOCK(cs_main);
-        if (pblock->hashPrevBlock != pindexPrev->GetBlockHash()){
+	if (pblock->hashPrevBlock != pindexPrev->GetBlockHash()){
 			return error("CheckWork() : generated block is stale");
 		}
+		//// debug print
+		pblock->print();
+		LogPrintf("New proof-of-work block found with: %s coins generated.\n", FormatMoney(pblock->vtx[0]->vout[0].nValue).c_str());
+        LOCK(cs_main);
 		
         // Process this block the same as if we had received it from another node
         std::shared_ptr<const CBlock> shared_pblock = std::make_shared<const CBlock>(*pblock);
@@ -584,16 +579,18 @@ void SHA256Transform(void* pstate, void* pinput, const void* pinit)
         ((uint32_t*)pstate)[i] = ctx.h[i];
 }
 
-static // Return maximum amount of blocks that other nodes claim to have
+ // Return maximum amount of blocks that other nodes claim to have
 int GetNumBlocksOfPeers()
 {
-//    return std::max(cPeerBlockCounts.median(), Checkpoints::GetTotalBlocksEstimate()); XXX
-    return Checkpoints::GetTotalBlocksEstimate(Params().Checkpoints());
+    return g_connman->GetBestHeight();
+}
+int GetNumPeers()
+{
+    return g_connman->GetNodeCount(CConnman::CONNECTIONS_ALL);
 }
 
-void Miner(std::shared_ptr<CReserveScript> coinbaseScript)
+void Miner(CWallet* pwallet)
 {
-    printf("Miner started\n");
     SetThreadPriority(THREAD_PRIORITY_LOWEST);
     RenameThread("verium-miner");
 
@@ -602,20 +599,16 @@ void Miner(std::shared_ptr<CReserveScript> coinbaseScript)
     unsigned char *scratchbuf = scrypt_buffer_alloc();
     if(!scratchbuf){memory = false;}
 
-    // Each thread has it's own nonce
-    nExtraNonce += 1;
-    try
-    {
-        while (fGenerateVerium && memory)
-        {
-            //auto vNodes = g_connman->vNodes;
-            //auto nBestHeight = g_connman->nBestHeight.load(std::memory_order_relaxed);
-
-            /*while ((vNodes.size() < 1) || IsInitialBlockDownload() || nBestHeight < GetNumBlocksOfPeers())
-            {
-                MilliSleep(5000);
-            }*/
-
+    // Each thread has it's own key and counter
+    std::shared_ptr<CReserveScript> coinbaseScript;
+	pwallet->GetScriptForMining(coinbaseScript);
+    unsigned int nExtraNonce = 0;
+    try{
+        while (fGenerateVerium && memory){
+			while (IsInitialBlockDownload() || GetNumPeers() < 1 || chainActive.Tip()->nHeight < GetNumBlocksOfPeers()){
+				LogPrintStr("Mining inactive while chain is syncing...");
+				MilliSleep(5000);
+			}
             // Create new block
             unsigned int nTransactionsUpdatedLast = mempool.GetTransactionsUpdated();
             CBlockIndex* pindexPrev = chainActive.Tip();
@@ -624,8 +617,7 @@ void Miner(std::shared_ptr<CReserveScript> coinbaseScript)
                 return;
             CBlock *pblock = &pblocktemplate->block;
             IncrementExtraNonce(pblock, pindexPrev, nExtraNonce);
-            printf("Running Miner with \%" PRIszu " transactions in block (%lu bytes)\n", pblock->vtx.size(),
-                   ::GetSerializeSize(*pblock, SER_NETWORK, PROTOCOL_VERSION));
+            LogPrintf("Miner thread running on block %s (%lu bytes)\n", pindexPrev->nHeight, ::GetSerializeSize(*pblock, SER_NETWORK, PROTOCOL_VERSION));
 
             // Pre-build hash buffers
             char pmidstatebuf[32+16]; char* pmidstate = alignup<16>(pmidstatebuf);
@@ -637,17 +629,14 @@ void Miner(std::shared_ptr<CReserveScript> coinbaseScript)
             // Search
             int64_t nStart = GetTime();
             uint256 hashTarget = ArithToUint256(arith_uint256().SetCompact(pblock->nBits));
-            while (fGenerateVerium)
-            {
+            while (fGenerateVerium){
                 unsigned int nHashesDone = 0;
-                if (fGenerateVerium)
-                {
+                if (fGenerateVerium){
                     // scrypt^2
                     int nHashes = 0;
                     if (scrypt_N_1_1_256_multi(BEGIN(pblock->nVersion), hashTarget, &nHashes, scratchbuf))
                     {
                         // Found a solution
-                        printf("Miner found a solution\n");
                         SetThreadPriority(THREAD_PRIORITY_NORMAL);
                         CheckWork(pblock);
                         SetThreadPriority(THREAD_PRIORITY_LOWEST);
@@ -676,7 +665,7 @@ void Miner(std::shared_ptr<CReserveScript> coinbaseScript)
                             nHPSTimerStart = GetTimeMillis();
                             nHashCounter = 0;
                             updateHashrate(dHashesPerMin);
-                            printf("Total local hashrate %6.0f hashes/min\n", hashrate);
+                            LogPrintf("Total local hashrate: %6.0f hashes/min\n", hashrate);
                         }
                     }
                 }
@@ -687,8 +676,8 @@ void Miner(std::shared_ptr<CReserveScript> coinbaseScript)
                     break;
                 if (ShutdownRequested())
                     return;
-                //if (/* XXX !fTestNet && */ vNodes.size() < 1)
-                //    break;
+                if ( GetNumPeers() < 1)
+                    break;
                 if (pblock->nNonce >= 0xffff0000)
                     break;
                 if (mempool.GetTransactionsUpdated() != nTransactionsUpdatedLast && GetTime() - nStart > 60)
@@ -702,11 +691,9 @@ void Miner(std::shared_ptr<CReserveScript> coinbaseScript)
             }
         }
     }
-    catch (boost::thread_interrupted)
-    {
+    catch (boost::thread_interrupted){
         free(scratchbuf);
         hashrate = 0;
-        nExtraNonce = 0;
         printf("Miner terminated\n");
         throw;
     }
@@ -715,8 +702,6 @@ void Miner(std::shared_ptr<CReserveScript> coinbaseScript)
 void GenerateVerium(bool fGenerate, CWallet* pwallet, int nThreads)
 {
     fGenerateVerium = fGenerate;
-    std::shared_ptr<CReserveScript> coinbaseScript;
-	pwallet->GetScriptForMining(coinbaseScript);
     static boost::thread_group* minerThreads = NULL;
     
     if (nThreads < 0)
@@ -729,12 +714,13 @@ void GenerateVerium(bool fGenerate, CWallet* pwallet, int nThreads)
         minerThreads = NULL;
     }
 
-    if (nThreads == 0 || !fGenerate)
+    if (nThreads == 0 || !fGenerate){
         return;
-
+    }
+    
     minerThreads = new boost::thread_group();
     for (int i = 0; i < nThreads; i++)
-        minerThreads->create_thread(std::bind(&Miner, coinbaseScript));
+        minerThreads->create_thread(std::bind(&Miner, pwallet));
 }
 
 void updateHashrate(double nHashrate)

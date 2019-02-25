@@ -143,7 +143,6 @@ UniValue getmininginfo(const JSONRPCRequest& request)
 
     UniValue obj(UniValue::VOBJ);
     obj.push_back(Pair("blocks",           (int)chainActive.Height()));
-    //obj.push_back(Pair("currentblocksize", (uint64_t)nLastBlockSize)); // XXX what is this?
     obj.push_back(Pair("currentblocktx",   (uint64_t)nLastBlockTx));
     obj.push_back(Pair("difficulty",       (double)GetDifficulty()));
     obj.push_back(Pair("blocktime (min)",  (double)blocktime));
