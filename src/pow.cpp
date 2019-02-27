@@ -17,8 +17,8 @@
 #include <inttypes.h>
 
 /////////////////
-extern arith_uint256 bnProofOfWorkLimit;
-extern arith_uint256 bnProofOfWorkLimitTestNet;
+extern arith_uint256 proofOfWorkLimit;
+extern arith_uint256 proofOfWorkLimitTestNet;
 static const int64_t nTargetTimespan = 2 * 60 * 60;  // 2 hours
 double GetDifficulty(const CBlockIndex* blockindex = nullptr);
 
@@ -40,9 +40,8 @@ unsigned int calculateBlocktime(const CBlockIndex* pindex)
 
 unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast)
 {
-    arith_uint256 bnTargetLimit = bnProofOfWorkLimit;
     if (pindexLast->nHeight <= 2)
-        return bnTargetLimit.GetCompact(); // first few blocks
+        return proofOfWorkLimit.GetCompact(); // first few blocks
     const CBlockIndex* pindexPrev = pindexLast->pprev;
     const CBlockIndex* pindexPrevPrev = pindexPrev->pprev;
     unsigned int nTargetSpacing = calculateBlocktime(pindexPrev);
@@ -59,24 +58,24 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast)
     int64_t nInterval = targetTimespan / nTargetSpacing;
     bnNew *= ((nInterval - 1) * nTargetSpacing + nActualSpacing + nActualSpacing);
     bnNew /= ((nInterval + 1) * nTargetSpacing);
-    if (bnNew > bnTargetLimit)
+    if (bnNew > proofOfWorkLimit)
     {
-        bnNew = bnTargetLimit;
+        bnNew = proofOfWorkLimit;
     }
     return bnNew.GetCompact();
 }
 
 bool CheckProofOfWork(uint256 hash, unsigned int nBits, const Consensus::Params& params)
 {
-    arith_uint256 bnTarget;
-    bnTarget.SetCompact(nBits);
+    arith_uint256 target;
+    target.SetCompact(nBits);
 
     // Check range
-    if (bnTarget <= 0 || bnTarget > bnProofOfWorkLimit)
+    if (target <= 0 || target > proofOfWorkLimit)
         return error("CheckProofOfWork() : nBits below minimum work");
 
     // Check proof of work matches claimed amount
-    if (UintToArith256(hash) > bnTarget)
+    if (UintToArith256(hash) > target)
         return error("CheckProofOfWork() : hash doesn't match nBits");
 
     return true;

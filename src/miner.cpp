@@ -27,7 +27,6 @@
 #include <validationinterface.h>
 #include <crypto/scrypt.h>
 #include <wallet/wallet.h>
-#include <checkpoints.h>
 #include <chainparams.h>
 #include <txdb.h>
 #include <init.h>
