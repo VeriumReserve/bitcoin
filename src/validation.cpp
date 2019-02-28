@@ -1914,9 +1914,6 @@ bool CChainState::ConnectBlock(const CBlock& block, CValidationState& state, CBl
 
         if (tx.IsCoinBase())
         {
-			if (tx.GetValueOut() > calculateMinerReward(pindex->pprev)) {
-				return state.DoS(100, error("%s: reward in the block out of range.", __func__), REJECT_INVALID, "reward-outofrange");
-			}
             nValueOut += tx.GetValueOut();
         } else
         {
@@ -1982,6 +1979,10 @@ bool CChainState::ConnectBlock(const CBlock& block, CValidationState& state, CBl
 
     int64_t nTime4 = GetTimeMicros(); nTimeVerify += nTime4 - nTime2;
     LogPrint(BCLog::BENCH, "    - Verify %u txins: %.2fms (%.3fms/txin) [%.2fs (%.2fms/blk)]\n", nInputs - 1, MILLI * (nTime4 - nTime2), nInputs <= 1 ? 0 : MILLI * (nTime4 - nTime2) / (nInputs-1), nTimeVerify * MICRO, nTimeVerify * MILLI / nBlocksTotal);
+
+    CAmount blockReward = nFees + GetBlockSubsidy(pindex);
+    if (block.vtx[0]->GetValueOut() > blockReward)
+        return state.DoS(100, error("ConnectBlock(): coinbase pays too much (actual=%d vs limit=%d)", block.vtx[0]->GetValueOut(), blockReward), REJECT_INVALID, "bad-cb-amount");
 
     if (fJustCheck)
         return true;
