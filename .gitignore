@@ -12,6 +12,10 @@ src/bitcoin-tx
 src/test/test_bitcoin
 src/test/test_bitcoin_fuzzy
 src/qt/test/test_bitcoin-qt
+src/qt/verium-qt
+src/verium-cli
+src/verium-tx
+src/veriumd
 
 # autoreconf
 Makefile.in
