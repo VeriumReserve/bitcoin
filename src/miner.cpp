@@ -28,6 +28,7 @@
 #include <crypto/scrypt.h>
 #include <wallet/wallet.h>
 #include <chainparams.h>
+#include <bignum.h>
 #include <txdb.h>
 #include <init.h>
 #include <chainparams.h>
@@ -536,7 +537,7 @@ void FormatHashBuffers(CBlock* pblock, char* pmidstate, char* pdata, char* phash
 bool CheckWork(CBlock* pblock)
 {
     arith_uint256 hashBlock = UintToArith256( pblock->GetWorkHash() );
-    arith_uint256 hashTarget = arith_uint256().SetCompact(pblock->nBits);
+    arith_uint256 hashTarget = UintToArith256( CBigNum().SetCompact(pblock->nBits).getuint256() );
     CBlockIndex* pindexPrev = chainActive.Tip();
 
     if (hashBlock > hashTarget){
@@ -627,8 +628,9 @@ void Miner(CWallet* pwallet)
 
             // Search
             int64_t nStart = GetTime();
-            uint256 hashTarget = ArithToUint256(arith_uint256().SetCompact(pblock->nBits));
-            while (fGenerateVerium){
+            uint256 hashTarget = CBigNum().SetCompact(pblock->nBits).getuint256();
+            while (fGenerateVerium)
+            {
                 unsigned int nHashesDone = 0;
                 if (fGenerateVerium){
                     // scrypt^2

@@ -10,6 +10,7 @@
 #include <primitives/block.h>
 #include <uint256.h>
 #include <math.h>
+#include <bignum.h>
 #include <util.h>
 #include <timedata.h>
 #include <validation.h>
@@ -53,29 +54,29 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast)
     else{targetTimespan = nTargetTimespan;}
     // ppcoin: target change every block
     // ppcoin: retarget with exponential moving toward target spacing
-    arith_uint256 bnNew;
+    CBigNum bnNew;
     bnNew.SetCompact(pindexPrev->nBits);
     int64_t nInterval = targetTimespan / nTargetSpacing;
     bnNew *= ((nInterval - 1) * nTargetSpacing + nActualSpacing + nActualSpacing);
     bnNew /= ((nInterval + 1) * nTargetSpacing);
-    if (bnNew > proofOfWorkLimit)
+    if (bnNew > CBigNum(proofOfWorkLimit))
     {
-        bnNew = proofOfWorkLimit;
+        bnNew = CBigNum(proofOfWorkLimit);
     }
     return bnNew.GetCompact();
 }
 
 bool CheckProofOfWork(uint256 hash, unsigned int nBits, const Consensus::Params& params)
 {
-    arith_uint256 target;
-    target.SetCompact(nBits);
+    CBigNum bnTarget;
+    bnTarget.SetCompact(nBits);
 
     // Check range
-    if (target <= 0 || target > proofOfWorkLimit)
+    if (bnTarget <= 0 || bnTarget > CBigNum(ArithToUint256(proofOfWorkLimit)))
         return error("CheckProofOfWork() : nBits below minimum work");
 
     // Check proof of work matches claimed amount
-    if (UintToArith256(hash) > target)
+    if (UintToArith256(hash) > UintToArith256(bnTarget.getuint256()))
         return error("CheckProofOfWork() : hash doesn't match nBits");
 
     return true;
