@@ -167,6 +167,8 @@ BitcoinGUI::BitcoinGUI(const PlatformStyle *_platformStyle, const NetworkStyle *
         setCentralWidget(rpcConsole);
     }
 
+    qApp->setStyleSheet(GUIUtil::veriStyleSheet);
+
     // Accept D&D of URIs
     setAcceptDrops(true);
 
@@ -455,13 +457,23 @@ void BitcoinGUI::createToolBars()
     if(walletFrame)
     {
         QToolBar *toolbar = addToolBar(tr("Tabs toolbar"));
+        addToolBar(Qt::LeftToolBarArea, toolbar);
         toolbar->setContextMenuPolicy(Qt::PreventContextMenu);
+
         toolbar->setMovable(false);
-        toolbar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+        toolbar->setAutoFillBackground(true);
+        toolbar->setContentsMargins(0,0,0,0);
+        toolbar->layout()->setSpacing(0);
+        toolbar->setOrientation(Qt::Vertical);
+        toolbar->setIconSize(QSize(TOOLBAR_ICON_WIDTH,TOOLBAR_ICON_HEIGHT));
+        toolbar->setFixedWidth(TOOLBAR_WIDTH);
+        toolbar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+
         toolbar->addAction(overviewAction);
         toolbar->addAction(sendCoinsAction);
         toolbar->addAction(receiveCoinsAction);
         toolbar->addAction(historyAction);
+
         overviewAction->setChecked(true);
     }
 }
