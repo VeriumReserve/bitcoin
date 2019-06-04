@@ -1140,19 +1140,6 @@ bool ReadBlockFromDisk(CBlock& block, const CBlockIndex* pindex, const Consensus
     return true;
 }
 
-CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
-{
-    int halvings = nHeight / consensusParams.nSubsidyHalvingInterval;
-    // Force block reward to zero when right shift is undefined.
-    if (halvings >= 64)
-        return 0;
-
-    CAmount nSubsidy = 50 * COIN;
-    // Subsidy is cut in half every 210,000 blocks which will occur approximately every 4 years.
-    nSubsidy >>= halvings;
-    return nSubsidy;
-}
-
 bool IsInitialBlockDownload()
 {
     // Once this function has returned false, it must remain false.
@@ -1924,31 +1911,11 @@ bool CChainState::ConnectBlock(const CBlock& block, CValidationState& state, CBl
             nValueOut += tx.GetValueOut();
         } else
         {
-            CAmount txfee = 0;
-            if (!Consensus::CheckTxInputs(tx, state, view, pindex->nHeight, txfee)) {
-                return error("%s: Consensus::CheckTxInputs: %s, %s", __func__, tx.GetHash().ToString(), FormatStateMessage(state));
-            }
-            nFees += txfee;
-            if (!MoneyRange(nFees)) {
-                return state.DoS(100, error("%s: accumulated fee in the block out of range.", __func__),
-                                 REJECT_INVALID, "bad-txns-accumulated-fee-outofrange");
-            }
-
-            // Check that transaction is BIP68 final
-            // BIP68 lock checks (as opposed to nLockTime checks) must
-            // be in ConnectBlock because they require the UTXO set
-            prevheights.resize(tx.vin.size());
-            for (size_t j = 0; j < tx.vin.size(); j++) {
-                prevheights[j] = view.AccessCoin(tx.vin[j].prevout).nHeight;
-            }
-
-            if (!SequenceLocks(tx, nLockTimeFlags, &prevheights, *pindex)) {
-                return state.DoS(100, error("%s: contains a non-BIP68-final transaction", __func__),
-                                 REJECT_INVALID, "bad-txns-nonfinal");
-            }
-
-            nValueIn += view.GetValueIn(tx);
-            nValueOut += tx.GetValueOut();
+            int64_t nTxValueIn = view.GetValueIn(tx);
+            int64_t nTxValueOut = tx.GetValueOut();
+            nValueIn += nTxValueIn;
+            nValueOut += nTxValueOut;
+            nFees += nTxValueIn - nTxValueOut;
         }
 
         // GetTransactionSigOpCost counts 3 types of sigops:
@@ -1982,10 +1949,22 @@ bool CChainState::ConnectBlock(const CBlock& block, CValidationState& state, CBl
 
     // ppcoin: track money supply and mint amount info
     pindex->nMint = nValueOut - nValueIn + nFees;
-    pindex->nMoneySupply = (pindex->pprev ? pindex->pprev->nMoneySupply : 0) + nValueOut - nValueIn;    
+    pindex->nMoneySupply = (pindex->pprev ? pindex->pprev->nMoneySupply : 0) + nValueOut - nValueIn;
+    // XXX DEBUG XXX
+    //printf("height=%d  nMint=%ld\n", pindex->nHeight, pindex->nMint);
+    //printf("height=%d  nMoneySupply=%ld\n", pindex->nHeight, pindex->nMoneySupply);
+    //printf("height=%d  nTime=%d\n", pindex->nHeight, pindex->nTime);
+    //!!!!!!!!!!!!!!
 
     int64_t nTime4 = GetTimeMicros(); nTimeVerify += nTime4 - nTime2;
     LogPrint(BCLog::BENCH, "    - Verify %u txins: %.2fms (%.3fms/txin) [%.2fs (%.2fms/blk)]\n", nInputs - 1, MILLI * (nTime4 - nTime2), nInputs <= 1 ? 0 : MILLI * (nTime4 - nTime2) / (nInputs-1), nTimeVerify * MICRO, nTimeVerify * MILLI / nBlocksTotal);
+
+    CAmount blockReward = GetProofOfWorkReward(nFees, pindex->pprev);
+    // XXX DEBUG XXX
+    //printf("height=%d  blockReward=%ld\n", pindex->nHeight, blockReward);
+    //!!!!!!!!!!!!!!
+    if (block.vtx[0]->GetValueOut() > blockReward)
+        return state.DoS(100, error("ConnectBlock(): coinbase pays too much (actual=%d vs limit=%d)", block.vtx[0]->GetValueOut(), blockReward), REJECT_INVALID, "bad-cb-amount");
 
     if (fJustCheck)
         return true;

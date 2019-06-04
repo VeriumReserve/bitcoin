@@ -17,8 +17,8 @@
 
 /////////////////////////
 #include "arith_uint256.h"
-arith_uint256 bnProofOfWorkLimit(~arith_uint256(0) >> 11);  // standard scrypt^2 minimum difficulty (0.00000048)
-arith_uint256 bnProofOfWorkLimitTestNet(~arith_uint256(0) >> 11);
+arith_uint256 proofOfWorkLimit(~arith_uint256(0) >> 11);  // standard scrypt^2 minimum difficulty (0.00000048)
+arith_uint256 proofOfWorkLimitTestNet(~arith_uint256(0) >> 11);
 
 static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesisOutputScript, uint32_t nTime, uint32_t nNonce, uint32_t nBits, int32_t nVersion, const CAmount& genesisReward)
 {
@@ -114,7 +114,7 @@ public:
         nDefaultPort = 36988;
         nPruneAfterHeight = 100000;
 
-        genesis = CreateGenesisBlock(1472669240, 233180, bnProofOfWorkLimit.GetCompact(), 1, 2500 * COIN);
+        genesis = CreateGenesisBlock(1472669240, 233180, proofOfWorkLimit.GetCompact(), 1, 2500 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
         assert(consensus.hashGenesisBlock == uint256S("0x8232c0cf3bd7e05546e3d7aaaaf89fed8bc97c4df1a8c95e9249e13a2734932b"));
         assert(genesis.hashMerkleRoot == uint256S("0x925e430072a1f39b530fc79db162e29433ab0ea266a99c8cab4f03001dc9faa9"));

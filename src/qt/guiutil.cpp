@@ -76,6 +76,48 @@ extern double NSAppKitVersionNumber;
 
 namespace GUIUtil {
 
+//////////// Common Verium stylesheets
+// These magic values are taken from the old client implementation.
+// Adjust them as needed.
+const int TOOLBAR_WIDTH = 120;
+const int TOOLBAR_ICON_WIDTH = TOOLBAR_WIDTH;
+const int TOOLBAR_ICON_HEIGHT = 48;
+const int HEADER_WIDTH = 900;
+const int HEADER_HEIGHT = 0;
+const int BUTTON_WIDTH = 140;
+const int BUTTON_HEIGHT = 27;
+
+/* Custom colors / fonts */
+#define STR_COLOR QString("#586a7a")
+#define STR_COLOR_LT QString("#46505a")
+#define STR_COLOR_HOVER QString("#46505a")
+#define STR_COLOR_TTBG QString("#86909C")
+#define STR_FONT_COLOR QString("#46505a")
+
+QString veriCentralWidgetStyleSheet = QString("QStackedWidget { background: white; border: none;} ");
+QString veriTabWidgetStyleSheet = QString("QTabWidget::pane { background: white; color: " + STR_FONT_COLOR + "; border: none; }");
+QString veriPushButtonStyleSheet = QString("QPushButton { background: " + STR_COLOR + "; width: %1px; height: %2px; border: none; color: white} \
+                            QPushButton:disabled { background: #EBEBEB; color: #666666; } \
+                            QPushButton:hover { background: " + STR_COLOR_LT + "; } \
+                            QPushButton:pressed { background: " + STR_COLOR_LT + "; } ").arg(BUTTON_WIDTH).arg(BUTTON_HEIGHT);
+QString veriToolBarStyleSheet = QString("QToolBar { background: " + STR_COLOR + "; color: white; border: 0px; } \
+                            QToolButton { background: " + STR_COLOR + "; color: white; border: 0px; font-family: Lato; font-style: normal; font-weight: normal; font-size: 12px; } \
+                            QToolButton:hover { background: " + STR_COLOR_HOVER + "; color: white; border: 0px; } \
+                            QToolButton:pressed { background: " + STR_COLOR_LT + "; color: white; border: 0px; } \
+                            QToolButton:checked { background: " + STR_COLOR_LT + "; color: white; border: 0px; } ");QString veriToolTipStyleSheet = QString("QToolTip { background-color: " + STR_COLOR_TTBG + "; color: white; border: 1px solid #EBEBEB; border-radius: 3px; margin: 0; padding: 4px; white-space: nowrap; } ");
+QString veriMiscStyleSheet = QString("QStatusBar { background: " + STR_COLOR + "; color: white; } QStatusBar::item { border: none; } QDialog { background: white; color: " + STR_FONT_COLOR + "; } QTableView::item:hover { background: #EBEBEB; color: " + STR_FONT_COLOR + "; } ");
+QString veriMenuStyleSheet = QString("QMenuBar { background-color: " + STR_COLOR_HOVER + "; color: white; } \
+                            QMenuBar::item { background-color: transparent; margin: 0px; padding: 4px 16px 4px 16px; } \
+                            QMenuBar::item:selected { background-color: " + STR_COLOR + "; color: white; } \
+                            QMenu { background-color: " + STR_COLOR_HOVER + "; color: white; } \
+                            QMenu::item { background-color: transparent; margin: 0px 0px 4px 4px; padding: 4px 8px 4px 24px; } \
+                            QMenu::item:selected { background-color: " + STR_COLOR + "; color: white; }");
+QString veriMessageBox = QString("QMessageBox { messagebox-text-interaction-flags: 5; }");
+
+// Put them all together
+QString veriStyleSheet = veriCentralWidgetStyleSheet + veriPushButtonStyleSheet + veriToolBarStyleSheet + veriToolTipStyleSheet + veriMiscStyleSheet + veriMenuStyleSheet + veriMessageBox;
+///////////////////////////////!verium
+
 QString dateTimeStr(const QDateTime &date)
 {
     return date.date().toString(Qt::SystemLocaleShortDate) + QString(" ") + date.toString("hh:mm");

@@ -3325,7 +3325,7 @@ void CWallet::ReserveKeyFromKeyPool(int64_t& nIndex, CKeyPool& keypool, bool fRe
 
         assert(keypool.vchPubKey.IsValid());
         m_pool_key_to_index.erase(keypool.vchPubKey.GetID());
-        LogPrintf("keypool reserve %d\n", nIndex);
+        //LogPrintf("keypool reserve %d\n", nIndex);
     }
 }
 
@@ -3334,7 +3334,7 @@ void CWallet::KeepKey(int64_t nIndex)
     // Remove from key pool
     CWalletDB walletdb(*dbw);
     walletdb.ErasePool(nIndex);
-    LogPrintf("keypool keep %d\n", nIndex);
+    //LogPrintf("keypool keep %d\n", nIndex);
 }
 
 void CWallet::ReturnKey(int64_t nIndex, bool fInternal, const CPubKey& pubkey)
@@ -3349,7 +3349,7 @@ void CWallet::ReturnKey(int64_t nIndex, bool fInternal, const CPubKey& pubkey)
         }
         m_pool_key_to_index[pubkey.GetID()] = nIndex;
     }
-    LogPrintf("keypool return %d\n", nIndex);
+   //LogPrintf("keypool return %d\n", nIndex);
 }
 
 bool CWallet::GetKeyFromPool(CPubKey& result, bool internal)

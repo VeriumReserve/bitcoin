@@ -51,4 +51,24 @@ static const int MAX_URI_LENGTH = 255;
 #define QAPP_APP_NAME_DEFAULT "Bitcoin-Qt"
 #define QAPP_APP_NAME_TESTNET "Bitcoin-Qt-testnet"
 
+/************
+ ** Verium **/
+// These magic values are taken from the old client implementation.
+// Adjust them as needed.
+const int TOOLBAR_WIDTH = 120;
+const int TOOLBAR_ICON_WIDTH = TOOLBAR_WIDTH;
+const int TOOLBAR_ICON_HEIGHT = 48;
+const int HEADER_WIDTH = 900;
+const int HEADER_HEIGHT = 0;
+const int BUTTON_WIDTH = 140;
+const int BUTTON_HEIGHT = 27;
+
+/* Custom colors / fonts */
+#define STR_COLOR QString("#586a7a")
+#define STR_COLOR_LT QString("#46505a")
+#define STR_COLOR_HOVER QString("#46505a")
+#define STR_COLOR_TTBG QString("#86909C")
+#define STR_FONT_COLOR QString("#46505a")
+ /** !VERIUM **/
+
 #endif // BITCOIN_QT_GUICONSTANTS_H

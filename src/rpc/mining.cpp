@@ -20,6 +20,7 @@
 #include <rpc/blockchain.h>
 #include <rpc/mining.h>
 #include <rpc/server.h>
+#include <wallet/rpcwallet.h>
 #include <txmempool.h>
 #include <util.h>
 #include <utilstrencodings.h>
@@ -37,70 +38,6 @@ unsigned int ParseConfirmTarget(const UniValue& value)
         throw JSONRPCError(RPC_INVALID_PARAMETER, strprintf("Invalid conf_target, must be between %u - %u", 1, max_target));
     }
     return (unsigned int)target;
-}
-
-/**
- * Return average network hashes per second based on the last 'lookup' blocks,
- * or from the last difficulty change if 'lookup' is nonpositive.
- * If 'height' is nonnegative, compute the estimate at the time when a given block was found.
- */
-UniValue GetNetworkHashPS(int lookup, int height) {
-    CBlockIndex *pb = chainActive.Tip();
-
-    if (height >= 0 && height < chainActive.Height())
-        pb = chainActive[height];
-
-    if (pb == nullptr || !pb->nHeight)
-        return 0;
-
-    // If lookup is -1, then use blocks since last difficulty change.
-    if (lookup <= 0)
-        lookup = pb->nHeight % Params().GetConsensus().DifficultyAdjustmentInterval() + 1;
-
-    // If lookup is larger than chain, then set it to chain length.
-    if (lookup > pb->nHeight)
-        lookup = pb->nHeight;
-
-    CBlockIndex *pb0 = pb;
-    int64_t minTime = pb0->GetBlockTime();
-    int64_t maxTime = minTime;
-    for (int i = 0; i < lookup; i++) {
-        pb0 = pb0->pprev;
-        int64_t time = pb0->GetBlockTime();
-        minTime = std::min(time, minTime);
-        maxTime = std::max(time, maxTime);
-    }
-
-    // In case there's a situation where minTime == maxTime, we don't want a divide by zero exception.
-    if (minTime == maxTime)
-        return 0;
-
-    arith_uint256 workDiff = pb->nChainWork - pb0->nChainWork;
-    int64_t timeDiff = maxTime - minTime;
-
-    return workDiff.getdouble() / timeDiff;
-}
-
-UniValue getnetworkhashps(const JSONRPCRequest& request)
-{
-    if (request.fHelp || request.params.size() > 2)
-        throw std::runtime_error(
-            "getnetworkhashps ( nblocks height )\n"
-            "\nReturns the estimated network hashes per second based on the last n blocks.\n"
-            "Pass in [blocks] to override # of blocks, -1 specifies since last difficulty change.\n"
-            "Pass in [height] to estimate the network speed at the time when a certain block was found.\n"
-            "\nArguments:\n"
-            "1. nblocks     (numeric, optional, default=120) The number of blocks, or -1 for blocks since last difficulty change.\n"
-            "2. height      (numeric, optional, default=-1) To estimate at the time of the given height.\n"
-            "\nResult:\n"
-            "x             (numeric) Hashes per second estimated\n"
-            "\nExamples:\n"
-            + HelpExampleCli("getnetworkhashps", "")
-            + HelpExampleRpc("getnetworkhashps", "")
-       );
-
-    LOCK(cs_main);
-    return GetNetworkHashPS(!request.params[0].isNull() ? request.params[0].get_int() : 120, !request.params[1].isNull() ? request.params[1].get_int() : -1);
 }
 
 UniValue generateBlocks(std::shared_ptr<CReserveScript> coinbaseScript, int nGenerate, uint64_t nMaxTries, bool keepScript)
@@ -191,33 +128,30 @@ UniValue getmininginfo(const JSONRPCRequest& request)
         throw std::runtime_error(
             "getmininginfo\n"
             "\nReturns a json object containing mining-related information."
-            "\nResult:\n"
-            "{\n"
-            "  \"blocks\": nnn,             (numeric) The current block\n"
-            "  \"currentblockweight\": nnn, (numeric) The last block weight\n"
-            "  \"currentblocktx\": nnn,     (numeric) The last block transaction\n"
-            "  \"difficulty\": xxx.xxxxx    (numeric) The current difficulty\n"
-            "  \"networkhashps\": nnn,      (numeric) The network hashes per second\n"
-            "  \"pooledtx\": n              (numeric) The size of the mempool\n"
-            "  \"chain\": \"xxxx\",           (string) current network name as defined in BIP70 (main, test, regtest)\n"
-            "  \"warnings\": \"...\"          (string) any network and blockchain warnings\n"
-            "  \"errors\": \"...\"            (string) DEPRECATED. Same as warnings. Only shown when bitcoind is started with -deprecatedrpc=getmininginfo\n"
-            "}\n"
-            "\nExamples:\n"
-            + HelpExampleCli("getmininginfo", "")
-            + HelpExampleRpc("getmininginfo", "")
         );
-
 
     LOCK(cs_main);
 
+    double minerate;
+    double nethashrate = GetPoWKHashPM();
+    double blocktime = (double)calculateBlocktime(chainActive.Tip())/60;
+    double totalhashrate = hashrate;
+    if (totalhashrate == 0.0){minerate = 0.0;}
+    else{
+        minerate = 16.666667*(nethashrate*blocktime)/(totalhashrate);  //((100/((totalhashrate_Hpm/(nethashrate_kHpm*1000))*100))*blocktime_min)/60
+    }
+
     UniValue obj(UniValue::VOBJ);
     obj.push_back(Pair("blocks",           (int)chainActive.Height()));
-    obj.push_back(Pair("currentblockweight", (uint64_t)nLastBlockWeight));
     obj.push_back(Pair("currentblocktx",   (uint64_t)nLastBlockTx));
     obj.push_back(Pair("difficulty",       (double)GetDifficulty()));
-    obj.push_back(Pair("networkhashps",    getnetworkhashps(request)));
+    obj.push_back(Pair("blocktime (min)",  (double)blocktime));
+    obj.push_back(Pair("blockreward (VRM)", (double)GetProofOfWorkReward(0,chainActive.Tip()->pprev)/COIN));
+    obj.push_back(Pair("nethashrate (kH/m)", nethashrate));
+    obj.push_back(Pair("hashrate (H/m)",   (double)totalhashrate));
+    obj.push_back(Pair("est. block rate (hrs)", (double)minerate));
     obj.push_back(Pair("pooledtx",         (uint64_t)mempool.size()));
+    obj.push_back(Pair("blocksperhour",    GetBlockRatePerHour()));
     obj.push_back(Pair("chain",            Params().NetworkIDString()));
     if (IsDeprecatedRPCEnabled("getmininginfo")) {
         obj.push_back(Pair("errors",       GetWarnings("statusbar")));
@@ -227,6 +161,41 @@ UniValue getmininginfo(const JSONRPCRequest& request)
     return obj;
 }
 
+UniValue minerstart(const JSONRPCRequest& request)
+{
+    if (request.fHelp || request.params.size() != 1)
+        throw std::runtime_error(
+                "minerstart <nthreads>\n"
+                "\nUsed to start mining Verium."
+                );
+
+    LOCK(cs_main);
+
+    CWallet * const pwallet = GetWalletForJSONRPCRequest(request);
+    int nThreads = std::stoi(request.params[0].get_str());
+    GenerateVerium(true, pwallet, nThreads);
+    UniValue obj(UniValue::VOBJ);
+    obj.push_back(Pair("Miner status", "active"));
+	obj.push_back(Pair("Mining with number of threads", nThreads));
+    return obj;
+}
+
+UniValue minerstop(const JSONRPCRequest& request)
+{
+    if (request.fHelp || request.params.size() > 0)
+        throw std::runtime_error(
+                "minerstop\n"
+                "\nUsed to stop mining Verium."
+                );
+
+    LOCK(cs_main);
+
+    CWallet * const pwallet = GetWalletForJSONRPCRequest(request);
+    GenerateVerium(false, pwallet, 0);
+    UniValue obj(UniValue::VOBJ);
+    obj.push_back(Pair("Miner status","stopped"));
+    return obj;
+}
 
 // NOTE: Unlike wallet RPC (which use BTC values), mining RPCs follow GBT (BIP 22) in using satoshi amounts
 UniValue prioritisetransaction(const JSONRPCRequest& request)
@@ -977,18 +946,15 @@ UniValue estimaterawfee(const JSONRPCRequest& request)
 static const CRPCCommand commands[] =
 { //  category              name                      actor (function)         argNames
   //  --------------------- ------------------------  -----------------------  ----------
-    { "mining",             "getnetworkhashps",       &getnetworkhashps,       {"nblocks","height"} },
-    { "mining",             "getmininginfo",          &getmininginfo,          {} },
     { "mining",             "prioritisetransaction",  &prioritisetransaction,  {"txid","dummy","fee_delta"} },
     { "mining",             "getblocktemplate",       &getblocktemplate,       {"template_request"} },
     { "mining",             "submitblock",            &submitblock,            {"hexdata","dummy"} },
-
-
+    { "mining",             "getmininginfo",          &getmininginfo,          {} },
+    { "mining",             "minerstop",              &minerstop,              {} },
+    { "mining",             "minerstart",             &minerstart,             {"nthreads"} },
     { "generating",         "generatetoaddress",      &generatetoaddress,      {"nblocks","address","maxtries"} },
-
     { "util",               "estimatefee",            &estimatefee,            {"nblocks"} },
     { "util",               "estimatesmartfee",       &estimatesmartfee,       {"conf_target", "estimate_mode"} },
-
     { "hidden",             "estimaterawfee",         &estimaterawfee,         {"conf_target", "threshold"} },
 };
 
