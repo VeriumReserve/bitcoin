@@ -46,7 +46,7 @@
         </sizepolicy>
        </property>
        <property name="pixmap">
-        <pixmap resource="../bitcoin.qrc">:/icons/res/src/aboutBackground.png</pixmap>
+        <pixmap resource="../bitcoin.qrc">:/images/aboutBackground</pixmap>
        </property>
        <property name="scaledContents">
         <bool>false</bool>

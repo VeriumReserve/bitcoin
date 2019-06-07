@@ -96,6 +96,12 @@
         <file alias="spinner-034">res/movies/spinner-034.png</file>
         <file alias="spinner-035">res/movies/spinner-035.png</file>
     </qresource>
+    <qresource prefix="/images">
+        <file alias="askPassphraseBackground">res/images/askpassphrasepage-background.png</file>
+        <file alias="post">res/images/post.png</file>
+        <file alias="aboutBackground">res/images/aboutBackground.png</file>
+        <file alias="splash">res/images/splash.png</file>
+    </qresource>
     <qresource prefix="/fonts">
         <file alias="Lato-Bold">res/fonts/Lato2OFL/Lato-Bold.ttf</file>
         <file alias="Lato-Regular">res/fonts/Lato2OFL/Lato-Regular.ttf</file>
