@@ -53,10 +53,10 @@
         <file alias="hd_enabled">res/icons/hd_enabled.png</file>
         <file alias="hd_disabled">res/icons/hd_disabled.png</file>
         <file alias="network_disabled">res/icons/network_disabled.png</file>
-        <file>res/src/aboutBackground.png</file>
-        <file>res/src/askpassphrasepage-background.png</file>
-        <file>res/src/post.png</file>
-        <file>res/src/splash.png</file>
+        <file alias="chat">res/icons/chat.png</file>
+        <file alias="forum">res/icons/forum.png</file>
+        <file alias="site">res/icons/website.png</file>
+        <file alias="blockchain">res/icons/blockchain.png</file>
     </qresource>
     <qresource prefix="/movies">
         <file alias="spinner-000">res/movies/spinner-000.png</file>
@@ -95,5 +95,9 @@
         <file alias="spinner-033">res/movies/spinner-033.png</file>
         <file alias="spinner-034">res/movies/spinner-034.png</file>
         <file alias="spinner-035">res/movies/spinner-035.png</file>
+    </qresource>
+    <qresource prefix="/fonts">
+        <file alias="Lato-Bold">res/fonts/Lato2OFL/Lato-Bold.ttf</file>
+        <file alias="Lato-Regular">res/fonts/Lato2OFL/Lato-Regular.ttf</file>
     </qresource>
 </RCC>

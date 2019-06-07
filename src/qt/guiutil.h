@@ -16,6 +16,7 @@
 #include <QString>
 #include <QTableView>
 #include <QLabel>
+#include <QGraphicsView>
 
 class QValidatedLineEdit;
 class SendCoinsRecipient;
@@ -33,8 +34,13 @@ QT_END_NAMESPACE
  */
 namespace GUIUtil
 {
+    int pointsToPixels(int points);
+    void setFontPixelSize(QFont *font);
+    void setFontPixelSizes();
+
     // Common stylesheets
     extern QString veriStyleSheet;
+    extern QGraphicsView *header(QWidget *parent, QString backgroundImage);
 
     // Create human-readable string from date
     QString dateTimeStr(const QDateTime &datetime);

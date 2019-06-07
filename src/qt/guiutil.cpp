@@ -3,6 +3,7 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include <qt/guiutil.h>
+#include <qt/guiconstants.h>
 
 #include <qt/bitcoinaddressvalidator.h>
 #include <qt/bitcoinunits.h>
@@ -51,6 +52,7 @@
 #include <QTextDocument> // for Qt::mightBeRichText
 #include <QThread>
 #include <QMouseEvent>
+#include <QGraphicsView>
 
 #if QT_VERSION < 0x050000
 #include <QUrl>
@@ -76,9 +78,33 @@ extern double NSAppKitVersionNumber;
 
 namespace GUIUtil {
 
+int pointsToPixels(int points) { return(points * 4 / 3); }
+
+void setFontPixelSize(QFont *font)
+{
+    font->setPixelSize(pointsToPixels(font->pointSize()));
+}
+
+void setFontPixelSizes()
+{
+    setFontPixelSize((QFont *)&qFontSmallest);
+    setFontPixelSize((QFont *)&qFontSmaller);
+    setFontPixelSize((QFont *)&qFontSmall);
+    setFontPixelSize((QFont *)&qFont);
+    setFontPixelSize((QFont *)&qFontLarge);
+    setFontPixelSize((QFont *)&qFontLarger);
+    setFontPixelSize((QFont *)&qFontSmallerBold);
+    setFontPixelSize((QFont *)&qFontSmallBold);
+    setFontPixelSize((QFont *)&qFontBold);
+    setFontPixelSize((QFont *)&qFontLargeBold);
+    setFontPixelSize((QFont *)&qFontLargerBold);
+}
+
 //////////// Common Verium stylesheets
 // These magic values are taken from the old client implementation.
 // Adjust them as needed.
+bool fNoHeaders = true; // XXX Not sure.
+bool fSmallHeaders = true; // XXX Not sure.
 const int TOOLBAR_WIDTH = 120;
 const int TOOLBAR_ICON_WIDTH = TOOLBAR_WIDTH;
 const int TOOLBAR_ICON_HEIGHT = 48;
@@ -116,6 +142,31 @@ QString veriMessageBox = QString("QMessageBox { messagebox-text-interaction-flag
 
 // Put them all together
 QString veriStyleSheet = veriCentralWidgetStyleSheet + veriPushButtonStyleSheet + veriToolBarStyleSheet + veriToolTipStyleSheet + veriMiscStyleSheet + veriMenuStyleSheet + veriMessageBox;
+
+// Setup header and styles
+QGraphicsView *header(QWidget *parent, QString backgroundImage)
+{
+    QGraphicsView *h = new QGraphicsView(parent);
+    h->setStyleSheet("QGraphicsView { background: url(" + backgroundImage + ") no-repeat 0px 0px; border: none; background-color: " + STR_COLOR + "; }");
+    h->setObjectName(QStringLiteral("header"));
+    h->setContentsMargins(0,0,0,0);
+    QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Maximum);
+    sizePolicy.setHorizontalStretch(0);
+    sizePolicy.setVerticalStretch(0);
+    sizePolicy.setHeightForWidth(h->sizePolicy().hasHeightForWidth());
+    h->setSizePolicy(sizePolicy);
+    h->setMinimumSize(QSize(16777215, HEADER_HEIGHT));
+    h->setMaximumSize(QSize(16777215, HEADER_HEIGHT));
+    h->setAutoFillBackground(true);
+    h->setFrameShape(QFrame::NoFrame);
+    h->setFrameShadow(QFrame::Plain);
+    h->setLineWidth(0);
+    h->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    h->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    h->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
+    h->setCacheMode(QGraphicsView::CacheBackground);
+    return h;
+}
 ///////////////////////////////!verium
 
 QString dateTimeStr(const QDateTime &date)
