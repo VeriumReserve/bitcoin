@@ -122,22 +122,29 @@ const int BUTTON_HEIGHT = 27;
 
 QString veriCentralWidgetStyleSheet = QString("QStackedWidget { background: white; border: none;} ");
 QString veriTabWidgetStyleSheet = QString("QTabWidget::pane { background: white; color: " + STR_FONT_COLOR + "; border: none; }");
+
 QString veriPushButtonStyleSheet = QString("QPushButton { background: " + STR_COLOR + "; width: %1px; height: %2px; border: none; color: white} \
                             QPushButton:disabled { background: #EBEBEB; color: #666666; } \
                             QPushButton:hover { background: " + STR_COLOR_LT + "; } \
                             QPushButton:pressed { background: " + STR_COLOR_LT + "; } ").arg(BUTTON_WIDTH).arg(BUTTON_HEIGHT);
+
 QString veriToolBarStyleSheet = QString("QToolBar { background: " + STR_COLOR + "; color: white; border: 0px; } \
                             QToolButton { background: " + STR_COLOR + "; color: white; border: 0px; font-family: Lato; font-style: normal; font-weight: normal; font-size: 12px; } \
                             QToolButton:hover { background: " + STR_COLOR_HOVER + "; color: white; border: 0px; } \
                             QToolButton:pressed { background: " + STR_COLOR_LT + "; color: white; border: 0px; } \
-                            QToolButton:checked { background: " + STR_COLOR_LT + "; color: white; border: 0px; } ");QString veriToolTipStyleSheet = QString("QToolTip { background-color: " + STR_COLOR_TTBG + "; color: white; border: 1px solid #EBEBEB; border-radius: 3px; margin: 0; padding: 4px; white-space: nowrap; } ");
-QString veriMiscStyleSheet = QString("QStatusBar { background: " + STR_COLOR + "; color: white; } QStatusBar::item { border: none; } QDialog { background: white; color: " + STR_FONT_COLOR + "; } QTableView::item:hover { background: #EBEBEB; color: " + STR_FONT_COLOR + "; } ");
+                            QToolButton:checked { background: " + STR_COLOR_LT + "; color: white; border: 0px; } ");
+
+QString veriToolTipStyleSheet = QString("QToolTip { background-color: " + STR_COLOR_TTBG + "; color: white; border: 1px solid #EBEBEB; border-radius: 3px; margin: 0; padding: 4px; white-space: nowrap; } ");
+
+QString veriMiscStyleSheet = QString("QStatusBar { background: " + STR_COLOR + "; color: white; } QStatusBar::item { border: none; } QDialog { background: white; color: " + STR_FONT_COLOR + "; } QTableView::item:hover { background: #EBEBEB; color: " + STR_FONT_COLOR + "; } QProgressBar { color: white; } ");
+
 QString veriMenuStyleSheet = QString("QMenuBar { background-color: " + STR_COLOR_HOVER + "; color: white; } \
                             QMenuBar::item { background-color: transparent; margin: 0px; padding: 4px 16px 4px 16px; } \
                             QMenuBar::item:selected { background-color: " + STR_COLOR + "; color: white; } \
                             QMenu { background-color: " + STR_COLOR_HOVER + "; color: white; } \
                             QMenu::item { background-color: transparent; margin: 0px 0px 4px 4px; padding: 4px 8px 4px 24px; } \
                             QMenu::item:selected { background-color: " + STR_COLOR + "; color: white; }");
+
 QString veriMessageBox = QString("QMessageBox { messagebox-text-interaction-flags: 5; }");
 
 // Put them all together
