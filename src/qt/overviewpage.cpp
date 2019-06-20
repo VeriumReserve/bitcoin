@@ -121,7 +121,11 @@ OverviewPage::OverviewPage(const PlatformStyle *platformStyle, QWidget *parent) 
     currentWatchImmatureBalance(-1),
     txdelegate(new TxViewDelegate(platformStyle, this))
 {
+    // Setup header and styles
+    GUIUtil::header(this, QString(""));
+
     ui->setupUi(this);
+    this->layout()->setContentsMargins(0, 0 + HEADER_HEIGHT, 0, 0);
 
     // use a SingleColorIcon for the "out of sync warning" icon
     QIcon icon = platformStyle->SingleColorIcon(":/icons/warning");
