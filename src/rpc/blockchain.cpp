@@ -31,6 +31,7 @@
 #include <init.h>
 #include <rpc/miniunz.h>
 #include <curl/curl.h>
+#include <openssl/ssl.h>
 #include <stdint.h>
 
 #include <univalue.h>
@@ -1686,6 +1687,7 @@ int DownloadFile(std::string url, boost::filesystem::path target_file_path)
 
     LogPrintf("bootstrap: Downloading blockchain from %s. \n", url.c_str());
 
+    OpenSSL_add_ssl_algorithms();
     CURL *curlHandle = curl_easy_init();
     curl_easy_setopt(curlHandle, CURLOPT_URL, url.c_str());
     curl_easy_setopt(curlHandle, CURLOPT_NOPROGRESS, 1L);
