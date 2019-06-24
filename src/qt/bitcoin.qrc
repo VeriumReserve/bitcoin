@@ -57,6 +57,8 @@
         <file alias="forum">res/icons/forum.png</file>
         <file alias="site">res/icons/website.png</file>
         <file alias="blockchain">res/icons/blockchain.png</file>
+        <file alias="miningoff">res/icons/miningoff.png</file>
+        <file alias="miningon">res/icons/miningon.png</file>
     </qresource>
     <qresource prefix="/movies">
         <file alias="spinner-000">res/movies/spinner-000.png</file>
