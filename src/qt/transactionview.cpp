@@ -16,6 +16,7 @@
 #include <qt/transactionrecord.h>
 #include <qt/transactiontablemodel.h>
 #include <qt/walletmodel.h>
+#include <qt/guiconstants.h>
 
 #include <ui_interface.h>
 
@@ -128,6 +129,10 @@ TransactionView::TransactionView(const PlatformStyle *platformStyle, QWidget *pa
     vlayout->setSpacing(0);
 
     QTableView *view = new QTableView(this);
+    view->setFont(qFont);
+    view->setMouseTracking(true);
+    view->viewport()->setAttribute(Qt::WA_Hover, true);
+    view->horizontalHeader()->setHighlightSections(false);
     vlayout->addLayout(hlayout);
     vlayout->addWidget(createDateRangeWidget());
     vlayout->addWidget(view);

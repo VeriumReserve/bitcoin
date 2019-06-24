@@ -195,6 +195,7 @@ BitcoinGUI::BitcoinGUI(const PlatformStyle *_platformStyle, const NetworkStyle *
     // Create status bar
     statusBar();
     statusBar()->setFont(qFontSmall);
+    //statusBar()->setFixedHeight(STATUSBAR_HEIGHT);
 
     // Disable size grip because it looks ugly and nobody needs it
     statusBar()->setSizeGripEnabled(false);
@@ -232,6 +233,10 @@ BitcoinGUI::BitcoinGUI(const PlatformStyle *_platformStyle, const NetworkStyle *
     progressBar = new GUIUtil::ProgressBar();
     progressBar->setAlignment(Qt::AlignCenter);
     progressBar->setVisible(false);
+    progressBar->setContentsMargins(0,0,0,0);
+    progressBar->setFont(qFontSmall);
+    progressBar->setMinimumWidth(550);
+    progressBar->setStyleSheet("QProgressBar::chunk { background: " + STR_COLOR_LT + "; } QProgressBar { color: black; border-color: " + STR_COLOR_LT + "; margin: 3px; margin-right: 13px; border-width: 1px; border-style: solid; }");
 
     // Override style sheet for progress bar for styles that have a segmented progress bar,
     // as they make the text unreadable (workaround for issue #1071)

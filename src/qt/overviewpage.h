@@ -36,10 +36,13 @@ public:
     void setClientModel(ClientModel *clientModel);
     void setWalletModel(WalletModel *walletModel);
     void showOutOfSyncWarning(bool fShow);
+    bool mining;
+    int processors;
 
 public Q_SLOTS:
     void setBalance(const CAmount& balance, const CAmount& unconfirmedBalance, const CAmount& immatureBalance,
                     const CAmount& watchOnlyBalance, const CAmount& watchUnconfBalance, const CAmount& watchImmatureBalance);
+    void setStatistics();
 
 Q_SIGNALS:
     void transactionClicked(const QModelIndex &index);
@@ -65,6 +68,8 @@ private Q_SLOTS:
     void updateAlerts(const QString &warnings);
     void updateWatchOnlyLabels(bool showWatchOnly);
     void handleOutOfSyncWarningClicks();
+    void on_mineButton_clicked();
+    void on_spinBox_valueChanged(int procs);
 };
 
 #endif // BITCOIN_QT_OVERVIEWPAGE_H
