@@ -391,8 +391,6 @@ void OverviewPage::on_spinBox_valueChanged(int procs)
 
 void OverviewPage::setStatistics()
 {
-    // DBG
-    printf("OverviewPage->setStatistics()\n");
     // calculate stats
     int minerate;
     double nethashrate = GetPoWKHashPM();
