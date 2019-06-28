@@ -400,12 +400,12 @@ void OverviewPage::setStatistics()
     else{
         minerate = 0.694*(nethashrate*blocktime)/(totalhashrate);  //((100/((totalhashrate_Hpm/(nethashrate_kHpm*1000))*100))*blocktime_min)/60*24
 
-    // display stats
-    ui->difficulty->setText(QString::number(GetDifficulty()));
-    ui->blocktime->setText(QString::number(blocktime));
-    ui->blocknumber->setText(QString::number(chainActive.Tip()->nHeight));
-    ui->nethashrate->setText(QString::number(nethashrate));
-    ui->hashrate->setText(QString::number(totalhashrate));
-    ui->mineRate->setText(QString::number(minerate));
+        // display stats
+        ui->difficulty->setText(QString::number(GetDifficulty()));
+        ui->blocktime->setText(QString::number(blocktime));
+        ui->blocknumber->setText(QString::number(chainActive.Tip()->nHeight));
+        ui->nethashrate->setText(QString::number(nethashrate));
+        ui->hashrate->setText(QString::number(totalhashrate));
+        ui->mineRate->setText(QString::number(minerate));
     }
 }
