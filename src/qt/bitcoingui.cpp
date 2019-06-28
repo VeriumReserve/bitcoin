@@ -858,6 +858,9 @@ void BitcoinGUI::setNumBlocks(int count, const QDateTime& blockDate, double nVer
 
         progressBarLabel->setVisible(false);
         progressBar->setVisible(false);
+
+        // update Verium statistics on the overviewPage.
+        walletFrame->setStatistics();
     }
     else
     {

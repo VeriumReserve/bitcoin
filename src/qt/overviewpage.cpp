@@ -19,6 +19,8 @@
 #include <miner.h>
 #include <wallet/wallet.h>
 #include <rpc/blockchain.h>
+#include <pow.h>
+#include <validation.h>
 
 #include <QAbstractItemDelegate>
 #include <QPainter>
@@ -389,28 +391,23 @@ void OverviewPage::on_spinBox_valueChanged(int procs)
 
 void OverviewPage::setStatistics()
 {
-#if 0
+    // DBG
+    printf("OverviewPage->setStatistics()\n");
     // calculate stats
     int minerate;
     double nethashrate = GetPoWKHashPM();
-    double blocktime = (double)calculateBlocktime(pindexBest)/60;
+    double blocktime = (double)calculateBlocktime(chainActive.Tip())/60;
     double totalhashrate = hashrate;
     if (totalhashrate == 0.0){ minerate = 0;}
     else{
         minerate = 0.694*(nethashrate*blocktime)/(totalhashrate);  //((100/((totalhashrate_Hpm/(nethashrate_kHpm*1000))*100))*blocktime_min)/60*24
-    }
 
     // display stats
     ui->difficulty->setText(QString::number(GetDifficulty()));
     ui->blocktime->setText(QString::number(blocktime));
-    ui->blocknumber->setText(QString::number(pindexBest->nHeight));
+    ui->blocknumber->setText(QString::number(chainActive.Tip()->nHeight));
     ui->nethashrate->setText(QString::number(nethashrate));
     ui->hashrate->setText(QString::number(totalhashrate));
     ui->mineRate->setText(QString::number(minerate));
-    ui->blockreward->setText(QString::number((double)GetProofOfWorkReward(0,pindexBest->pprev)/COIN));
-#endif
-
-
-    // display stats
-    ui->difficulty->setText(QString::number(GetDifficulty()));
+    }
 }

@@ -44,6 +44,8 @@ public:
     bool handlePaymentRequest(const SendCoinsRecipient& recipient);
 
     void showOutOfSyncWarning(bool fShow);
+    /** update verium statistics on the overviewpage **/
+    void setStatistics();
 
 Q_SIGNALS:
     /** Notify that the user has requested more information about the out-of-sync warning */

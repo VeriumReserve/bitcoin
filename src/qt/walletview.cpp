@@ -338,3 +338,10 @@ void WalletView::requestedSyncWarningInfo()
 {
     Q_EMIT outOfSyncWarningClicked();
 }
+
+void WalletView::setStatistics()
+{
+    if (overviewPage)
+        overviewPage->setStatistics();
+}
+

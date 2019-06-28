@@ -210,3 +210,10 @@ void WalletFrame::outOfSyncWarningClicked()
 {
     Q_EMIT requestedSyncWarningInfo();
 }
+
+void WalletFrame::setStatistics()
+{
+    if (currentWalletView())
+        currentWalletView()->setStatistics();
+}
+
