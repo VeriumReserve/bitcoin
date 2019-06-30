@@ -150,6 +150,7 @@ private:
     QAction* openRPCConsoleAction = nullptr;
     QAction* openAction = nullptr;
     QAction* showHelpMessageAction = nullptr;
+    QAction* bootstrapAction = nullptr;
     QAction* m_create_wallet_action{nullptr};
     QAction* m_open_wallet_action{nullptr};
     QMenu* m_open_wallet_menu{nullptr};
@@ -298,6 +299,9 @@ public Q_SLOTS:
     /** Handle macOS Dock icon clicked */
     void macosDockIconActivated();
 #endif
+
+    /** Bootstrap the chain */
+    void bootstrapClicked();
 
     /** Show window if hidden, unminimize when minimized, rise when obscured or show if hidden and fToggleHidden is true */
     void showNormalIfMinimized() { showNormalIfMinimized(false); }
