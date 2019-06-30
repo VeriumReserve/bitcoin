@@ -17,6 +17,7 @@
 #include <qt/platformstyle.h>
 #include <qt/rpcconsole.h>
 #include <qt/utilitydialog.h>
+#include <rpc/server.h> // for bootstrap
 
 #ifdef ENABLE_WALLET
 #include <qt/walletframe.h>
@@ -110,6 +111,7 @@ BitcoinGUI::BitcoinGUI(const PlatformStyle *_platformStyle, const NetworkStyle *
     openRPCConsoleAction(0),
     openAction(0),
     showHelpMessageAction(0),
+    bootstrapAction(0),
     trayIcon(0),
     trayIconMenu(0),
     notificator(0),
@@ -398,6 +400,9 @@ void BitcoinGUI::createActions()
     showHelpMessageAction->setMenuRole(QAction::NoRole);
     showHelpMessageAction->setStatusTip(tr("Show the %1 help message to get a list with possible Bitcoin command-line options").arg(tr(PACKAGE_NAME)));
 
+    bootstrapAction = new QAction(tr("&Bootstrap the Chain"));
+
+
     connect(quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
     connect(aboutAction, SIGNAL(triggered()), this, SLOT(aboutClicked()));
     connect(aboutQtAction, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
@@ -407,6 +412,7 @@ void BitcoinGUI::createActions()
     connect(openRPCConsoleAction, SIGNAL(triggered()), this, SLOT(showDebugWindow()));
     // prevents an open debug window from becoming stuck/unusable on client shutdown
     connect(quitAction, SIGNAL(triggered()), rpcConsole, SLOT(hide()));
+    connect(bootstrapAction, SIGNAL(triggered()), this, SLOT(bootstrapClicked()));
 
 #ifdef ENABLE_WALLET
     if(walletFrame)
@@ -459,6 +465,7 @@ void BitcoinGUI::createMenuBar()
         settings->addSeparator();
     }
     settings->addAction(optionsAction);
+    settings->addAction(bootstrapAction);
 
     QMenu *help = appMenuBar->addMenu(tr("&Help"));
     if(walletFrame)
@@ -698,6 +705,17 @@ void BitcoinGUI::showDebugWindowActivateConsole()
 void BitcoinGUI::showHelpMessageClicked()
 {
     helpMessageDialog->show();
+}
+
+void BitcoinGUI::bootstrapClicked()
+{
+    extern UniValue bootstrap(const JSONRPCRequest& request);
+
+    QMessageBox::information(this, "Bootstrap", "The client will now bootstrap the chain. Please be patient.", QMessageBox::Ok, QMessageBox::Ok);
+
+    extern UniValue bootstrap(const JSONRPCRequest& request);
+    auto req = JSONRPCRequest();
+    bootstrap(req);
 }
 
 #ifdef ENABLE_WALLET

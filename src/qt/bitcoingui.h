@@ -112,6 +112,7 @@ private:
     QAction *openRPCConsoleAction;
     QAction *openAction;
     QAction *showHelpMessageAction;
+    QAction *bootstrapAction;
 
     QSystemTrayIcon *trayIcon;
     QMenu *trayIconMenu;
@@ -225,6 +226,9 @@ private Q_SLOTS:
     /** Handle tray icon clicked */
     void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
 #endif
+
+    /** Bootstrap the chain */
+    void bootstrapClicked();
 
     /** Show window if hidden, unminimize when minimized, rise when obscured or show if hidden and fToggleHidden is true */
     void showNormalIfMinimized(bool fToggleHidden = false);
