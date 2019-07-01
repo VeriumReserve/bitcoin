@@ -1691,6 +1691,7 @@ static size_t write_data(void *ptr, size_t size, size_t nmemb, void *stream)
  * This is admittedly ugly, but it allows us to get a percentage
  * callback in the GUI portion of code. by setting the xinfo_data.
  *
+ * XXX it could use some rate limiting
  */
 static void* xferinfo_data = nullptr;
 static int xferinfo(void *p,
