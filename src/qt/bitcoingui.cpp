@@ -18,6 +18,7 @@
 #include <qt/rpcconsole.h>
 #include <qt/utilitydialog.h>
 #include <rpc/server.h> // for bootstrap
+#include <qt/bootstrapdlg.h>
 
 #ifdef ENABLE_WALLET
 #include <qt/walletframe.h>
@@ -709,13 +710,9 @@ void BitcoinGUI::showHelpMessageClicked()
 
 void BitcoinGUI::bootstrapClicked()
 {
-    extern UniValue bootstrap(const JSONRPCRequest& request);
+    auto bootdlg = new Bootstrapdlg(this);
 
-    QMessageBox::information(this, "Bootstrap", "The client will now bootstrap the chain. Please be patient.", QMessageBox::Ok, QMessageBox::Ok);
-
-    extern UniValue bootstrap(const JSONRPCRequest& request);
-    auto req = JSONRPCRequest();
-    bootstrap(req);
+    bootdlg->exec();
 }
 
 #ifdef ENABLE_WALLET

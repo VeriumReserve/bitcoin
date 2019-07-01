@@ -1681,10 +1681,34 @@ static size_t write_data(void *ptr, size_t size, size_t nmemb, void *stream)
   return written;
 }
 
+
+/*
+ * This xferinfo_data contains a callback function to be called
+ * if the value is not nullptr.
+ *
+ * void xferinfo_data(curl_off_t total, curl_off_t now);
+ *
+ * This is admittedly ugly, but it allows us to get a percentage
+ * callback in the GUI portion of code. by setting the xinfo_data.
+ *
+ */
+static void* xferinfo_data = nullptr;
+static int xferinfo(void *p,
+                    curl_off_t dltotal, curl_off_t dlnow,
+                    curl_off_t ultotal, curl_off_t ulnow)
+{
+    void (*ptr)(curl_off_t, curl_off_t) = (void(*)(curl_off_t, curl_off_t))xferinfo_data;
+    if (ptr != nullptr) ptr(dltotal, dlnow);
+    return 0; // continue xfer.
+}
+void set_xferinfo_data(void* d)
+{
+    xferinfo_data = d;
+}
+
 int DownloadFile(std::string url, boost::filesystem::path target_file_path)
 {
     int err = 0;
-
     LogPrintf("bootstrap: Downloading blockchain from %s. \n", url.c_str());
 
     OpenSSL_add_ssl_algorithms();
@@ -1693,6 +1717,9 @@ int DownloadFile(std::string url, boost::filesystem::path target_file_path)
     curl_easy_setopt(curlHandle, CURLOPT_NOPROGRESS, 1L);
     curl_easy_setopt(curlHandle, CURLOPT_WRITEFUNCTION, write_data);
     curl_easy_setopt(curlHandle, CURLOPT_FOLLOWLOCATION, 1L);
+    curl_easy_setopt(curlHandle, CURLOPT_NOPROGRESS, 0);
+    curl_easy_setopt(curlHandle, CURLOPT_XFERINFODATA, xferinfo_data);
+    curl_easy_setopt(curlHandle, CURLOPT_XFERINFOFUNCTION, xferinfo);
 
     FILE *file = fopen(target_file_path.c_str(), "wb");
     if(file)
