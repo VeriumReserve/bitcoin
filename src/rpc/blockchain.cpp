@@ -1675,12 +1675,6 @@ UniValue savemempool(const JSONRPCRequest& request)
 }
 
 //bootstrap 
-static size_t write_data(void *ptr, size_t size, size_t nmemb, void *stream)
-{
-  size_t written = fwrite(ptr, size, nmemb, (FILE *)stream);
-  return written;
-}
-
 
 /*
  * This xferinfo_data contains a callback function to be called
@@ -1716,7 +1710,6 @@ int DownloadFile(std::string url, boost::filesystem::path target_file_path)
     CURL *curlHandle = curl_easy_init();
     curl_easy_setopt(curlHandle, CURLOPT_URL, url.c_str());
     curl_easy_setopt(curlHandle, CURLOPT_NOPROGRESS, 1L);
-    curl_easy_setopt(curlHandle, CURLOPT_WRITEFUNCTION, write_data);
     curl_easy_setopt(curlHandle, CURLOPT_FOLLOWLOCATION, 1L);
     curl_easy_setopt(curlHandle, CURLOPT_NOPROGRESS, 0);
     curl_easy_setopt(curlHandle, CURLOPT_XFERINFODATA, xferinfo_data);
