@@ -50,10 +50,10 @@ static const int MAX_URI_LENGTH = 255;
 /* Number of frames in spinner animation */
 #define SPINNER_FRAMES 36
 
-#define QAPP_ORG_NAME "Bitcoin"
-#define QAPP_ORG_DOMAIN "bitcoin.org"
-#define QAPP_APP_NAME_DEFAULT "Bitcoin-Qt"
-#define QAPP_APP_NAME_TESTNET "Bitcoin-Qt-testnet"
+#define QAPP_ORG_NAME "Verium"
+#define QAPP_ORG_DOMAIN "vericoin.info"
+#define QAPP_APP_NAME_DEFAULT "Verium-Qt"
+#define QAPP_APP_NAME_TESTNET "Verium-Qt-testnet"
 
 /************
  ** Verium **/
