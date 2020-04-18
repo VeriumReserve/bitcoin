@@ -36,6 +36,7 @@ These dependencies are required:
  libssl      | Crypto           | Random Number Generation, Elliptic Curve Cryptography
  libboost    | Utility          | Library for threading, data structures, etc
  libevent    | Networking       | OS independent asynchronous networking
+ libcurl     | Bootstrap        | Library for download bootstrap
 
 Optional dependencies:
 
@@ -65,7 +66,7 @@ Dependency Build Instructions: Ubuntu & Debian
 ----------------------------------------------
 Build requirements:
 
-    sudo apt-get install build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils python3
+    sudo apt-get install build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils python3 libcurl4-openssl-dev
 
 Options when installing required Boost library files:
 
@@ -131,7 +132,7 @@ Dependency Build Instructions: Fedora
 -------------------------------------
 Build requirements:
 
-    sudo dnf install gcc-c++ libtool make autoconf automake openssl-devel libevent-devel boost-devel libdb4-devel libdb4-cxx-devel python3
+    sudo dnf install gcc-c++ libtool make autoconf automake openssl-devel libevent-devel boost-devel libdb4-devel libdb4-cxx-devel python3 libcurl-devel
 
 Optional:
 
@@ -305,7 +306,7 @@ started than on [OpenBSD](build-openbsd.md). Installing dependencies:
 
     pkg install autoconf automake libtool pkgconf
     pkg install boost-libs openssl libevent
-    pkg install gmake
+    pkg install gmake curl
 
 You need to use GNU make (`gmake`) instead of `make`.
 (`libressl` instead of `openssl` will also work)
