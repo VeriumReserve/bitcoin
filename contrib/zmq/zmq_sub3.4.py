@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
-# Copyright (c) 2014-2017 The Bitcoin Core developers
+# Copyright (c) 2014-2017 The Verium Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 """
     ZMQ example using python3's asyncio
 
-    Bitcoin should be started with the command line arguments:
-        bitcoind -testnet -daemon \
-                -zmqpubrawtx=tcp://127.0.0.1:28332 \
-                -zmqpubrawblock=tcp://127.0.0.1:28332 \
-                -zmqpubhashtx=tcp://127.0.0.1:28332 \
-                -zmqpubhashblock=tcp://127.0.0.1:28332
+    Verium should be started with the command line arguments:
+        veriumd -testnet -daemon \
+                -zmqpubrawtx=tcp://127.0.0.1:18332 \
+                -zmqpubrawblock=tcp://127.0.0.1:18332 \
+                -zmqpubhashtx=tcp://127.0.0.1:18332 \
+                -zmqpubhashblock=tcp://127.0.0.1:18332
 
     We use the asyncio library here.  `self.handle()` installs itself as a
     future at the end of the function.  Since it never returns with the event
@@ -21,9 +21,6 @@
     The `@asyncio.coroutine` decorator and the `yield from` syntax found here
     was introduced in python 3.4 and has been deprecated in favor of the `async`
     and `await` keywords respectively.
-
-    A blocking example using python 2.7 can be obtained from the git history:
-    https://github.com/bitcoin/bitcoin/blob/37a7fe9e440b83e2364d5498931253937abe9294/contrib/zmq/zmq_sub.py
 """
 
 import binascii
