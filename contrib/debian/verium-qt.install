@@ -1,0 +1,6 @@
+usr/local/bin/verium-qt usr/bin
+share/pixmaps/verium32.xpm usr/share/pixmaps
+share/pixmaps/verium16.xpm usr/share/pixmaps
+share/pixmaps/verium128.png usr/share/pixmaps
+debian/verium-qt.desktop usr/share/applications
+debian/verium-qt.protocol usr/share/kde4/services/

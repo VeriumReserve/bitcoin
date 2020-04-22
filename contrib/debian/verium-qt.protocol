@@ -1,6 +1,6 @@
 [Protocol]
-exec=bitcoin-qt '%u'
-protocol=bitcoin
+exec=verium-qt '%u'
+protocol=verium
 input=none
 output=none
 helper=true

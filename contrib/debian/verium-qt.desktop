@@ -1,0 +1,14 @@
+[Desktop Entry]
+Version=1.0
+Name=Verium Core
+Comment=Connect to the Verium P2P Network
+Comment[de]=Verbinde mit dem Verium peer-to-peer Netzwerk
+Comment[fr]=Verium, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=Verium, eşten eşe kriptografik sanal para birimi
+Exec=verium-qt %u
+Terminal=false
+Type=Application
+Icon=verium128
+MimeType=x-scheme-handler/verium;
+Categories=Office;Finance;
+StartupWMClass=Verium-qt
