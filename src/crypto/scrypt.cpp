@@ -201,6 +201,7 @@ static const uint32_t finalblk[16] = {
 };
 
 
+#ifndef __FreeBSD__
 static inline void be32enc(void *pp, uint32_t x)
 {
     uint8_t *p = (uint8_t *)pp;
@@ -216,6 +217,7 @@ static inline uint32_t be32dec(const void *pp)
     return ((uint32_t)(p[3]) + ((uint32_t)(p[2]) << 8) +
         ((uint32_t)(p[1]) << 16) + ((uint32_t)(p[0]) << 24));
 }
+#endif
 
 static inline void HMAC_SHA256_80_init(const uint32_t *key,
 	uint32_t *tstate, uint32_t *ostate)
