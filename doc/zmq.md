@@ -66,7 +66,7 @@ address. The same address can be used in more than one notification.
 
 For instance:
 
-    $ veriumd -zmqpubhashtx=tcp://127.0.0.1:43987 \
+    $ veriumd -zmqpubhashtx=tcp://127.0.0.1:18332 \
                -zmqpubrawtx=ipc:///tmp/veriumd.tx.raw
 
 Each PUB notification has a topic and body, where the header
