@@ -1,11 +1,33 @@
-UNIX BUILD NOTES
-====================
+# UNIX BUILD NOTES
+
 Some notes on how to build Verium Core in Unix.
 
 (for OpenBSD specific instructions, see [build-openbsd.md](build-openbsd.md))
 
-Note
----------------------
+## Table of Contents
+----------------------------------------------
+1. [Note](#note)
+2. [How to Build](#how-to-build)
+3. [Dependencies](#dependencies)
+4. [Memory Requirements](#memory-requirements)
+5. [Build Instructions](#build-instructions)
+    1. [Ubuntu and Debian](#ubuntu-and-debian)
+    2. [Fedora](#fedora)
+    3. [Arch Linux](#arch-linux)
+    4. [FreeBSD](#freebsd)
+6. [Build Notes](#build-notes)
+7. [Miniupnpc](#miniupnpc)
+8. [Berkeley DB](#berkeley-db)
+9. [Boost](#boost)
+10. [Security](#security)
+11. [Disable-wallet mode](#disable-wallet-mode)
+12. [Additional Configure Flags](#additional-configure-flags)
+13. [ARM Cross-compilation](#arm-cross-compilation)
+
+
+## Note
+----------------------------------------------
+
 Always use absolute paths to configure and compile verium and the dependencies,
 for example, when specifying the path of the dependency:
 
@@ -14,8 +36,8 @@ for example, when specifying the path of the dependency:
 Here BDB_PREFIX must be an absolute path - it is defined using $(pwd) which ensures
 the usage of the absolute path.
 
-To Build
----------------------
+## How To Build
+----------------------------------------------
 
 ```bash
 ./autogen.sh
@@ -26,8 +48,8 @@ make install # optional
 
 This will build verium-qt as well if the dependencies are met.
 
-Dependencies
----------------------
+## Dependencies
+----------------------------------------------
 
 These dependencies are required:
 
@@ -54,8 +76,8 @@ Optional dependencies:
 
 For the versions used, see [dependencies.md](dependencies.md)
 
-Memory Requirements
---------------------
+## Memory Requirements
+----------------------------------------------
 
 C++ compilers are memory-hungry. It is recommended to have at least 1.5 GB of
 memory available when compiling Verium Core. On systems with less, gcc can be
@@ -64,7 +86,9 @@ tuned to conserve memory with additional CXXFLAGS:
 
     ./configure CXXFLAGS="--param ggc-min-expand=1 --param ggc-min-heapsize=32768"
 
-Dependency Build Instructions: Ubuntu & Debian
+## Build Instructions
+
+### Ubuntu and Debian
 ----------------------------------------------
 Build requirements:
 
@@ -89,7 +113,7 @@ BerkeleyDB 5.1 or later, which break binary wallet compatibility with the distri
 are based on BerkeleyDB 4.8. If you do not care about wallet compatibility,
 pass `--with-incompatible-bdb` to configure.
 
-To build and use BerkeleyDB 4.8 please refere to the Berkeley DB section of this file
+To build and use BerkeleyDB 4.8 please referer to the [Berkeley DB](#berkeley-db)
 
 See the section "Disable-wallet mode" to build Verium Core without wallet.
 
@@ -101,9 +125,8 @@ ZMQ dependencies (provides ZMQ API 4.x):
 
     sudo apt-get install libzmq3-dev
 
-Dependencies for the GUI: Ubuntu & Debian
------------------------------------------
 
+#### GUI
 If you want to build Verium-Qt, make sure that the required packages for Qt development
 are installed. Either Qt 5 or Qt 4 are necessary to build the GUI.
 If both Qt 4 and Qt 5 are installed, Qt 5 will be used. Pass `--with-gui=qt4` to configure to choose Qt4.
@@ -124,8 +147,21 @@ libqrencode (optional) can be installed with:
 Once these are installed, they will be found by configure and a verium-qt executable will be
 built by default.
 
-Dependency Build Instructions: Fedora
--------------------------------------
+#### Quick Build
+Bash script to quickly download and build verium with GUI
+
+```sh
+sudo apt-get install -y git build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils python3 libcurl4-openssl-dev libboost-system-dev libboost-filesystem-dev libboost-chrono-dev libboost-program-options-dev libboost-test-dev libboost-thread-dev libminizip-dev zlib1g-dev libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler libqrencode-dev
+git clone https://github.com/VeriumReserve/verium.git ~/verium
+cd ~/verium
+./contrib/install_db4.sh ~/verium
+./autogen.sh
+./configure BDB_LIBS="-L${BDB_PREFIX}/lib -ldb_cxx-4.8" BDB_CFLAGS="-I${BDB_PREFIX}/include"
+make
+```
+
+### Fedora
+----------------------------------------------
 Build requirements:
 
     sudo dnf install gcc-c++ libtool make autoconf automake openssl-devel libevent-devel boost-devel libdb4-devel libdb4-cxx-devel python3 libcurl-devel minizip-devel
@@ -142,14 +178,104 @@ libqrencode (optional) can be installed with:
 
     sudo dnf install qrencode-devel
 
-Notes
------
+To build and use BerkeleyDB 4.8 please referer to the [Berkeley DB](#berkeley-db)
+
+
+Bash script to quickly download and build verium with GUI
+
+#### Quick Build
+Bash script to quickly download and build verium with GUI
+
+```sh
+sudo dnf install git gcc-c++ libtool make autoconf automake openssl-devel libevent-devel boost-devel libdb4-devel libdb4-cxx-devel python3 libcurl-devel minizip-devel qt5-qttools-devel qt5-qtbase-devel protobuf-devel qrencode-devel
+git clone https://github.com/VeriumReserve/verium.git ~/verium
+cd ~/verium
+./contrib/install_db4.sh ~/verium
+./autogen.sh
+./configure BDB_LIBS="-L${BDB_PREFIX}/lib -ldb_cxx-4.8" BDB_CFLAGS="-I${BDB_PREFIX}/include"
+make
+```
+
+#### Arch Linux
+----------------------------------------------
+Build requirements:
+
+    sudo pacman -S base-devel boost libevent python minizip
+
+Optional:
+
+    sudo pacman -S install miniupnpc
+
+To build with Qt 5 (recommended) you need the following:
+
+    sudo dnf install qt5-qttools qt5-qtbase protobuf
+
+libqrencode (optional) can be installed with:
+
+    sudo dnf install qrencode
+
+To build and use BerkeleyDB 4.8 please referer to the [Berkeley DB](#berkeley-db)
+
+#### Quick Build
+Bash script to quickly download and build verium with GUI
+
+```sh
+sudo pacman -S git base-devel boost libevent python minizip qt5-qttools qt5-qtbase protobuf qrencode
+git clone https://github.com/VeriumReserve/verium.git ~/verium
+cd ~/verium
+./contrib/install_db4.sh ~/verium
+./autogen.sh
+./configure BDB_LIBS="-L${BDB_PREFIX}/lib -ldb_cxx-4.8" BDB_CFLAGS="-I${BDB_PREFIX}/include"
+make
+```
+
+#### FreeBSD
+----------------------------------------------
+Clang is installed by default as `cc` compiler, this makes it easier to get
+started than on [OpenBSD](build-openbsd.md). Installing dependencies:
+
+    pkg install autoconf automake libtool pkgconf boost-libs openssl libevent gmake curl minizip
+
+You need to use GNU make (`gmake`) instead of `make`.
+(`libressl` instead of `openssl` will also work)
+
+For the wallet (optional):
+
+    ./contrib/install_db4.sh `pwd`
+    export BDB_PREFIX $PWD/db4
+
+Then build using:
+
+    ./autogen.sh
+    ./configure BDB_LIBS="-L${BDB_PREFIX}/lib -ldb_cxx-4.8" BDB_CFLAGS="-I${BDB_PREFIX}/include" LDFLAGS="-L/usr/local/lib/" CPPFLAGS="-I/usr/local/include/" MAKE="gmake"
+    gmake
+
+*Note on debugging*: The version of `gdb` installed by default is [ancient and considered harmful](https://wiki.freebsd.org/GdbRetirement).
+It is not suitable for debugging a multi-threaded C++ program, not even for getting backtraces. Please install the package `gdb` and
+use the versioned gdb command e.g. `gdb7111`.
+
+#### Quick Build
+Bash script to quickly download and build verium with GUI
+
+```sh
+sudo pkg install git autoconf automake libtool pkgconf boost-libs openssl libevent gmake curl minizip
+git clone https://github.com/VeriumReserve/verium.git ~/verium
+cd ~/verium
+./contrib/install_db4.sh ~/verium
+./autogen.sh
+./configure BDB_LIBS="-L${BDB_PREFIX}/lib -ldb_cxx-4.8" BDB_CFLAGS="-I${BDB_PREFIX}/include" LDFLAGS="-L/usr/local/lib/" CPPFLAGS="-I/usr/local/include/" MAKE="gmake"
+gmake
+```
+
+
+## Build Notes
+----------------------------------------------
 The release is built with GCC and then "strip veriumd" to strip the debug
 symbols, which reduces the executable size by about 90%.
 
 
-miniupnpc
----------
+## Miniupnpc
+----------------------------------------------
 
 [miniupnpc](http://miniupnp.free.fr/) may be used for UPnP port mapping.  It can be downloaded from [here](
 http://miniupnp.tuxfamily.org/files/).  UPnP support is compiled in and
@@ -160,8 +286,8 @@ turned off by default.  See the configure options for upnp behavior desired:
 	--enable-upnp-default    UPnP support turned on by default at runtime
 
 
-Berkeley DB
------------
+## Berkeley DB
+----------------------------------------------
 It is recommended to use Berkeley DB 4.8. If you have to build it yourself,
 you can use [the installation script included in contrib/](/contrib/install_db4.sh)
 like so
@@ -174,7 +300,7 @@ from the root of the repository.
 
 **Note**: You only need Berkeley DB if the wallet is enabled (see the section *Disable-Wallet mode* below).
 
-Boost
+## Boost
 -----
 If you need to build Boost yourself:
 
@@ -183,7 +309,7 @@ If you need to build Boost yourself:
 	./bjam install
 
 
-Security
+## Security
 --------
 To help make your verium installation more secure by making certain attacks impossible to
 exploit even if a vulnerability is found, binaries are hardened by default.
@@ -232,7 +358,7 @@ Hardening enables the following features:
 
     The STK RW- means that the stack is readable and writeable but not executable.
 
-Disable-wallet mode
+## Disable-wallet mode
 --------------------
 When the intention is to run only a P2P node without a wallet, verium may be compiled in
 disable-wallet mode with:
@@ -244,34 +370,14 @@ In this case there is no dependency on Berkeley DB 4.8.
 Mining is also possible in disable-wallet mode, but only using the `getblocktemplate` RPC
 call not `getwork`.
 
-Additional Configure Flags
---------------------------
+## Additional Configure Flags
+----------------------------------------------
 A list of additional configure flags can be displayed with:
 
     ./configure --help
 
-
-Setup and Build Example: Arch Linux
------------------------------------
-This example lists the steps necessary to setup and build a command line only, non-wallet distribution of the latest changes on Arch Linux:
-
-    pacman -S git base-devel boost libevent python minizip
-    git clone https://github.com/VeriumReserve/verium.git
-    cd verium/
-    ./autogen.sh
-    ./configure --disable-wallet --without-gui --without-miniupnpc
-    make check
-
-Note:
-Enabling wallet support requires either compiling against a Berkeley DB newer than 4.8 (package `db`) using `--with-incompatible-bdb`,
-or building and depending on a local version of Berkeley DB 4.8. The readily available Arch Linux packages are currently built using
-`--with-incompatible-bdb` according to the [PKGBUILD](https://projects.archlinux.org/svntogit/community.git/tree/bitcoin/trunk/PKGBUILD).
-As mentioned above, when maintaining portability of the wallet between the standard Verium Core distributions and independently built
-node software is desired, Berkeley DB 4.8 must be used.
-
-
-ARM Cross-compilation
--------------------
+## ARM Cross-compilation
+----------------------------------------------
 These steps can be performed on, for example, an Ubuntu VM. The depends system
 will also work on other Linux distributions, however the commands for
 installing the toolchain will be different.
@@ -291,33 +397,3 @@ To build executables for ARM:
 
 
 For further documentation on the depends system see [README.md](../depends/README.md) in the depends directory.
-
-Building on FreeBSD
---------------------
-
-(Updated as of FreeBSD 11.0)
-
-Clang is installed by default as `cc` compiler, this makes it easier to get
-started than on [OpenBSD](build-openbsd.md). Installing dependencies:
-
-    pkg install autoconf automake libtool pkgconf
-    pkg install boost-libs openssl libevent
-    pkg install gmake curl
-
-You need to use GNU make (`gmake`) instead of `make`.
-(`libressl` instead of `openssl` will also work)
-
-For the wallet (optional):
-
-    ./contrib/install_db4.sh `pwd`
-    setenv BDB_PREFIX $PWD/db4
-
-Then build using:
-
-    ./autogen.sh
-    ./configure BDB_CFLAGS="-I${BDB_PREFIX}/include" BDB_LIBS="-L${BDB_PREFIX}/lib -ldb_cxx"
-    gmake
-
-*Note on debugging*: The version of `gdb` installed by default is [ancient and considered harmful](https://wiki.freebsd.org/GdbRetirement).
-It is not suitable for debugging a multi-threaded C++ program, not even for getting backtraces. Please install the package `gdb` and
-use the versioned gdb command e.g. `gdb7111`.
