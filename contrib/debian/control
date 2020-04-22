@@ -1,8 +1,8 @@
-Source: bitcoin
+Source: verium
 Section: utils
 Priority: optional
-Maintainer: Matt Corallo <matt@mattcorallo.com>
-Uploaders: Matt Corallo <matt@mattcorallo.com>
+Maintainer: Verium Core Team <contact@vericoin.info>
+Uploaders: Verium Core Team <contact@vericoin.info>
 Build-Depends: debhelper,
  devscripts,
  automake,
@@ -24,47 +24,50 @@ Build-Depends: debhelper,
  libqrencode-dev,
  libprotobuf-dev, protobuf-compiler,
  python,
- libzmq3-dev
+ libzmq3-dev,
+ libcurl4-openssl-dev,
+ zlib1g-dev,
+ libminizip-dev
 Standards-Version: 3.9.2
-Homepage: https://bitcoincore.org/
-Vcs-Git: git://github.com/bitcoin/bitcoin.git
-Vcs-Browser: https://github.com/bitcoin/bitcoin
+Homepage: https://vericoin.info
+Vcs-Git: git://github.com/VeriumReserve/verium.git
+Vcs-Browser: https://github.com/VeriumReserve/verium
 
-Package: bitcoind
+Package: veriumd
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: peer-to-peer network based digital currency - daemon
- Bitcoin is a free open source peer-to-peer electronic cash system that
+ Verium is a free open source peer-to-peer electronic cash system that
  is completely decentralized, without the need for a central server or
  trusted parties.  Users hold the crypto keys to their own money and
  transact directly with each other, with the help of a P2P network to
  check for double-spending.
  .
- This package provides the daemon, bitcoind, and the CLI tool
- bitcoin-cli to interact with the daemon.
+ This package provides the daemon, veriumd, and the CLI tool
+ verium-cli to interact with the daemon.
 
-Package: bitcoin-qt
+Package: verium-qt
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: peer-to-peer network based digital currency - Qt GUI
- Bitcoin is a free open source peer-to-peer electronic cash system that
+ Verium is a free open source peer-to-peer electronic cash system that
  is completely decentralized, without the need for a central server or
  trusted parties.  Users hold the crypto keys to their own money and
  transact directly with each other, with the help of a P2P network to
  check for double-spending.
  .
- This package provides Bitcoin-Qt, a GUI for Bitcoin based on Qt.
+ This package provides Verium-Qt, a GUI for Verium based on Qt.
 
-Package: bitcoin-tx
+Package: verium-tx
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: peer-to-peer digital currency - standalone transaction tool
- Bitcoin is a free open source peer-to-peer electronic cash system that
+ Verium is a free open source peer-to-peer electronic cash system that
  is completely decentralized, without the need for a central server or
  trusted parties.  Users hold the crypto keys to their own money and
  transact directly with each other, with the help of a P2P network to
  check for double-spending.
  .
- This package provides bitcoin-tx, a command-line transaction creation
- tool which can be used without a bitcoin daemon.  Some means of
+ This package provides verium-tx, a command-line transaction creation
+ tool which can be used without a verium daemon.  Some means of
  exchanging minimal transaction data with peers is still required.
