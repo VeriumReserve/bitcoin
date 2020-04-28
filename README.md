@@ -2,7 +2,7 @@ Verium Core integration/staging tree
 =====================================
 
 [![Build Status](https://travis-ci.org/VeriumReserve/verium.svg?branch=0.16)](https://travis-ci.org/VeriumReserve/verium) 
-Ubuntu Server Xenial 16.04
+Ubuntu Server Xenial 18.04
 
 https://www.vericonomy.com
 

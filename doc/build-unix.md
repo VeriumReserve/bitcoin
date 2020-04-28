@@ -155,6 +155,7 @@ sudo apt-get install -y git build-essential libtool autotools-dev automake pkg-c
 git clone https://github.com/VeriumReserve/verium.git ~/verium
 cd ~/verium
 ./contrib/install_db4.sh ~/verium
+export BDB_PREFIX="${HOME}/verium/db4"
 ./autogen.sh
 ./configure BDB_LIBS="-L${BDB_PREFIX}/lib -ldb_cxx-4.8" BDB_CFLAGS="-I${BDB_PREFIX}/include"
 make
@@ -191,6 +192,7 @@ sudo dnf install git gcc-c++ libtool make autoconf automake openssl-devel libeve
 git clone https://github.com/VeriumReserve/verium.git ~/verium
 cd ~/verium
 ./contrib/install_db4.sh ~/verium
+export BDB_PREFIX="${HOME}/verium/db4"
 ./autogen.sh
 ./configure BDB_LIBS="-L${BDB_PREFIX}/lib -ldb_cxx-4.8" BDB_CFLAGS="-I${BDB_PREFIX}/include"
 make
@@ -224,6 +226,7 @@ sudo pacman -S git base-devel boost libevent python minizip qt5-qttools qt5-qtba
 git clone https://github.com/VeriumReserve/verium.git ~/verium
 cd ~/verium
 ./contrib/install_db4.sh ~/verium
+export BDB_PREFIX="${HOME}/verium/db4"
 ./autogen.sh
 ./configure BDB_LIBS="-L${BDB_PREFIX}/lib -ldb_cxx-4.8" BDB_CFLAGS="-I${BDB_PREFIX}/include"
 make
@@ -262,6 +265,7 @@ sudo pkg install git autoconf automake libtool pkgconf boost-libs openssl libeve
 git clone https://github.com/VeriumReserve/verium.git ~/verium
 cd ~/verium
 ./contrib/install_db4.sh ~/verium
+export BDB_PREFIX="${HOME}/verium/db4"
 ./autogen.sh
 ./configure BDB_LIBS="-L${BDB_PREFIX}/lib -ldb_cxx-4.8" BDB_CFLAGS="-I${BDB_PREFIX}/include" LDFLAGS="-L/usr/local/lib/" CPPFLAGS="-I/usr/local/include/" MAKE="gmake"
 gmake
