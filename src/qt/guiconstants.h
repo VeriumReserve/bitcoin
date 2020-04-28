@@ -5,9 +5,9 @@
 #ifndef BITCOIN_QT_GUICONSTANTS_H
 #define BITCOIN_QT_GUICONSTANTS_H
 
+#include <QFont>
 #include <QString>
 #include <QTranslator>
-#include <QFont>
 
 /* Milliseconds between model updates */
 static const int MODEL_UPDATE_DELAY = 250;
@@ -100,6 +100,6 @@ static const QFont qFontLargeBold("Lato", 12, QFont::Bold, false);
 static const QFont qFontLargerBold("Lato", 14, QFont::Bold, false);
 #endif
 
- /** !VERIUM **/
+/** !VERIUM **/
 
 #endif // BITCOIN_QT_GUICONSTANTS_H
