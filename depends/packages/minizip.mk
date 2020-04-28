@@ -6,12 +6,10 @@ $(package)_sha256_hash=78d87c463dd6bd446292fe0d3ee72878355b3b7fa52add5722671dfe9
 $(package)_dependencies=zlib
 
 define $(package)_set_vars
-$(package)_build_opts= CC="$($(package)_cc)"
-$(package)_build_opts+=CFLAGS="$($(package)_cflags) $($(package)_cppflags) -fPIC"
-$(package)_build_opts+=RANLIB="$($(package)_ranlib)"
-$(package)_build_opts+=AR="$($(package)_ar)"
-$(package)_build_opts_darwin+=AR="$($(package)_libtool)"
-$(package)_build_opts_darwin+=ARFLAGS="-o"
+ifeq ($(host),x86_64-apple-darwin14)
+$(package)_cc=$(BASEDIR)/$(host)/native/bin/clang -target $(host) -mmacosx-version-min=$(OSX_MIN_VERSION) --sysroot $(OSX_SDK) -mlinker-version=$(LD64_VERSION)
+$(package)_cxx=$(BASEDIR)/$(host)/native/bin/clang++ -target $(host) -mmacosx-version-min=$(OSX_MIN_VERSION) --sysroot $(OSX_SDK) -mlinker-version=$(LD64_VERSION) -stdlib=libc++
+endif
 endef
 
 define $(package)_config_cmds
