@@ -281,6 +281,7 @@ crypto_libbitcoin_crypto_a_SOURCES = \
   crypto/sha2-arm.S \
   crypto/sha2-x86.S \
   crypto/sha2-x64.S \
+  crypto/scrypt-armv8.c \
   crypto/scrypt-arm.S \
   crypto/scrypt-x86.S \
   crypto/scrypt-x64.S \
