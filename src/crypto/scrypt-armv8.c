@@ -34,11 +34,6 @@
 
 #include <compat/endian.h>
 
-extern void sha256_init(uint32_t *state);
-
-extern void sha256_transform(uint32_t state[8], const uint32_t data[16], int swap);
-
-
 #define _ALIGN(x) __attribute__ ((aligned(x)))
 
 static inline uint32_t swab32(uint32_t v)
@@ -139,7 +134,10 @@ static inline void PBKDF2_SHA256_128_32(uint32_t *tstate, uint32_t *ostate,
 #define HAVE_SCRYPT_3WAY 1
 #define scrypt_best_throughput() 3
 
-
+static const uint32_t sha256_h[8] = {
+    0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a,
+    0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19
+};
 
 static const uint32_t sha256_k[64] = {
     0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5,
@@ -159,6 +157,11 @@ static const uint32_t sha256_k[64] = {
     0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208,
     0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2
 };
+
+void sha256_init(uint32_t *state)
+{
+    memcpy(state, sha256_h, 32);
+}
 
 /* Elementary functions used by SHA256 */
 #define Ch(x, y, z)     ((x & (y ^ z)) ^ z)

@@ -74,6 +74,7 @@ extern "C" void scrypt_core_3way(uint32_t* X, uint32_t* V, int N);
 #define SCRYPT_MAX_WAYS 3
 #define HAVE_SCRYPT_3WAY 1
 #define scrypt_best_throughput() 3
+extern "C" void sha256_init(uint32_t *state);
 extern "C" void sha256_transform(uint32_t* state, const uint32_t* block, int swap);
 extern "C" void scrypt_core(uint32_t* X, uint32_t* V, int N);
 extern "C" void scrypt_core_3way(uint32_t B[32 * 3], uint32_t *V, uint32_t N);
