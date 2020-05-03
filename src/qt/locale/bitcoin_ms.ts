@@ -80,7 +80,7 @@
     <name>BanTableModel</name>
     </context>
 <context>
-    <name>BitcoinGUI</name>
+    <name>VeriumGUI</name>
     </context>
 <context>
     <name>CoinControlDialog</name>
@@ -214,6 +214,6 @@
     </message>
     </context>
 <context>
-    <name>bitcoin-core</name>
+    <name>verium-core</name>
     </context>
 </TS>
