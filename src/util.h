@@ -391,7 +391,7 @@ inline void ExitThread(size_t nExitCode)
  */
 template <typename Callable> void TraceThread(const char* name,  Callable func)
 {
-    std::string s = strprintf("bitcoin-%s", name);
+    std::string s = strprintf("verium-%s", name);
     RenameThread(s.c_str());
     try
     {

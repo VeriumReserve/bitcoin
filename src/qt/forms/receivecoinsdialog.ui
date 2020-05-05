@@ -164,7 +164,7 @@
         <item row="5" column="2">
          <layout class="QHBoxLayout" name="horizontalLayout_6">
           <item>
-           <widget class="VeriumAmountField" name="reqAmount">
+           <widget class="BitcoinAmountField" name="reqAmount">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -351,7 +351,7 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>VeriumAmountField</class>
+   <class>BitcoinAmountField</class>
    <extends>QLineEdit</extends>
    <header>qt/bitcoinamountfield.h</header>
    <container>1</container>

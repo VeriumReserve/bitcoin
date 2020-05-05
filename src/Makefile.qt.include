@@ -496,9 +496,9 @@ CLEAN_QT = $(nodist_qt_libbitcoinqt_a_SOURCES) $(QT_QM) $(QT_FORMS_H) qt/*.gcda 
 CLEANFILES += $(CLEAN_QT)
 
 verium_qt_clean: FORCE
-	rm -f $(CLEAN_QT) $(qt_libbitcoinqt_a_OBJECTS) $(qt_verium_qt_OBJECTS) qt/bitcoin-qt$(EXEEXT) $(LIBBITCOINQT)
+	rm -f $(CLEAN_QT) $(qt_libbitcoinqt_a_OBJECTS) $(qt_verium_qt_OBJECTS) qt/verium-qt$(EXEEXT) $(LIBBITCOINQT)
 
-verium_qt : qt/bitcoin-qt$(EXEEXT)
+verium_qt : qt/verium-qt$(EXEEXT)
 
 ui_%.h: %.ui
 	@test -f $(UIC)

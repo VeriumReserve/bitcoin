@@ -694,7 +694,7 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_Buttons">
        <item>
-        <widget class="QPushButton" name="openVeriumConfButton">
+        <widget class="QPushButton" name="openBitcoinConfButton">
          <property name="toolTip">
           <string>Open the %1 configuration file from the working directory.</string>
          </property>

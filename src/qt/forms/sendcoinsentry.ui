@@ -165,7 +165,7 @@
     <item row="2" column="1">
      <layout class="QHBoxLayout" name="horizontalLayoutAmount" stretch="0,1,0">
       <item>
-       <widget class="VeriumAmountField" name="payAmount"/>
+       <widget class="BitcoinAmountField" name="payAmount"/>
       </item>
       <item>
        <widget class="QCheckBox" name="checkboxSubtractFeeFromAmount">
@@ -709,7 +709,7 @@
      </widget>
     </item>
     <item row="2" column="1">
-     <widget class="VeriumAmountField" name="payAmount_is">
+     <widget class="BitcoinAmountField" name="payAmount_is">
       <property name="acceptDrops">
        <bool>false</bool>
       </property>
@@ -1242,7 +1242,7 @@
      </widget>
     </item>
     <item row="2" column="1">
-     <widget class="VeriumAmountField" name="payAmount_s">
+     <widget class="BitcoinAmountField" name="payAmount_s">
       <property name="acceptDrops">
        <bool>false</bool>
       </property>
@@ -1258,7 +1258,7 @@
    <header>qt/qvalidatedlineedit.h</header>
   </customwidget>
   <customwidget>
-   <class>VeriumAmountField</class>
+   <class>BitcoinAmountField</class>
    <extends>QLineEdit</extends>
    <header>qt/bitcoinamountfield.h</header>
   </customwidget>
