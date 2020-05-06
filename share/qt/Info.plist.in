@@ -60,7 +60,7 @@
       <key>UTTypeIdentifier</key>
       <string>org.bitcoin.paymentrequest</string>
       <key>UTTypeDescription</key>
-      <string>Bitcoin payment request</string>
+      <string>Verium payment request</string>
       <key>UTTypeConformsTo</key>
       <array>
         <string>public.data</string>

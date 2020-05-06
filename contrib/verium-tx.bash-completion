@@ -46,7 +46,7 @@ _verium_tx() {
 
     return 0
 } &&
-complete -F _verium_tx bitcoin-tx
+complete -F _verium_tx verium-tx
 
 # Local variables:
 # mode: shell-script
