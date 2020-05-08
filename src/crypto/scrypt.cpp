@@ -43,7 +43,7 @@ void sha256_init(uint32_t *state)
     memcpy(state, sha256_h, 32);
 }
 
-#if defined(__i386__)
+#if defined(__i386__) || defined(__aarch64__)
 
 static const uint32_t sha256_k[64] = {
     0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5,
