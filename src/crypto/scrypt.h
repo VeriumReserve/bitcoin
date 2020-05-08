@@ -58,13 +58,17 @@ extern "C" int sha256_use_4way();
 extern "C" void sha256_init_4way(uint32_t* state);
 extern "C" void sha256_transform_4way(uint32_t* state, const uint32_t* block, int swap);
 
-#elif defined(__arm__) && defined(__APCS_32__) && defined(__ARM_NEON)
+#elif defined(__arm__) && defined(__APCS_32__)
+
+extern "C" void scrypt_core(uint32_t* X, uint32_t* V, int N);
+
+#if defined(__ARM_NEON)
+#undef HAVE_SHA256_4WAY
 #define SCRYPT_MAX_WAYS 3
 #define HAVE_SCRYPT_3WAY 1
 #define scrypt_best_throughput() 3
-#undef HAVE_SHA256_4WAY
-extern "C" void scrypt_core(uint32_t* X, uint32_t* V, int N);
-extern "C" void scrypt_core_3way(uint32_t* X, uint32_t* V, int N);
+void scrypt_core_3way(uint32_t *X, uint32_t *V, int N);
+#endif
 
 #elif defined(__aarch64__)
 
