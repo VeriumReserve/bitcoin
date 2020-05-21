@@ -12,7 +12,6 @@
 #include <wallet/coincontrol.h>
 #include <wallet/wallet.h>
 
-static const int64_t MIN_TX_FEE = 20000000;
 CAmount GetRequiredFee(unsigned int nTxBytes)
 {
     CAmount nBaseFee = MIN_TX_FEE;
