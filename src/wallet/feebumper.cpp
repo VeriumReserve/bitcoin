@@ -91,7 +91,7 @@ static feebumper::Result CheckFeeRate(const CWallet* wallet, const CWalletTx& wt
         return feebumper::Result::INVALID_PARAMETER;
     }
 
-    CAmount requiredFee = GetRequiredFee(*wallet, maxTxSize);
+    CAmount requiredFee = GetRequiredFee(maxTxSize);
     if (new_total_fee < requiredFee) {
         errors.push_back(strprintf("Insufficient total fee (cannot be less than required fee %s)",
             FormatMoney(requiredFee)));
@@ -213,7 +213,7 @@ Result CreateTotalBumpTransaction(const CWallet* wallet, const uint256& txid, co
             FormatMoney(minTotalFee), FormatMoney(nOldFeeRate.GetFee(maxNewTxSize)), FormatMoney(nodeIncrementalRelayFee.GetFee(maxNewTxSize))));
         return Result::INVALID_PARAMETER;
     }
-    CAmount requiredFee = GetRequiredFee(*wallet, maxNewTxSize);
+    CAmount requiredFee = GetRequiredFee(maxNewTxSize);
     if (total_fee < requiredFee) {
         errors.push_back(strprintf("Insufficient totalFee (cannot be less than required fee %s)",
             FormatMoney(requiredFee)));

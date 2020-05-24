@@ -10,7 +10,7 @@
 #include <wallet/wallet.h>
 
 
-CAmount GetRequiredFee(const CWallet& wallet, unsigned int nTxBytes)
+CAmount GetRequiredFee(unsigned int nTxBytes)
 {
     CAmount nBaseFee = MIN_TX_FEE;
     CAmount nMinFee = (1 + nTxBytes / 1000) * nBaseFee;
