@@ -172,7 +172,7 @@ RES_ICONS = \
   qt/res/icons/address-book.png \
   qt/res/icons/bitcoin-splash.png \
   qt/res/icons/bitcoin.ico \
-  qt/res/icons/bitcoin.png \
+  qt/res/icons/verium.png \
   qt/res/icons/bitcoin_testnet.ico \
   qt/res/icons/chat.png \
   qt/res/icons/chevron.png \
