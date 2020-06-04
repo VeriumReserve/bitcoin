@@ -1,5 +1,7 @@
-#include <curl/curl.h>
+#ifndef BITCOIN_QT_BOOTSTRAPDLG_H
+#define BITCOIN_QT_BOOTSTRAPDLG_H
 
+#include <curl/curl.h>
 #include <QObject>
 #include <QWidget>
 #include <QDialog>
@@ -24,4 +26,4 @@ private Q_SLOTS:
     void on_startButton_clicked();
 
 };
-
+#endif // BITCOIN_QT_BOOTSTRAPDLG_H
