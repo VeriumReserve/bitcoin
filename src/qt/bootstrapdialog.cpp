@@ -1,32 +1,31 @@
-#include <qt/bootstrapdlg.h>
-#include <qt/forms/ui_bootstrapdlg.h>
-
+#include <qt/bootstrapdialog.h>
+#include <qt/forms/ui_bootstrapdialog.h>
 #include <qt/guiutil.h>
 #include <qt/guiconstants.h>
 #include <bootstrap.h>
 #include <QDesktopServices>
 
-Bootstrapdlg::Bootstrapdlg(QWidget *parent) :
+Bootstrapdialog::Bootstrapdialog(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::Bootstrapdlg)
+    ui(new Ui::Bootstrapdialog)
 {
     ui->setupUi(this);
     setWindowTitle(tr("Chain Bootstrap"));
     ui->checkBox->setVisible(false);
 }
 
-Bootstrapdlg::~Bootstrapdlg()
+Bootstrapdialog::~Bootstrapdialog()
 {
     delete ui;
 }
 
-Bootstrapdlg* xfer_callback_instance;
+Bootstrapdialog* xfer_callback_instance;
 static void xfer_callback(curl_off_t total, curl_off_t now)
 {
     xfer_callback_instance->setProgress(total, now);
 }
 
-void Bootstrapdlg::on_startButton_clicked()
+void Bootstrapdialog::on_startButton_clicked()
 {
     extern void set_xferinfo_data(void*);
 
@@ -45,7 +44,7 @@ void Bootstrapdlg::on_startButton_clicked()
     QApplication::quit();
 }
 
-void Bootstrapdlg::setProgress(curl_off_t total, curl_off_t now)
+void Bootstrapdialog::setProgress(curl_off_t total, curl_off_t now)
 {
     ui->progressBar->setMinimum(0);
     ui->progressBar->setMaximum(total - 1);
