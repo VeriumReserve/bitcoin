@@ -1,13 +1,8 @@
-#pragma once
-
 #include <curl/curl.h>
 
 #include <QObject>
 #include <QWidget>
 #include <QDialog>
-#include <QNetworkAccessManager>
-#include <QNetworkReply>
-#include <QByteArray>
 #include <QTimer>
 
 namespace Ui {

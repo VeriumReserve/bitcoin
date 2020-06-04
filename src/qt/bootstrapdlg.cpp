@@ -3,29 +3,22 @@
 
 #include <qt/guiutil.h>
 #include <qt/guiconstants.h>
-
-#include <rpc/server.h> /// JSONRequest
-
+#include <bootstrap.h>
 #include <QDesktopServices>
-
-using namespace GUIUtil;
 
 Bootstrapdlg::Bootstrapdlg(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Bootstrapdlg)
 {
     ui->setupUi(this);
-    // Setup header and styles
-    GUIUtil::header(this, QString(""));
-
-    ui->progressBar->setStyleSheet("QProgressBar { background-color: #e8e8e8; border: 1px solid grey; border-radius: 7px; padding: 1px; text-align: center; } QProgressBar::chunk { background: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #FF8000, stop: 1 orange); border-radius: 7px; margin: 0px; }");
+    setWindowTitle(tr("Chain Bootstrap"));
+    ui->checkBox->setVisible(false);
 }
 
 Bootstrapdlg::~Bootstrapdlg()
 {
     delete ui;
 }
-
 
 Bootstrapdlg* xfer_callback_instance;
 static void xfer_callback(curl_off_t total, curl_off_t now)
@@ -35,18 +28,21 @@ static void xfer_callback(curl_off_t total, curl_off_t now)
 
 void Bootstrapdlg::on_startButton_clicked()
 {
-    extern UniValue bootstrap(const JSONRPCRequest& request);
     extern void set_xferinfo_data(void*);
 
     xfer_callback_instance = this;
     set_xferinfo_data((void*)xfer_callback);
 
-    QMessageBox::information(this, "Bootstrap", "The client will now bootstrap the chain. Please be patient.", QMessageBox::Ok, QMessageBox::Ok);
-    auto req = JSONRPCRequest();
-    bootstrap(req);
-
+    QMessageBox::information(this, "Bootstrap", "The client will now bootstrap the chain. \n\nThe Verium vault will exit after extracting the bootstrap and need to be restarted.", QMessageBox::Ok, QMessageBox::Ok);
+    try {
+        DownloadBootstrap();
+    } catch (const std::runtime_error& e) {
+        QMessageBox::critical(this, tr("Bootstrap failed"), e.what());
+    }
     set_xferinfo_data(nullptr);
     xfer_callback_instance = nullptr;
+    this->close();
+    QApplication::quit();
 }
 
 void Bootstrapdlg::setProgress(curl_off_t total, curl_off_t now)
@@ -55,4 +51,3 @@ void Bootstrapdlg::setProgress(curl_off_t total, curl_off_t now)
     ui->progressBar->setMaximum(total - 1);
     ui->progressBar->setValue(now);
 }
-

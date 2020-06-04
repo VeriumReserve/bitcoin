@@ -18,7 +18,6 @@
 #include <qt/platformstyle.h>
 #include <qt/rpcconsole.h>
 #include <qt/utilitydialog.h>
-#include <bootstrap.h>
 #include <qt/bootstrapdlg.h>
 
 #ifdef ENABLE_WALLET
