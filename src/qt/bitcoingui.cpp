@@ -18,7 +18,7 @@
 #include <qt/platformstyle.h>
 #include <qt/rpcconsole.h>
 #include <qt/utilitydialog.h>
-#include <qt/bootstrapdlg.h>
+#include <qt/bootstrapdialog.h>
 
 #ifdef ENABLE_WALLET
 #include <qt/walletcontroller.h>
@@ -970,7 +970,7 @@ void BitcoinGUI::showHelpMessageClicked()
 
 void BitcoinGUI::bootstrapClicked()
 {
-    auto bootdlg = new Bootstrapdlg(this);
+    auto bootdlg = new BootstrapDialog(this);
 
     bootdlg->exec();
 }

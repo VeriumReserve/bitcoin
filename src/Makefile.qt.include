@@ -11,7 +11,7 @@ include Makefile.qt_locale.include
 QT_FORMS_UI = \
   qt/forms/addressbookpage.ui \
   qt/forms/askpassphrasedialog.ui \
-  qt/forms/bootstrapdialog.ui
+  qt/forms/bootstrapdialog.ui \
   qt/forms/coincontroldialog.ui \
   qt/forms/communitypage.ui \
   qt/forms/createwalletdialog.ui \
@@ -119,7 +119,7 @@ BITCOIN_QT_H = \
   qt/bitcoin.h \
   qt/bitcoingui.h \
   qt/bitcoinunits.h \
-  qt/bootstrapdialog.h
+  qt/bootstrapdialog.h \
   qt/clientmodel.h \
   qt/coincontroldialog.h \
   qt/coincontroltreewidget.h \

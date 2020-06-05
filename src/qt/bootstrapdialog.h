@@ -8,18 +8,18 @@
 #include <QTimer>
 
 namespace Ui {
-    class Bootstrapdialog;
+    class BootstrapDialog;
 }
-class Bootstrapdialog : public QDialog
+class BootstrapDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit Bootstrapdialog(QWidget *parent = 0);
-    ~Bootstrapdialog();
+    explicit BootstrapDialog(QWidget *parent = 0);
+    ~BootstrapDialog();
     void setProgress(curl_off_t, curl_off_t);
 
-    Ui::Bootstrapdialog *ui;
+    Ui::BootstrapDialog *ui;
 
 private Q_SLOTS:
 

@@ -5,27 +5,27 @@
 #include <bootstrap.h>
 #include <QDesktopServices>
 
-Bootstrapdialog::Bootstrapdialog(QWidget *parent) :
+BootstrapDialog::BootstrapDialog(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::Bootstrapdialog)
+    ui(new Ui::BootstrapDialog)
 {
     ui->setupUi(this);
     setWindowTitle(tr("Chain Bootstrap"));
     ui->checkBox->setVisible(false);
 }
 
-Bootstrapdialog::~Bootstrapdialog()
+BootstrapDialog::~BootstrapDialog()
 {
     delete ui;
 }
 
-Bootstrapdialog* xfer_callback_instance;
+BootstrapDialog* xfer_callback_instance;
 static void xfer_callback(curl_off_t total, curl_off_t now)
 {
     xfer_callback_instance->setProgress(total, now);
 }
 
-void Bootstrapdialog::on_startButton_clicked()
+void BootstrapDialog::on_startButton_clicked()
 {
     extern void set_xferinfo_data(void*);
 
@@ -44,7 +44,7 @@ void Bootstrapdialog::on_startButton_clicked()
     QApplication::quit();
 }
 
-void Bootstrapdialog::setProgress(curl_off_t total, curl_off_t now)
+void BootstrapDialog::setProgress(curl_off_t total, curl_off_t now)
 {
     ui->progressBar->setMinimum(0);
     ui->progressBar->setMaximum(total - 1);
