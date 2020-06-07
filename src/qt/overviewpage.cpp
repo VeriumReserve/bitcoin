@@ -181,6 +181,15 @@ OverviewPage::OverviewPage(const PlatformStyle *platformStyle, QWidget *parent) 
     updateMiningStatsTimer = new QTimer(this);
     connect(updateMiningStatsTimer, &QTimer::timeout, this, &OverviewPage::updateMiningStatistics);
 
+    // Prepare mining animation
+    miningOnMovie = new QMovie(":/movies/mining_on", "gif", this);
+    connect(miningOnMovie, &QMovie::frameChanged, [this](int frame) {
+      if(miningState)
+        ui->mineButton->setIcon(QIcon(miningOnMovie->currentPixmap()));
+    });
+    if (miningOnMovie->loopCount() != -1)
+        connect(miningOnMovie, &QMovie::finished, miningOnMovie, &QMovie::start);
+
     // manage receive/send button
     ui->receiveBox->installEventFilter(this);
     ui->sendBox->installEventFilter(this);
@@ -354,13 +363,16 @@ void OverviewPage::manageMiningState(bool state, int procs)
     if ( ! miningState )
     {
         updateMiningStatsTimer->stop();
+        ui->mineButton->setIcon(QIcon(":/icons/verium"));
+        miningOnMovie->stop();
         ui->labelMinerHashrate->setText("--- H/m");
-        ui->labelEstNextReward->setText("--- Days");
+        ui->labelEstNextReward->setText("--- Day(s)");
         ui->labelMinerButton->setText(tr("Click to start:"));
     }
     else
     {
-        // Update stats every 5s
+        // Update stats every 1s
+        miningOnMovie->start();
         updateMiningStatsTimer->start(1000);
         ui->labelMinerButton->setText(tr("Click to stop:"));
     }
@@ -416,5 +428,5 @@ void OverviewPage::updateMiningStatistics()
     }
 
     ui->labelMinerHashrate->setText(QString("%1 H/m").arg(QString::number(totalhashrate, 'f', 3)));
-    ui->labelEstNextReward->setText(QString("%1 Days").arg(QString::number(minerate, 'f', 1)));
+    ui->labelEstNextReward->setText(QString("%1 Day(s)").arg(QString::number(minerate, 'f', 1)));
 }

@@ -207,8 +207,6 @@ RES_ICONS = \
   qt/res/icons/lock_closed.png \
   qt/res/icons/lock_open.png \
   qt/res/icons/minimize.png \
-  qt/res/icons/mining_off.png \
-  qt/res/icons/mining_on.png \
   qt/res/icons/move.png \
   qt/res/icons/network_disabled.png \
   qt/res/icons/overview.png \
@@ -305,7 +303,7 @@ endif # ENABLE_WALLET
 
 RES_IMAGES =
 
-RES_MOVIES = $(wildcard $(srcdir)/qt/res/movies/spinner-*.png)
+RES_MOVIES = $(wildcard $(srcdir)/qt/res/movies/spinner-*.png  qt/res/movies/mining_on.gif)
 
 RES_FONTS = \
   qt/res/fonts/Lato2OFL/Lato-Heavy.ttf \

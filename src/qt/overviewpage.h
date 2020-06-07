@@ -9,6 +9,7 @@
 
 #include <QWidget>
 #include <QTimer>
+#include <QMovie>
 #include <memory>
 
 class ClientModel;
@@ -66,6 +67,7 @@ private:
     TxViewDelegate *txdelegate;
     std::unique_ptr<TransactionFilterProxy> filter;
     QTimer *updateMiningStatsTimer;
+    QMovie *miningOnMovie;
 
 private Q_SLOTS:
     void updateDisplayUnit();
