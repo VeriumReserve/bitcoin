@@ -303,7 +303,8 @@ endif # ENABLE_WALLET
 
 RES_IMAGES =
 
-RES_MOVIES = $(wildcard $(srcdir)/qt/res/movies/spinner-*.png  qt/res/movies/mining_on.gif)
+RES_MOVIES = $(wildcard $(srcdir)/qt/res/movies/spinner-*.png) \
+  qt/res/movies/mining_on.gif
 
 RES_FONTS = \
   qt/res/fonts/Lato2OFL/Lato-Heavy.ttf \
