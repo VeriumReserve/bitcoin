@@ -11,6 +11,9 @@
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,1">
+   <property name="topMargin">
+    <number>4</number>
+   </property>
    <item>
     <widget class="QFrame" name="frame2">
      <property name="sizePolicy">
@@ -64,13 +67,6 @@
          <widget class="QLineEdit" name="reqLabel">
           <property name="toolTip">
            <string>An optional label to associate with the new receiving address.</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="2">
-         <widget class="QLabel" name="label_5">
-          <property name="text">
-           <string>Use this form to request payments. All fields are &lt;b&gt;optional&lt;/b&gt;.</string>
           </property>
          </widget>
         </item>
@@ -189,31 +185,6 @@
            </widget>
           </item>
           <item>
-           <widget class="QCheckBox" name="useBech32">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>1000</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="focusPolicy">
-             <enum>Qt::StrongFocus</enum>
-            </property>
-            <property name="toolTip">
-             <string>Native segwit addresses (aka Bech32 or BIP-173) reduce your transaction fees later on and offer better protection against typos, but old wallets don't support them. When unchecked, an address compatible with older wallets will be created instead.</string>
-            </property>
-            <property name="text">
-             <string>Generate native segwit (Bech32) address</string>
-            </property>
-           </widget>
-          </item>
-          <item>
            <spacer name="horizontalSpacer_3">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -227,6 +198,13 @@
            </spacer>
           </item>
          </layout>
+        </item>
+        <item row="2" column="0" colspan="3">
+         <widget class="QLabel" name="label_5">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Create new receiving address (All fields are optional)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>
@@ -360,7 +338,6 @@
  <tabstops>
   <tabstop>reqLabel</tabstop>
   <tabstop>reqAmount</tabstop>
-  <tabstop>useBech32</tabstop>
   <tabstop>reqMessage</tabstop>
   <tabstop>receiveButton</tabstop>
   <tabstop>clearButton</tabstop>

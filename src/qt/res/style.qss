@@ -113,7 +113,8 @@ QLabel#availableTitle, QLabel#unconfirmedTitle, QLabel#minerHashTitle,
 QLabel#totalTitle, QLabel#immatureTitle, QLabel#estNextRewardTitle,
 QLabel#lastTransactionsTitle, QLabel#minerTitle {
     color: #586A7A;
-    font: 10pt "Lato Bold";
+    font: 10pt "Lato";
+    font-weight: bold;
 }
 
 QLabel#labelBalance, QLabel#labelUnconfirmed, QLabel#labelMinerHashrate,
@@ -121,7 +122,8 @@ QLabel#labelTotal, QLabel#labelImmature, QLabel#labelEstNextReward {
     margin-top: 2px;
     margin-bottom: 2px;
     color: #46505A;
-    font: 11pt "Lato Heavy";
+    font: 11pt "Lato";
+    font-weight: bold;
 }
 
 QLabel#watchOnlyAvailableText, QLabel#watchOnlyUnconfirmedText,
@@ -160,11 +162,49 @@ QLabel#labelMinerButton, QLabel#labelThreadNumber {
 }
 
 
+/** Receive Coin Page **/
+QWidget#ReceiveCoinsDialog QFrame{
+    border-radius: 5px;
+    background-color: white;
+}
+
+
+QWidget#ReceiveCoinsDialog QLabel {
+    font: 10pt "Lato";
+    color: #46505A;
+}
+
+QWidget#ReceiveCoinsDialog QLabel#label_5{
+    color: #586A7A;
+    margin-bottom:10px;
+    font: 10pt "Lato";
+    font-weight: bold;
+}
+
+QWidget#ReceiveCoinsDialog QLineEdit, QWidget#ReceiveCoinsDialog QAbstractSpinBox {
+    border: no;
+    border-bottom: 2px solid gray;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+    background-color: #f5f5f5;
+    min-height: 25px;
+    padding: 0 4px;
+    color: #586A7A;
+    font: 11pt "Lato";
+}
+QWidget#ReceiveCoinsDialog QLineEdit::focus, QWidget#ReceiveCoinsDialog QAbstractSpinBox::focus {
+    background-color: #dcdcdc;
+    border-bottom: 4px solid #418bca;
+}
+
+QWidget#ReceiveCoinsDialog QAbstractSpinBox::up-button,
+QWidget#ReceiveCoinsDialog QAbstractSpinBox::down-button {
+    border: no;
+}
 /** Community Page **/
 QWidget#CommunityPage QLabel#communityTitle {
     color: white;
     font: 27pt "Lato Light";
-    color: #46505A;
     margin-bottom: 5px;
 }
 
@@ -181,13 +221,14 @@ QWidget#explorerBox:hover, QWidget#twitterBox:hover, QWidget#chatBox:hover, QWid
 QLabel#explorerTitle, QLabel#twitterTitle, QLabel#chatTitle, QLabel#websiteTitle {
     margin-left: 5px;
     color: white;
-    font: 17pt "Lato Bold";
+    font: 17pt "Lato";
+    font-weight: bold;
 }
 
 QLabel#explorerDescription, QLabel#twitterDescription, QLabel#chatDescription, QLabel#websiteDescription {
     margin-left: 3px;
     margin-right: 45px;
-    margin-top: 15px;
+    margin-top: 10px;
     color: white;
     font: 10pt "Lato Bold";
 }
