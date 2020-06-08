@@ -80,10 +80,8 @@ public:
 
         // Write Date & Address
         QDateTime date = index.data(TransactionTableModel::DateRole).toDateTime();
-        painter->drawText(textRect, Qt::AlignLeft|Qt::AlignVCenter, GUIUtil::dateTimeStr(date));
-
         QString address = index.data(Qt::DisplayRole).toString();
-        painter->drawText(textRect, Qt::AlignCenter|Qt::AlignVCenter, address);
+        painter->drawText(textRect, Qt::AlignLeft|Qt::AlignVCenter, QString("%1  -  %2").arg(GUIUtil::dateTimeStr(date)).arg(address));
 
         // Write amount
         qint64 amount = index.data(TransactionTableModel::AmountRole).toLongLong();
