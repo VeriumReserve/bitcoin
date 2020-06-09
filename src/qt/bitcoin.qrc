@@ -6,6 +6,7 @@
         <file alias="add">res/icons/add.png</file>
         <file alias="address-book">res/icons/address-book.png</file>
         <file alias="arrow">res/icons/arrow.png</file>
+        <file alias="arrow-dark">res/icons/arrow-dark.png</file>
         <file alias="chat">res/icons/chat.png</file>
         <file alias="close">res/icons/close.png</file>
         <file alias="community">res/icons/community.png</file>

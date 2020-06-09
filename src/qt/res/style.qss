@@ -54,7 +54,8 @@ QComboBox#walletSelector {
     min-height: 35px;
     max-height: 35px;
     background-color: #418bca;
-    font-size: 13px;
+    font: 10pt "Lato";
+    font-weight: bold;
 }
 
 QComboBox#walletSelector::drop-down
@@ -65,11 +66,12 @@ QComboBox#walletSelector::drop-down
     background-position: center;
 }
 
-QComboBox#walletSelector::item {
-    background-color: #418bca;
-}
 QComboBox#walletSelector::item:selected {
-    background-color: #3277b3;
+    background-color: #74a9d8;
+}
+QComboBox#walletSelector QAbstractItemView {
+    background-color: #418bca;
+    border: no;
 }
 
 /** Bottom status bar **/
@@ -163,20 +165,21 @@ QLabel#labelMinerButton, QLabel#labelThreadNumber {
 
 
 /** Receive Coin Page **/
-QWidget#ReceiveCoinsDialog QFrame{
+
+QWidget#ReceiveCoinsDialog QFrame#frame, QWidget#ReceiveCoinsDialog QFrame#frame2 {
     border-radius: 5px;
     background-color: white;
+    padding: 0px 10px 10px 10px;
 }
-
 
 QWidget#ReceiveCoinsDialog QLabel {
     font: 10pt "Lato";
     color: #46505A;
 }
 
-QWidget#ReceiveCoinsDialog QLabel#label_5{
+QWidget#ReceiveCoinsDialog QLabel#label_5, QWidget#ReceiveCoinsDialog QLabel#label_6 {
     color: #586A7A;
-    margin-bottom:10px;
+    margin-bottom: 4px;
     font: 10pt "Lato";
     font-weight: bold;
 }
@@ -186,11 +189,11 @@ QWidget#ReceiveCoinsDialog QLineEdit, QWidget#ReceiveCoinsDialog QAbstractSpinBo
     border-bottom: 2px solid gray;
     border-top-right-radius: 3px;
     border-top-left-radius: 3px;
-    background-color: #f5f5f5;
-    min-height: 25px;
+    background-color: #e6e6e6;
+    height: 25px;
     padding: 0 4px;
-    color: #586A7A;
-    font: 11pt "Lato";
+    color: black;
+    font: 11pt "Lato Light";
 }
 QWidget#ReceiveCoinsDialog QLineEdit::focus, QWidget#ReceiveCoinsDialog QAbstractSpinBox::focus {
     background-color: #dcdcdc;
@@ -201,6 +204,61 @@ QWidget#ReceiveCoinsDialog QAbstractSpinBox::up-button,
 QWidget#ReceiveCoinsDialog QAbstractSpinBox::down-button {
     border: no;
 }
+
+QWidget#ReceiveCoinsDialog QComboBox#unit {
+    border: no;
+    border-bottom: 2px solid gray;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+    background-color: #e6e6e6;
+    padding: 0px 10px 0px 10px;
+    height: 25px;
+    font: 11pt "Lato Light";
+}
+
+QWidget#ReceiveCoinsDialog QComboBox#unit::drop-down {
+    background-color: #e6e6e6;
+    background-image: url(:/icons/arrow-dark);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+QWidget#ReceiveCoinsDialog QComboBox#unit QAbstractItemView {
+    background-color: #e6e6e6;
+    selection-color: #586A7A;
+    border: no;
+}
+
+QWidget#ReceiveCoinsDialog QPushButton {
+    border: no;
+    border-radius: 3px;
+    height: 25px;
+    padding: 5px 10px;
+    background-color: #418bca;
+    color: white;
+    font: 10pt "Lato";
+    font-weight: bold;
+}
+QWidget#ReceiveCoinsDialog QPushButton:hover {
+    background-color: #2d6a9f;
+}
+
+QWidget#ReceiveCoinsDialog QPushButton#clearButton,
+QWidget#ReceiveCoinsDialog QPushButton#removeRequestButton {
+    background-color: #e93a5d;
+}
+QWidget#ReceiveCoinsDialog QPushButton#clearButton:hover,
+QWidget#ReceiveCoinsDialog QPushButton#removeRequestButton:hover {
+    background-color: #e61942;
+}
+
+QWidget#ReceiveCoinsDialog QTableView {
+    font: 10pt "Lato";
+    alternate-background-color: white;
+    background-color: #e6e6e6;
+}
+
 /** Community Page **/
 QWidget#CommunityPage QLabel#communityTitle {
     color: white;
