@@ -11,6 +11,7 @@
 
 #include <QClipboard>
 #include <QPixmap>
+#include <QGraphicsDropShadowEffect>
 
 #if defined(HAVE_CONFIG_H)
 #include <config/bitcoin-config.h> /* for USE_QRCODE */
@@ -22,6 +23,22 @@ ReceiveRequestDialog::ReceiveRequestDialog(QWidget *parent) :
     model(nullptr)
 {
     ui->setupUi(this);
+    for (int i = 0; i < ui->verticalLayout->count(); ++i)
+    {
+        QWidget *box = ui->verticalLayout->itemAt(i)->widget();
+        if( box->isHidden())
+            continue;
+        QGraphicsDropShadowEffect* shadow = new QGraphicsDropShadowEffect();
+        shadow->setOffset(QPointF(5, 5));
+        shadow->setBlurRadius(20.0);
+        box->setGraphicsEffect(shadow);
+    }
+
+    QGraphicsDropShadowEffect* shadow = new QGraphicsDropShadowEffect();
+    shadow->setOffset(QPointF(5, 5));
+    shadow->setBlurRadius(20.0);
+    ui->lblQRCode->setGraphicsEffect(shadow);
+
 
 #ifndef USE_QRCODE
     ui->btnSaveAs->setVisible(false);
@@ -57,6 +74,11 @@ void ReceiveRequestDialog::update()
 {
     if(!model)
         return;
+
+    ui->amountBox->hide();
+    ui->labelBox->hide();
+    ui->messageBox->hide();
+
     QString target = info.label;
     if(target.isEmpty())
         target = info.address;
@@ -64,22 +86,28 @@ void ReceiveRequestDialog::update()
 
     QString uri = GUIUtil::formatBitcoinURI(info);
     ui->btnSaveAs->setEnabled(false);
-    QString html;
-    html += "<html><font face='verdana, arial, helvetica, sans-serif'>";
-    html += "<b>"+tr("Payment information")+"</b><br>";
-    html += "<b>"+tr("URI")+"</b>: ";
-    html += "<a href=\""+uri+"\">" + GUIUtil::HtmlEscape(uri) + "</a><br>";
-    html += "<b>"+tr("Address")+"</b>: " + GUIUtil::HtmlEscape(info.address) + "<br>";
-    if(info.amount)
-        html += "<b>"+tr("Amount")+"</b>: " + BitcoinUnits::formatHtmlWithUnit(model->getOptionsModel()->getDisplayUnit(), info.amount) + "<br>";
-    if(!info.label.isEmpty())
-        html += "<b>"+tr("Label")+"</b>: " + GUIUtil::HtmlEscape(info.label) + "<br>";
-    if(!info.message.isEmpty())
-        html += "<b>"+tr("Message")+"</b>: " + GUIUtil::HtmlEscape(info.message) + "<br>";
-    if(model->isMultiwallet()) {
-        html += "<b>"+tr("Wallet")+"</b>: " + GUIUtil::HtmlEscape(model->getWalletName()) + "<br>";
+    ui->textUri->setText("<a href=\""+uri+"\">" + GUIUtil::HtmlEscape(uri) + "</a>");
+    ui->textUri->setAlignment(Qt::AlignCenter);
+    ui->textAddress->setText(GUIUtil::HtmlEscape(info.address));
+    ui->textAddress->setAlignment(Qt::AlignCenter);
+
+    if(info.amount) {
+        ui->amountBox->show();
+        ui->textAmount->setText(BitcoinUnits::formatHtmlWithUnit(model->getOptionsModel()->getDisplayUnit(), info.amount));
+        ui->textAmount->setAlignment(Qt::AlignCenter);
     }
-    ui->outUri->setText(html);
+
+    if(!info.label.isEmpty()) {
+        ui->labelBox->show();
+        ui->textLabel->setText(GUIUtil::HtmlEscape(info.label));
+        ui->textLabel->setAlignment(Qt::AlignCenter);
+    }
+
+    if(!info.message.isEmpty()) {
+        ui->messageBox->show();
+        ui->textMessage->setText(GUIUtil::HtmlEscape(info.message));
+        ui->textMessage->setAlignment(Qt::AlignCenter);
+    }
 
     if (ui->lblQRCode->setQR(uri, info.address)) {
         ui->btnSaveAs->setEnabled(true);

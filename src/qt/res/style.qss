@@ -2,6 +2,7 @@
 QMainWindow { background-color: #586A7A; } /** Main surrounding color **/
 QToolBar#mainToolBar { background-color: #586A7A; } /** Main surrounding color **/
 QWidget#central { background-color: #418bca; } /** Central color **/
+QDialog#ReceiveRequestDialog { background-color: #418bca; } /** Dialog for coin request **/
 QToolBar#tabBar { background-color: #46505A; } /** Left toolbar color **/
 QToolBar#tabBar QToolButton:hover { background-color: #6A727A; } /** Left toolbar - hover button **/
 
@@ -256,6 +257,43 @@ QWidget#ReceiveCoinsDialog QPushButton#removeRequestButton:hover {
 QWidget#ReceiveCoinsDialog QTableView {
     font: 10pt "Lato";
     alternate-background-color: white;
+    background-color: #e6e6e6;
+}
+
+/** ReceiveRequestDialog **/
+QWidget#ReceiveRequestDialog QLabel#lblQRCode,
+QWidget#ReceiveRequestDialog QWidget#addressBox,
+QWidget#ReceiveRequestDialog QWidget#amountBox,
+QWidget#ReceiveRequestDialog QWidget#labelBox,
+QWidget#ReceiveRequestDialog QWidget#messageBox,
+QWidget#ReceiveRequestDialog QWidget#uriBox {
+    border-radius: 5px;
+    background-color: white;
+    padding: 0px 10px 10px 10px;
+    margin-bottom: 5px;
+}
+
+QWidget#ReceiveRequestDialog QLabel#addressTitle,
+QWidget#ReceiveRequestDialog QLabel#amountTitle,
+QWidget#ReceiveRequestDialog QLabel#labelTitle,
+QWidget#ReceiveRequestDialog QLabel#messageTitle,
+QWidget#ReceiveRequestDialog QLabel#uriTitle {
+    color: #586A7A;
+    font: 11pt "Lato";
+    font-weight: bold;
+}
+
+QWidget#ReceiveRequestDialog QTextEdit {
+    color: #46505A;
+    font: 11pt "Lato";
+    font-weight: bold;
+}
+
+QWidget#ReceiveRequestDialog QPushButton {
+    background-color: white;
+    color: #46505A;
+}
+QWidget#ReceiveRequestDialog QPushButton:hover {
     background-color: #e6e6e6;
 }
 

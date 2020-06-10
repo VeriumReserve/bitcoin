@@ -53,6 +53,7 @@ bool QRImageWidget::setQR(const QString& data, const QString& text)
         return false;
     }
 
+
     QImage qrImage = QImage(code->width + 8, code->width + 8, QImage::Format_RGB32);
     qrImage.fill(0xffffff);
     unsigned char *p = code->data;
@@ -70,17 +71,16 @@ bool QRImageWidget::setQR(const QString& data, const QString& text)
     painter.drawImage(0, 0, qrImage.scaled(QR_IMAGE_SIZE, QR_IMAGE_SIZE));
 
     if (!text.isEmpty()) {
-        QFont font = GUIUtil::fixedPitchFont();
-        font.setStyleStrategy(QFont::NoAntialias);
+        QFont font("Lato", 9, QFont::ExtraBold);
         QRect paddedRect = qrAddrImage.rect();
 
         // calculate ideal font size
-        qreal font_size = GUIUtil::calculateIdealFontSize(paddedRect.width() - 20, text, font);
+        qreal font_size = GUIUtil::calculateIdealFontSize(paddedRect.width(), text, font);
         font.setPointSizeF(font_size);
 
         painter.setFont(font);
         paddedRect.setHeight(QR_IMAGE_SIZE+12);
-        painter.drawText(paddedRect, Qt::AlignBottom|Qt::AlignCenter, text);
+        painter.drawText(QRect(paddedRect.left(), paddedRect.top(), paddedRect.width(), paddedRect.height()), Qt::AlignBottom|Qt::AlignCenter, text);
     }
 
     painter.end();
