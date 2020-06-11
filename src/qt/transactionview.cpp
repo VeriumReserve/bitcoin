@@ -34,6 +34,8 @@
 #include <QTimer>
 #include <QUrl>
 #include <QVBoxLayout>
+#include <QGridLayout>
+#include <QGraphicsDropShadowEffect>
 
 TransactionView::TransactionView(const PlatformStyle *platformStyle, QWidget *parent) :
     QWidget(parent), model(nullptr), transactionProxyModel(nullptr),
@@ -43,49 +45,46 @@ TransactionView::TransactionView(const PlatformStyle *platformStyle, QWidget *pa
     setContentsMargins(0,0,0,0);
 
     QWidget *filterBox = new QWidget();
+    filterBox->setObjectName("filterBox");
+    QVBoxLayout *filterBoxLayout = new QVBoxLayout();
+    filterBoxLayout->setMargin(0);
+    filterBoxLayout->setSpacing(0);
+    filterBox->setLayout(filterBoxLayout);
 
-    QHBoxLayout *hlayout = new QHBoxLayout();
-    hlayout->setContentsMargins(0,0,0,0);
+    // with shadow, it look better
+    QGraphicsDropShadowEffect* shadow = new QGraphicsDropShadowEffect();
+    shadow->setOffset(QPointF(5, 5));
+    shadow->setBlurRadius(20.0);
+    filterBox->setGraphicsEffect(shadow);
 
-    if (platformStyle->getUseExtraSpacing()) {
-        hlayout->setSpacing(5);
-        hlayout->addSpacing(26);
-    } else {
-        hlayout->setSpacing(0);
-        hlayout->addSpacing(23);
-    }
+    QLabel *filterTitle = new QLabel(tr("Filters"));
+    filterTitle->setObjectName("filterTitle");
+    filterBoxLayout->addWidget(filterTitle);
+
+    QGridLayout *filtersLayout = new QGridLayout();
+    filtersLayout->setContentsMargins(4,0,4,4);
+    filtersLayout->setSpacing(4);
+    filterBoxLayout->addLayout(filtersLayout);
 
     watchOnlyWidget = new QComboBox(this);
     watchOnlyWidget->setFixedWidth(24);
     watchOnlyWidget->addItem("", TransactionFilterProxy::WatchOnlyFilter_All);
     watchOnlyWidget->addItem(platformStyle->SingleColorIcon(":/icons/eye_plus"), "", TransactionFilterProxy::WatchOnlyFilter_Yes);
     watchOnlyWidget->addItem(platformStyle->SingleColorIcon(":/icons/eye_minus"), "", TransactionFilterProxy::WatchOnlyFilter_No);
-    hlayout->addWidget(watchOnlyWidget);
+ //   filterWatchOnlyLayout->addWidget(watchOnlyWidget);
 
-    dateWidget = new QComboBox(this);
-    dateWidget->setObjectName("dateWidget");
-    if (platformStyle->getUseExtraSpacing()) {
-        dateWidget->setFixedWidth(121);
-    } else {
-        dateWidget->setFixedWidth(120);
-    }
-    dateWidget->addItem(tr("All"), All);
-    dateWidget->addItem(tr("Today"), Today);
-    dateWidget->addItem(tr("This week"), ThisWeek);
-    dateWidget->addItem(tr("This month"), ThisMonth);
-    dateWidget->addItem(tr("Last month"), LastMonth);
-    dateWidget->addItem(tr("This year"), ThisYear);
-    dateWidget->addItem(tr("Range..."), Range);
-    hlayout->addWidget(dateWidget);
+    searchWidget = new QLineEdit(this);
+    searchWidget->setObjectName("searchWidget");
+    searchWidget->setPlaceholderText(tr("Enter address, transaction id, or label to search"));
+    QLabel *searchFilterTitle = new QLabel(tr("&Search: "));
+    searchFilterTitle->setObjectName("addressFilterTitle");
+    searchFilterTitle->setAlignment(Qt::AlignRight);
+    searchFilterTitle->setBuddy(searchWidget);
+    filtersLayout->addWidget(searchFilterTitle, 0, 0);
+    filtersLayout->addWidget(searchWidget, 0, 1);
 
     typeWidget = new QComboBox(this);
     typeWidget->setObjectName("typeWidget");
-    if (platformStyle->getUseExtraSpacing()) {
-        typeWidget->setFixedWidth(121);
-    } else {
-        typeWidget->setFixedWidth(120);
-    }
-
     typeWidget->addItem(tr("All"), TransactionFilterProxy::ALL_TYPES);
     typeWidget->addItem(tr("Received with"), TransactionFilterProxy::TYPE(TransactionRecord::RecvWithAddress) |
                                         TransactionFilterProxy::TYPE(TransactionRecord::RecvFromOther));
@@ -94,28 +93,45 @@ TransactionView::TransactionView(const PlatformStyle *platformStyle, QWidget *pa
     typeWidget->addItem(tr("To yourself"), TransactionFilterProxy::TYPE(TransactionRecord::SendToSelf));
     typeWidget->addItem(tr("Mined"), TransactionFilterProxy::TYPE(TransactionRecord::Generated));
     typeWidget->addItem(tr("Other"), TransactionFilterProxy::TYPE(TransactionRecord::Other));
-
-    hlayout->addWidget(typeWidget);
-
-    search_widget = new QLineEdit(this);
-    search_widget->setObjectName("searchWidget");
-    search_widget->setPlaceholderText(tr("Enter address, transaction id, or label to search"));
-    hlayout->addWidget(search_widget);
+    QLabel *typeFilterTitle = new QLabel(tr("&Type: "));
+    typeFilterTitle->setObjectName("typeFilterTitle");
+    typeFilterTitle->setAlignment(Qt::AlignRight);
+    typeFilterTitle->setBuddy(typeWidget);
+    filtersLayout->addWidget(typeFilterTitle, 1, 0);
+    filtersLayout->addWidget(typeWidget, 1, 1);
 
     amountWidget = new QLineEdit(this);
     amountWidget->setObjectName("amountWidget");
     amountWidget->setPlaceholderText(tr("Min amount"));
-    if (platformStyle->getUseExtraSpacing()) {
-        amountWidget->setFixedWidth(97);
-    } else {
-        amountWidget->setFixedWidth(100);
-    }
     QDoubleValidator *amountValidator = new QDoubleValidator(0, 1e20, 8, this);
     QLocale amountLocale(QLocale::C);
     amountLocale.setNumberOptions(QLocale::RejectGroupSeparator);
     amountValidator->setLocale(amountLocale);
     amountWidget->setValidator(amountValidator);
-    hlayout->addWidget(amountWidget);
+    QLabel *amountFilterTitle = new QLabel(tr("&Amount: "));
+    amountFilterTitle->setObjectName("amountFilterTitle");
+    amountFilterTitle->setAlignment(Qt::AlignRight);
+    amountFilterTitle->setBuddy(amountWidget);
+    filtersLayout->addWidget(amountFilterTitle, 2, 0);
+    filtersLayout->addWidget(amountWidget, 2, 1);
+
+    dateWidget = new QComboBox(this);
+    dateWidget->setObjectName("dateWidget");
+    dateWidget->addItem(tr("All"), All);
+    dateWidget->addItem(tr("Today"), Today);
+    dateWidget->addItem(tr("This week"), ThisWeek);
+    dateWidget->addItem(tr("This month"), ThisMonth);
+    dateWidget->addItem(tr("Last month"), LastMonth);
+    dateWidget->addItem(tr("This year"), ThisYear);
+    dateWidget->addItem(tr("Range..."), Range);
+    QLabel *dateFilterTitle = new QLabel(tr("&Date: "));
+    dateFilterTitle->setObjectName("dateFilterTitle");
+    dateFilterTitle->setAlignment(Qt::AlignRight);
+    dateFilterTitle->setBuddy(dateWidget);
+    filtersLayout->addWidget(dateFilterTitle, 3, 0);
+    filtersLayout->addWidget(dateWidget, 3, 1);
+
+
 
     // Delay before filtering transactions in ms
     static const int input_filter_delay = 200;
@@ -129,21 +145,14 @@ TransactionView::TransactionView(const PlatformStyle *platformStyle, QWidget *pa
     prefix_typing_delay->setInterval(input_filter_delay);
 
     QVBoxLayout *vlayout = new QVBoxLayout(this);
-    vlayout->setContentsMargins(0,0,0,0);
-    vlayout->setSpacing(0);
+    vlayout->setContentsMargins(9,0,9,0);
+    vlayout->setSpacing(9);
 
     QTableView *view = new QTableView(this);
-    vlayout->addLayout(hlayout);
+    vlayout->addWidget(filterBox);
     vlayout->addWidget(createDateRangeWidget());
     vlayout->addWidget(view);
-    vlayout->setSpacing(0);
-    int width = view->verticalScrollBar()->sizeHint().width();
-    // Cover scroll bar width with spacing
-    if (platformStyle->getUseExtraSpacing()) {
-        hlayout->addSpacing(width+2);
-    } else {
-        hlayout->addSpacing(width);
-    }
+
     // Always show scroll bar
     view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     view->setTabKeyNavigation(false);
@@ -153,6 +162,11 @@ TransactionView::TransactionView(const PlatformStyle *platformStyle, QWidget *pa
 
     transactionView = view;
     transactionView->setObjectName("transactionView");
+    QGraphicsDropShadowEffect* shadow2 = new QGraphicsDropShadowEffect();
+    shadow2->setOffset(QPointF(5, 5));
+    shadow2->setBlurRadius(20.0);
+    transactionView->setGraphicsEffect(shadow2);
+
 
     // Actions
     QAction *copyAddressAction = new QAction(tr("Copy address"), this);
@@ -181,7 +195,7 @@ TransactionView::TransactionView(const PlatformStyle *platformStyle, QWidget *pa
     connect(watchOnlyWidget, static_cast<void (QComboBox::*)(int)>(&QComboBox::activated), this, &TransactionView::chooseWatchonly);
     connect(amountWidget, &QLineEdit::textChanged, amount_typing_delay, static_cast<void (QTimer::*)()>(&QTimer::start));
     connect(amount_typing_delay, &QTimer::timeout, this, &TransactionView::changedAmount);
-    connect(search_widget, &QLineEdit::textChanged, prefix_typing_delay, static_cast<void (QTimer::*)()>(&QTimer::start));
+    connect(searchWidget, &QLineEdit::textChanged, prefix_typing_delay, static_cast<void (QTimer::*)()>(&QTimer::start));
     connect(prefix_typing_delay, &QTimer::timeout, this, &TransactionView::changedSearch);
 
     connect(view, &QTableView::doubleClicked, this, &TransactionView::doubleClicked);
@@ -323,7 +337,7 @@ void TransactionView::changedSearch()
 {
     if(!transactionProxyModel)
         return;
-    transactionProxyModel->setSearchString(search_widget->text());
+    transactionProxyModel->setSearchString(searchWidget->text());
 }
 
 void TransactionView::changedAmount()

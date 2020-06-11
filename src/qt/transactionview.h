@@ -67,7 +67,7 @@ private:
     QComboBox *dateWidget;
     QComboBox *typeWidget;
     QComboBox *watchOnlyWidget;
-    QLineEdit *search_widget;
+    QLineEdit *searchWidget;
     QLineEdit *amountWidget;
 
     QMenu *contextMenu;
