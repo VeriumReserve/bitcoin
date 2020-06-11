@@ -37,10 +37,12 @@
 
 TransactionView::TransactionView(const PlatformStyle *platformStyle, QWidget *parent) :
     QWidget(parent), model(nullptr), transactionProxyModel(nullptr),
-    transactionView(nullptr), abandonAction(nullptr), bumpFeeAction(nullptr), columnResizingFixer(nullptr)
+    transactionView(nullptr), columnResizingFixer(nullptr)
 {
     // Build filter row
     setContentsMargins(0,0,0,0);
+
+    QWidget *filterBox = new QWidget();
 
     QHBoxLayout *hlayout = new QHBoxLayout();
     hlayout->setContentsMargins(0,0,0,0);
@@ -61,6 +63,7 @@ TransactionView::TransactionView(const PlatformStyle *platformStyle, QWidget *pa
     hlayout->addWidget(watchOnlyWidget);
 
     dateWidget = new QComboBox(this);
+    dateWidget->setObjectName("dateWidget");
     if (platformStyle->getUseExtraSpacing()) {
         dateWidget->setFixedWidth(121);
     } else {
@@ -76,6 +79,7 @@ TransactionView::TransactionView(const PlatformStyle *platformStyle, QWidget *pa
     hlayout->addWidget(dateWidget);
 
     typeWidget = new QComboBox(this);
+    typeWidget->setObjectName("typeWidget");
     if (platformStyle->getUseExtraSpacing()) {
         typeWidget->setFixedWidth(121);
     } else {
@@ -94,10 +98,12 @@ TransactionView::TransactionView(const PlatformStyle *platformStyle, QWidget *pa
     hlayout->addWidget(typeWidget);
 
     search_widget = new QLineEdit(this);
+    search_widget->setObjectName("searchWidget");
     search_widget->setPlaceholderText(tr("Enter address, transaction id, or label to search"));
     hlayout->addWidget(search_widget);
 
     amountWidget = new QLineEdit(this);
+    amountWidget->setObjectName("amountWidget");
     amountWidget->setPlaceholderText(tr("Min amount"));
     if (platformStyle->getUseExtraSpacing()) {
         amountWidget->setFixedWidth(97);
@@ -149,9 +155,6 @@ TransactionView::TransactionView(const PlatformStyle *platformStyle, QWidget *pa
     transactionView->setObjectName("transactionView");
 
     // Actions
-    abandonAction = new QAction(tr("Abandon transaction"), this);
-    bumpFeeAction = new QAction(tr("Increase transaction fee"), this);
-    bumpFeeAction->setObjectName("bumpFeeAction");
     QAction *copyAddressAction = new QAction(tr("Copy address"), this);
     QAction *copyLabelAction = new QAction(tr("Copy label"), this);
     QAction *copyAmountAction = new QAction(tr("Copy amount"), this);
@@ -171,8 +174,6 @@ TransactionView::TransactionView(const PlatformStyle *platformStyle, QWidget *pa
     contextMenu->addAction(copyTxPlainText);
     contextMenu->addAction(showDetailsAction);
     contextMenu->addSeparator();
-    contextMenu->addAction(bumpFeeAction);
-    contextMenu->addAction(abandonAction);
     contextMenu->addAction(editLabelAction);
 
     connect(dateWidget, static_cast<void (QComboBox::*)(int)>(&QComboBox::activated), this, &TransactionView::chooseDate);
@@ -186,8 +187,6 @@ TransactionView::TransactionView(const PlatformStyle *platformStyle, QWidget *pa
     connect(view, &QTableView::doubleClicked, this, &TransactionView::doubleClicked);
     connect(view, &QTableView::customContextMenuRequested, this, &TransactionView::contextualMenu);
 
-    connect(bumpFeeAction, &QAction::triggered, this, &TransactionView::bumpFee);
-    connect(abandonAction, &QAction::triggered, this, &TransactionView::abandonTx);
     connect(copyAddressAction, &QAction::triggered, this, &TransactionView::copyAddress);
     connect(copyLabelAction, &QAction::triggered, this, &TransactionView::copyLabel);
     connect(copyAmountAction, &QAction::triggered, this, &TransactionView::copyAmount);
@@ -198,10 +197,6 @@ TransactionView::TransactionView(const PlatformStyle *platformStyle, QWidget *pa
     connect(showDetailsAction, &QAction::triggered, this, &TransactionView::showDetails);
     // Double-clicking on a transaction on the transaction history page shows details
     connect(this, &TransactionView::doubleClicked, this, &TransactionView::showDetails);
-    // Highlight transaction after fee bump
-    connect(this, &TransactionView::bumpedFee, [this](const uint256& txid) {
-      focusTransaction(txid);
-    });
 }
 
 void TransactionView::setModel(WalletModel *_model)
@@ -393,55 +388,12 @@ void TransactionView::contextualMenu(const QPoint &point)
     // check if transaction can be abandoned, disable context menu action in case it doesn't
     uint256 hash;
     hash.SetHex(selection.at(0).data(TransactionTableModel::TxHashRole).toString().toStdString());
-    abandonAction->setEnabled(model->wallet().transactionCanBeAbandoned(hash));
-    bumpFeeAction->setEnabled(model->wallet().transactionCanBeBumped(hash));
-
     if(index.isValid())
     {
         contextMenu->popup(transactionView->viewport()->mapToGlobal(point));
     }
 }
 
-void TransactionView::abandonTx()
-{
-    if(!transactionView || !transactionView->selectionModel())
-        return;
-    QModelIndexList selection = transactionView->selectionModel()->selectedRows(0);
-
-    // get the hash from the TxHashRole (QVariant / QString)
-    uint256 hash;
-    QString hashQStr = selection.at(0).data(TransactionTableModel::TxHashRole).toString();
-    hash.SetHex(hashQStr.toStdString());
-
-    // Abandon the wallet transaction over the walletModel
-    model->wallet().abandonTransaction(hash);
-
-    // Update the table
-    model->getTransactionTableModel()->updateTransaction(hashQStr, CT_UPDATED, false);
-}
-
-void TransactionView::bumpFee()
-{
-    if(!transactionView || !transactionView->selectionModel())
-        return;
-    QModelIndexList selection = transactionView->selectionModel()->selectedRows(0);
-
-    // get the hash from the TxHashRole (QVariant / QString)
-    uint256 hash;
-    QString hashQStr = selection.at(0).data(TransactionTableModel::TxHashRole).toString();
-    hash.SetHex(hashQStr.toStdString());
-
-    // Bump tx fee over the walletModel
-    uint256 newHash;
-    if (model->bumpFee(hash, newHash)) {
-        // Update the table
-        transactionView->selectionModel()->clearSelection();
-        model->getTransactionTableModel()->updateTransaction(hashQStr, CT_UPDATED, true);
-
-        qApp->processEvents();
-        Q_EMIT bumpedFee(newHash);
-    }
-}
 
 void TransactionView::copyAddress()
 {
@@ -544,6 +496,7 @@ void TransactionView::openThirdPartyTxUrl(QString url)
 QWidget *TransactionView::createDateRangeWidget()
 {
     dateRangeWidget = new QFrame();
+    dateRangeWidget->setObjectName("dateRangeWidget");
     dateRangeWidget->setFrameStyle(QFrame::Panel | QFrame::Raised);
     dateRangeWidget->setContentsMargins(1,1,1,1);
     QHBoxLayout *layout = new QHBoxLayout(dateRangeWidget);
@@ -552,6 +505,7 @@ QWidget *TransactionView::createDateRangeWidget()
     layout->addWidget(new QLabel(tr("Range:")));
 
     dateFrom = new QDateTimeEdit(this);
+    dateFrom->setObjectName("dateFrom");
     dateFrom->setDisplayFormat("dd/MM/yy");
     dateFrom->setCalendarPopup(true);
     dateFrom->setMinimumWidth(100);
@@ -560,6 +514,7 @@ QWidget *TransactionView::createDateRangeWidget()
     layout->addWidget(new QLabel(tr("to")));
 
     dateTo = new QDateTimeEdit(this);
+    dateTo->setObjectName("dateTo");
     dateTo->setDisplayFormat("dd/MM/yy");
     dateTo->setCalendarPopup(true);
     dateTo->setMinimumWidth(100);
