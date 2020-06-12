@@ -326,16 +326,11 @@ QString TransactionTableModel::formatTxDate(const TransactionRecord *wtx) const
 QString TransactionTableModel::lookupAddress(const std::string &address, bool tooltip) const
 {
     QString label = walletModel->getAddressTableModel()->labelForAddress(QString::fromStdString(address));
-    QString description;
-    if(!label.isEmpty())
-    {
-        description += label;
-    }
     if(label.isEmpty() || tooltip)
     {
-        description += QString(" (") + QString::fromStdString(address) + QString(")");
+        label = QString::fromStdString(address);
     }
-    return description;
+    return label;
 }
 
 QString TransactionTableModel::formatTxType(const TransactionRecord *wtx) const
