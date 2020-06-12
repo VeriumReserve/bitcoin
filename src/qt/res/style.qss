@@ -188,7 +188,6 @@ QLabel#labelMinerHashrate,
 QLabel#labelTotal,
 QLabel#labelImmature,
 QLabel#labelEstNextReward {
-    margin-top: 2px;
     margin-bottom: 2px;
     color: #46505A;
     font: 11pt "Lato";
@@ -208,9 +207,10 @@ QLabel#labelWatchUnconfirmed,
 QLabel#labelWatchTotal,
 QLabel#labelWatchImmature {
     border-top: 1px solid #d3d9df;
-    padding-top: 5px;
+    padding-top: 3px;
     color: #46505A;
-    font: 12pt "Lato Heavy";
+    font: 10pt "Lato";
+    font-weight: bold;
 }
 
 QLabel#sendTitle,
@@ -564,4 +564,16 @@ QWidget#filterBox #dateTo::drop-down {
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
+}
+
+QPushButton#exportButton {
+    border: no;
+    border-radius: 3px;
+    height: 25px;
+    padding: 3px 10px;
+    font: 10pt "Lato";
+    font-weight: bold;
+    background-color: white;
+    color: #46505A;
+    margin-right: 9px;
 }

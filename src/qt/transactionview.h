@@ -66,7 +66,6 @@ private:
 
     QComboBox *dateWidget;
     QComboBox *typeWidget;
-    QComboBox *watchOnlyWidget;
     QLineEdit *searchWidget;
     QLineEdit *amountWidget;
 
@@ -107,7 +106,6 @@ Q_SIGNALS:
 public Q_SLOTS:
     void chooseDate(int idx);
     void chooseType(int idx);
-    void chooseWatchonly(int idx);
     void changedAmount();
     void changedSearch();
     void exportClicked();
