@@ -87,14 +87,14 @@ public:
         qint64 amount = index.data(TransactionTableModel::AmountRole).toLongLong();
         bool confirmed = index.data(TransactionTableModel::ConfirmedRole).toBool();
 
-        QColor foreground(53, 155, 55);
+        QColor foreground = COLOR_POSITIVE;
         if(amount < 0)
         {
-            foreground = QColor(233, 58, 93);
+            foreground = COLOR_NEGATIVE;
         }
         else if(!confirmed)
         {
-            foreground = QColor(81, 177, 242);
+            foreground = COLOR_UNCONFIRMED;
         }
 
         painter->setPen(foreground);

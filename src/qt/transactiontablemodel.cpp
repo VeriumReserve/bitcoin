@@ -548,6 +548,12 @@ QVariant TransactionTableModel::data(const QModelIndex &index, int role) const
         {
             return COLOR_TX_STATUS_DANGER;
         }
+
+        if(index.column() == Amount && (rec->credit+rec->debit) > 0)
+        {
+            return COLOR_POSITIVE;
+        }
+
         // Non-confirmed (but not immature) as transactions are grey
         if(!rec->status.countsForBalance && rec->status.status != TransactionStatus::Immature)
         {
