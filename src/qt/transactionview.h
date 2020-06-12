@@ -72,7 +72,7 @@ private:
 
     QMenu *contextMenu;
 
-    QFrame *dateRangeWidget;
+    QWidget *dateRangeWidget;
     QDateTimeEdit *dateFrom;
     QDateTimeEdit *dateTo;
 

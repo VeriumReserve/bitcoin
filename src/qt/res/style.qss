@@ -472,7 +472,12 @@ QWidget#filterBox QLabel {
 
 QWidget#filterBox QLabel#dateFilterTitle,
 QWidget#filterBox QComboBox#dateWidget {
+    margin-top: 4px;
     margin-bottom: 10px;
+}
+
+QWidget#filterBox QLabel#dateFilterTitle {
+    margin-top: 8px;
 }
 
 QWidget#filterBox QLabel#filterTitle {
@@ -536,4 +541,27 @@ QWidget#filterBox QComboBox QAbstractItemView {
     background-color: #e6e6e6;
     selection-color: #586A7A;
     border: no;
+}
+
+QWidget#filterBox QLabel#toTitle,
+QWidget#filterBox QLabel#fromTitle {
+    max-width: 40px;
+}
+
+QWidget#filterBox #dateFrom,
+QWidget#filterBox #dateTo {
+    max-width: 100px;
+}
+
+QWidget#filterBox #dateTo {
+    margin-right: 30px;
+}
+
+QWidget#filterBox #dateFrom::drop-down,
+QWidget#filterBox #dateTo::drop-down {
+    background-color: #e6e6e6;
+    background-image: url(:/icons/arrow-dark);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
 }

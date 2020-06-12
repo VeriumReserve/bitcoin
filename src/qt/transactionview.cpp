@@ -115,6 +115,10 @@ TransactionView::TransactionView(const PlatformStyle *platformStyle, QWidget *pa
     filtersLayout->addWidget(amountFilterTitle, 2, 0);
     filtersLayout->addWidget(amountWidget, 2, 1);
 
+    QHBoxLayout *dateLayout = new QHBoxLayout();
+    dateLayout->setContentsMargins(0,0,0,0);
+    dateLayout->setSpacing(0);
+
     dateWidget = new QComboBox(this);
     dateWidget->setObjectName("dateWidget");
     dateWidget->addItem(tr("All"), All);
@@ -128,9 +132,12 @@ TransactionView::TransactionView(const PlatformStyle *platformStyle, QWidget *pa
     dateFilterTitle->setObjectName("dateFilterTitle");
     dateFilterTitle->setAlignment(Qt::AlignRight);
     dateFilterTitle->setBuddy(dateWidget);
-    filtersLayout->addWidget(dateFilterTitle, 3, 0);
-    filtersLayout->addWidget(dateWidget, 3, 1);
 
+    dateLayout->addWidget(dateWidget);
+    dateLayout->addWidget(createDateRangeWidget());
+
+    filtersLayout->addWidget(dateFilterTitle, 3, 0);
+    filtersLayout->addLayout(dateLayout, 3, 1);
 
 
     // Delay before filtering transactions in ms
@@ -150,7 +157,6 @@ TransactionView::TransactionView(const PlatformStyle *platformStyle, QWidget *pa
 
     QTableView *view = new QTableView(this);
     vlayout->addWidget(filterBox);
-    vlayout->addWidget(createDateRangeWidget());
     vlayout->addWidget(view);
 
     // Always show scroll bar
@@ -509,14 +515,17 @@ void TransactionView::openThirdPartyTxUrl(QString url)
 
 QWidget *TransactionView::createDateRangeWidget()
 {
-    dateRangeWidget = new QFrame();
+    dateRangeWidget = new QWidget();
     dateRangeWidget->setObjectName("dateRangeWidget");
-    dateRangeWidget->setFrameStyle(QFrame::Panel | QFrame::Raised);
-    dateRangeWidget->setContentsMargins(1,1,1,1);
+    dateRangeWidget->setContentsMargins(0,0,0,0);
     QHBoxLayout *layout = new QHBoxLayout(dateRangeWidget);
     layout->setContentsMargins(0,0,0,0);
-    layout->addSpacing(23);
-    layout->addWidget(new QLabel(tr("Range:")));
+    layout->setSpacing(0);
+
+    QLabel *fromTitle = new QLabel(tr("From:"));
+    fromTitle->setObjectName("fromTitle");
+    fromTitle->setContentsMargins(0,0,0,0);
+    layout->addWidget(fromTitle);
 
     dateFrom = new QDateTimeEdit(this);
     dateFrom->setObjectName("dateFrom");
@@ -524,8 +533,13 @@ QWidget *TransactionView::createDateRangeWidget()
     dateFrom->setCalendarPopup(true);
     dateFrom->setMinimumWidth(100);
     dateFrom->setDate(QDate::currentDate().addDays(-7));
+    dateFrom->setContentsMargins(0,0,0,0);
     layout->addWidget(dateFrom);
-    layout->addWidget(new QLabel(tr("to")));
+
+    QLabel *toTitle = new QLabel(tr("To:"));
+    toTitle->setContentsMargins(0,0,0,0);
+    toTitle->setObjectName("toTitle");
+    layout->addWidget(toTitle);
 
     dateTo = new QDateTimeEdit(this);
     dateTo->setObjectName("dateTo");
@@ -533,11 +547,12 @@ QWidget *TransactionView::createDateRangeWidget()
     dateTo->setCalendarPopup(true);
     dateTo->setMinimumWidth(100);
     dateTo->setDate(QDate::currentDate());
+    dateTo->setContentsMargins(0,0,0,0);
     layout->addWidget(dateTo);
-    layout->addStretch();
 
     // Hide by default
     dateRangeWidget->setVisible(false);
+    dateRangeWidget->setFixedHeight(25);
 
     // Notify on change
     connect(dateFrom, &QDateTimeEdit::dateChanged, this, &TransactionView::dateRangeChanged);
