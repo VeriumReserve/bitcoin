@@ -133,7 +133,7 @@ QWidget#minerStateBox,
 QWidget#lastTransactionsBox,
 QWidget#minerBox {
     border-radius: 5px;
-    min-height: 70px;
+    min-height: 80px;
 }
 
 QWidget#lastTransactionsBox,
@@ -188,9 +188,8 @@ QLabel#labelMinerHashrate,
 QLabel#labelTotal,
 QLabel#labelImmature,
 QLabel#labelEstNextReward {
-    margin-bottom: 2px;
     color: #46505A;
-    font: 11pt "Lato";
+    font: 13pt "Lato";
     font-weight: bold;
 }
 

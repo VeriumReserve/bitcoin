@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>596</width>
-    <height>400</height>
+    <height>402</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,7 +23,7 @@
    <item>
     <layout class="QGridLayout" name="topBoxes">
      <property name="spacing">
-      <number>15</number>
+      <number>9</number>
      </property>
      <item row="1" column="0">
       <widget class="QWidget" name="immatureBox" native="true">
@@ -801,7 +801,7 @@
            <string>--- Day(s)</string>
           </property>
           <property name="alignment">
-           <set>Qt::AlignHCenter|Qt::AlignTop</set>
+           <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </item>
@@ -854,7 +854,7 @@
            <string>--- H/m</string>
           </property>
           <property name="alignment">
-           <set>Qt::AlignHCenter|Qt::AlignTop</set>
+           <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </item>
