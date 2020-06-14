@@ -35,7 +35,6 @@
 #include <QUrl>
 #include <QVBoxLayout>
 #include <QGridLayout>
-#include <QGraphicsDropShadowEffect>
 
 TransactionView::TransactionView(const PlatformStyle *platformStyle, QWidget *parent) :
     QWidget(parent), model(nullptr), transactionProxyModel(nullptr),
@@ -50,12 +49,6 @@ TransactionView::TransactionView(const PlatformStyle *platformStyle, QWidget *pa
     filterBoxLayout->setMargin(0);
     filterBoxLayout->setSpacing(0);
     filterBox->setLayout(filterBoxLayout);
-
-    // with shadow, it look better
-    QGraphicsDropShadowEffect* shadow = new QGraphicsDropShadowEffect();
-    shadow->setOffset(QPointF(5, 5));
-    shadow->setBlurRadius(20.0);
-    filterBox->setGraphicsEffect(shadow);
 
     QLabel *filterTitle = new QLabel(tr("Filters"));
     filterTitle->setObjectName("filterTitle");
@@ -145,8 +138,8 @@ TransactionView::TransactionView(const PlatformStyle *platformStyle, QWidget *pa
     prefix_typing_delay->setInterval(input_filter_delay);
 
     QVBoxLayout *vlayout = new QVBoxLayout(this);
-    vlayout->setContentsMargins(9,0,9,5);
-    vlayout->setSpacing(9);
+    vlayout->setContentsMargins(0,0,0,0);
+    vlayout->setSpacing(6);
 
     QTableView *view = new QTableView(this);
     vlayout->addWidget(filterBox);
@@ -161,10 +154,6 @@ TransactionView::TransactionView(const PlatformStyle *platformStyle, QWidget *pa
 
     transactionView = view;
     transactionView->setObjectName("transactionView");
-    QGraphicsDropShadowEffect* shadow2 = new QGraphicsDropShadowEffect();
-    shadow2->setOffset(QPointF(5, 5));
-    shadow2->setBlurRadius(20.0);
-    transactionView->setGraphicsEffect(shadow2);
 
 
     // Actions

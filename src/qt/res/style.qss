@@ -454,8 +454,6 @@ QWidget#transactionView {
     background-color: #e6e6e6;
 }
 
-QWidget#contextMenu {}
-
 QWidget#filterBox {
     border-radius: 5px;
     background-color: white;
@@ -480,12 +478,12 @@ QWidget#filterBox QLabel#dateFilterTitle {
 }
 
 QWidget#filterBox QLabel#filterTitle {
-    color: #46505A;
+    color: #586A7A;
+    margin-bottom: 4px;
     font: 10pt "Lato";
-    padding: 5px;
-    margin-left: 0px;
-    margin-top: 0px;
     font-weight: bold;
+    padding: 7px;
+    margin-left: 3px;
 }
 
 QWidget#filterBox QComboBox,

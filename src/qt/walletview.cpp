@@ -42,6 +42,8 @@ WalletView::WalletView(const PlatformStyle *_platformStyle, QWidget *parent):
 
     transactionsPage = new QWidget(this);
     QVBoxLayout *vbox = new QVBoxLayout();
+    vbox->setContentsMargins(9,4,9,4);
+    vbox->setSpacing(6);
     QHBoxLayout *hbox_buttons = new QHBoxLayout();
     transactionView = new TransactionView(platformStyle, this);
     vbox->addWidget(transactionView);
