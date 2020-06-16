@@ -425,19 +425,25 @@ QWidget#bgWidget {
     background: rgba(67, 138, 201, 235);
 }
 
-/** Dialogs **/
-QDialog{
+/** Askpassphrase, Bootstrap and UpdateDialogs **/
+QDialog#AskPassphraseDialog,
+QDialog#BootstrapDialog,
+QDialog#UpdateDialog {
     border-radius: 5px;
     background-color: white;
 }
 
-QDialog QLabel,
-QDialog QCheckBox#toggleShowPasswordButton {
+QDialog#AskPassphraseDialog QLabel,
+QDialog#BootstrapDialog QLabel,
+QDialog#UpdateDialog QLabel,
+QDialog#AskPassphraseDialog QCheckBox#toggleShowPasswordButton {
     color: #46505A;
     font: 11pt "Lato";
 }
 
-QDialog QPushButton {
+QDialog#AskPassphraseDialog QPushButton,
+QDialog#BootstrapDialog QPushButton,
+QDialog#UpdateDialog QPushButton {
     border: no;
     border-radius: 3px;
     height: 25px;
@@ -447,15 +453,22 @@ QDialog QPushButton {
     font: 10pt "Lato";
     font-weight: bold;
 }
-QDialog QPushButton:hover {
+
+QDialog#AskPassphraseDialog QPushButton:hover,
+QDialog#BootstrapDialog QPushButton:hover,
+QDialog#UpdateDialog QPushButton:hover {
     background-color: #2d6a9f;
 }
 
-QDialog QPushButton#closeButton{
+QDialog#AskPassphraseDialog QPushButton#closeButton,
+QDialog#BootstrapDialog QPushButton#closeButton,
+QDialog#UpdateDialog QPushButton#closeButton {
     background-color: #e93a5d;
 }
 
-QDialog QPushButton#closeButton:hover{
+QDialog#AskPassphraseDialog QPushButton#closeButton:hover,
+QDialog#BootstrapDialog QPushButton#closeButton:hover,
+QDialog#UpdateDialog QPushButton#closeButton:hover {
     background-color: #e61942;
 }
 
