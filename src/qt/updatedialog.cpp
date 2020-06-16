@@ -175,7 +175,7 @@ void processUpdate(QString qClientName)
     newArgv.clear();
     // Installer created by pkgbuild or Package MakerGetArg
     command = QString("/usr/bin/open");
-    newArgv.append(QString(GetDataDir().c_str()) + QString("/") + qClientName;
+    newArgv.append(QString(GetDataDir().c_str()) + QString("/") + qClientName);
 #else
     // If Linux, just restart (already extracted verium-qt from the zip in downloader.cpp).
     newArgv.clear();
