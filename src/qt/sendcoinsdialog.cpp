@@ -67,9 +67,9 @@ SendCoinsDialog::SendCoinsDialog(const PlatformStyle *_platformStyle, QWidget *p
         ui->clearButton->setIcon(QIcon());
         ui->sendButton->setIcon(QIcon());
     } else {
-        ui->addButton->setIcon(_platformStyle->SingleColorIcon(":/icons/add"));
-        ui->clearButton->setIcon(_platformStyle->SingleColorIcon(":/icons/remove"));
-        ui->sendButton->setIcon(_platformStyle->SingleColorIcon(":/icons/send"));
+        ui->addButton->setIcon(QIcon(":/icons/add"));
+        ui->clearButton->setIcon(QIcon(":/icons/remove"));
+        ui->sendButton->setIcon(QIcon(":/icons/send"));
     }
 
     GUIUtil::setupAddressWidget(ui->lineEditCoinControlChange, this);
@@ -115,8 +115,6 @@ SendCoinsDialog::SendCoinsDialog(const PlatformStyle *_platformStyle, QWidget *p
         settings.setValue("nFeeRadio", 1); // custom
     if (!settings.contains("nFeeRadio"))
         settings.setValue("nFeeRadio", 0); // recommended
-    if (!settings.contains("nSmartFeeSliderPosition"))
-        settings.setValue("nSmartFeeSliderPosition", 0);
     if (!settings.contains("nTransactionFee"))
         settings.setValue("nTransactionFee", (qint64)DEFAULT_PAY_TX_FEE);
     ui->groupFee->setId(ui->radioSmartFee, 0);
@@ -132,7 +130,7 @@ void SendCoinsDialog::setClientModel(ClientModel *_clientModel)
     this->clientModel = _clientModel;
 
     if (_clientModel) {
-        connect(_clientModel, &ClientModel::numBlocksChanged, this, &SendCoinsDialog::updateSmartFeeLabel);
+//        connect(_clientModel, &ClientModel::numBlocksChanged, this, &SendCoinsDialog::updateSmartFeeLabel);
     }
 }
 
@@ -163,17 +161,9 @@ void SendCoinsDialog::setModel(WalletModel *_model)
         ui->frameCoinControl->setVisible(_model->getOptionsModel()->getCoinControlFeatures());
         coinControlUpdateLabels();
 
-        // fee section
-        for (const int n : confTargets) {
-            ui->confTargetSelector->addItem(tr("%1 (%2 blocks)").arg(GUIUtil::formatNiceTimeOffset(n*Params().GetConsensus().nPowTargetSpacing)).arg(n));
-        }
-        connect(ui->confTargetSelector, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &SendCoinsDialog::updateSmartFeeLabel);
-        connect(ui->confTargetSelector, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &SendCoinsDialog::coinControlUpdateLabels);
         connect(ui->groupFee, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &SendCoinsDialog::updateFeeSectionControls);
         connect(ui->groupFee, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &SendCoinsDialog::coinControlUpdateLabels);
         connect(ui->customFee, &BitcoinAmountField::valueChanged, this, &SendCoinsDialog::coinControlUpdateLabels);
-        connect(ui->optInRBF, &QCheckBox::stateChanged, this, &SendCoinsDialog::updateSmartFeeLabel);
-        connect(ui->optInRBF, &QCheckBox::stateChanged, this, &SendCoinsDialog::coinControlUpdateLabels);
         CAmount requiredFee = model->wallet().getRequiredFee(1000);
         ui->customFee->SetMinValue(requiredFee);
         if (ui->customFee->value() < requiredFee) {
@@ -181,24 +171,6 @@ void SendCoinsDialog::setModel(WalletModel *_model)
         }
         ui->customFee->setSingleStep(requiredFee);
         updateFeeSectionControls();
-        updateSmartFeeLabel();
-
-        // set default rbf checkbox state
-        ui->optInRBF->setCheckState(Qt::Checked);
-
-        // set the smartfee-sliders default value (wallets default conf.target or last stored value)
-        QSettings settings;
-        if (settings.value("nSmartFeeSliderPosition").toInt() != 0) {
-            // migrate nSmartFeeSliderPosition to nConfTarget
-            // nConfTarget is available since 0.15 (replaced nSmartFeeSliderPosition)
-            int nConfirmTarget = 25 - settings.value("nSmartFeeSliderPosition").toInt(); // 25 == old slider range
-            settings.setValue("nConfTarget", nConfirmTarget);
-            settings.remove("nSmartFeeSliderPosition");
-        }
-        if (settings.value("nConfTarget").toInt() == 0)
-            ui->confTargetSelector->setCurrentIndex(getIndexForConfTarget(model->wallet().getConfirmTarget()));
-        else
-            ui->confTargetSelector->setCurrentIndex(getIndexForConfTarget(settings.value("nConfTarget").toInt()));
     }
 }
 
@@ -207,7 +179,6 @@ SendCoinsDialog::~SendCoinsDialog()
     QSettings settings;
     settings.setValue("fFeeSectionMinimized", fFeeMinimized);
     settings.setValue("nFeeRadio", ui->groupFee->checkedId());
-    settings.setValue("nConfTarget", getConfTargetForIndex(ui->confTargetSelector->currentIndex()));
     settings.setValue("nTransactionFee", (qint64)ui->customFee->value());
 
     delete ui;
@@ -291,30 +262,15 @@ void SendCoinsDialog::on_sendButton_clicked()
 
         QString recipientElement;
 
-#ifdef ENABLE_BIP70
-        if (!rcp.paymentRequest.IsInitialized()) // normal payment
-#endif
+        if(rcp.label.length() > 0) // label with address
         {
-            if(rcp.label.length() > 0) // label with address
-            {
-                recipientElement.append(tr("%1 to '%2'").arg(amount, GUIUtil::HtmlEscape(rcp.label)));
-                recipientElement.append(QString(" (%1)").arg(address));
-            }
-            else // just address
-            {
-                recipientElement.append(tr("%1 to %2").arg(amount, address));
-            }
+            recipientElement.append(tr("%1 to '%2'").arg(amount, GUIUtil::HtmlEscape(rcp.label)));
+            recipientElement.append(QString(" (%1)").arg(address));
         }
-#ifdef ENABLE_BIP70
-        else if(!rcp.authenticatedMerchant.isEmpty()) // authenticated payment request
-        {
-            recipientElement.append(tr("%1 to '%2'").arg(amount, rcp.authenticatedMerchant));
-        }
-        else // unauthenticated payment request
+        else // just address
         {
             recipientElement.append(tr("%1 to %2").arg(amount, address));
         }
-#endif
 
         formatted.append(recipientElement);
     }
@@ -338,15 +294,6 @@ void SendCoinsDialog::on_sendButton_clicked()
         questionString.append("<span style='color:#aa0000; font-weight:bold;'>");
         questionString.append(BitcoinUnits::formatHtmlWithUnit(model->getOptionsModel()->getDisplayUnit(), txFee));
         questionString.append("</span><br />");
-
-        // append RBF message according to transaction's signalling
-        questionString.append("<span style='font-size:10pt; font-weight:normal;'>");
-        if (ui->optInRBF->isChecked()) {
-            questionString.append(tr("You can increase the fee later (signals Replace-By-Fee, BIP-125)."));
-        } else {
-            questionString.append(tr("Not signalling Replace-By-Fee, BIP-125."));
-        }
-        questionString.append("</span>");
     }
 
     // add total amount in all subdivision units
@@ -548,7 +495,6 @@ void SendCoinsDialog::updateDisplayUnit()
 {
     setBalance(model->wallet().getBalances());
     ui->customFee->setDisplayUnit(model->getOptionsModel()->getDisplayUnit());
-    updateSmartFeeLabel();
 }
 
 void SendCoinsDialog::processSendCoinsReturn(const WalletModel::SendCoinsReturn &sendCoinsReturn, const QString &msgArg)
@@ -649,12 +595,6 @@ void SendCoinsDialog::useAvailableBalance(SendCoinsEntry* entry)
 
 void SendCoinsDialog::updateFeeSectionControls()
 {
-    ui->confTargetSelector      ->setEnabled(ui->radioSmartFee->isChecked());
-    ui->labelSmartFee           ->setEnabled(ui->radioSmartFee->isChecked());
-    ui->labelSmartFee2          ->setEnabled(ui->radioSmartFee->isChecked());
-    ui->labelSmartFee3          ->setEnabled(ui->radioSmartFee->isChecked());
-    ui->labelFeeEstimation      ->setEnabled(ui->radioSmartFee->isChecked());
-    ui->labelCustomFeeWarning   ->setEnabled(ui->radioCustomFee->isChecked());
     ui->labelCustomPerKilobyte  ->setEnabled(ui->radioCustomFee->isChecked());
     ui->customFee               ->setEnabled(ui->radioCustomFee->isChecked());
 }
@@ -664,11 +604,7 @@ void SendCoinsDialog::updateFeeMinimizedLabel()
     if(!model || !model->getOptionsModel())
         return;
 
-    if (ui->radioSmartFee->isChecked())
-        ui->labelFeeMinimized->setText(ui->labelSmartFee->text());
-    else {
-        ui->labelFeeMinimized->setText(BitcoinUnits::formatWithUnit(model->getOptionsModel()->getDisplayUnit(), ui->customFee->value()) + "/kB");
-    }
+    ui->labelFeeMinimized->setText(BitcoinUnits::formatWithUnit(model->getOptionsModel()->getDisplayUnit(), ui->customFee->value()) + "/kB");
 }
 
 void SendCoinsDialog::updateCoinControlState(CCoinControl& ctrl)
@@ -678,42 +614,6 @@ void SendCoinsDialog::updateCoinControlState(CCoinControl& ctrl)
     } else {
         ctrl.m_feerate.reset();
     }
-    // Avoid using global defaults when sending money from the GUI
-    // Either custom fee will be used or if not selected, the confirmation target from dropdown box
-    ctrl.m_confirm_target = getConfTargetForIndex(ui->confTargetSelector->currentIndex());
-    ctrl.m_signal_bip125_rbf = ui->optInRBF->isChecked();
-}
-
-void SendCoinsDialog::updateSmartFeeLabel()
-{
-    if(!model || !model->getOptionsModel())
-        return;
-    CCoinControl coin_control;
-    updateCoinControlState(coin_control);
-    coin_control.m_feerate.reset(); // Explicitly use only fee estimation rate for smart fee labels
-    int returned_target;
-    FeeReason reason;
-    CFeeRate feeRate = CFeeRate(model->wallet().getMinimumFee(1000, coin_control, &returned_target, &reason));
-
-    ui->labelSmartFee->setText(BitcoinUnits::formatWithUnit(model->getOptionsModel()->getDisplayUnit(), feeRate.GetFeePerK()) + "/kB");
-
-    if (reason == FeeReason::FALLBACK) {
-        ui->labelSmartFee2->show(); // (Smart fee not initialized yet. This usually takes a few blocks...)
-        ui->labelFeeEstimation->setText("");
-        ui->fallbackFeeWarningLabel->setVisible(true);
-        int lightness = ui->fallbackFeeWarningLabel->palette().color(QPalette::WindowText).lightness();
-        QColor warning_colour(255 - (lightness / 5), 176 - (lightness / 3), 48 - (lightness / 14));
-        ui->fallbackFeeWarningLabel->setStyleSheet("QLabel { color: " + warning_colour.name() + "; }");
-        ui->fallbackFeeWarningLabel->setIndent(GUIUtil::TextWidth(QFontMetrics(ui->fallbackFeeWarningLabel->font()), "x"));
-    }
-    else
-    {
-        ui->labelSmartFee2->hide();
-        ui->labelFeeEstimation->setText(tr("Estimated to begin confirmation within %n block(s).", "", returned_target));
-        ui->fallbackFeeWarningLabel->setVisible(false);
-    }
-
-    updateFeeMinimizedLabel();
 }
 
 // Coin Control: copy label "Quantity" to clipboard

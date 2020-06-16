@@ -59,10 +59,6 @@ uint256 SendCoins(CWallet& wallet, SendCoinsDialog& sendCoinsDialog, const CTxDe
     SendCoinsEntry* entry = qobject_cast<SendCoinsEntry*>(entries->itemAt(0)->widget());
     entry->findChild<QValidatedLineEdit*>("payTo")->setText(QString::fromStdString(EncodeDestination(address)));
     entry->findChild<BitcoinAmountField*>("payAmount")->setValue(amount);
-    sendCoinsDialog.findChild<QFrame*>("frameFee")
-        ->findChild<QFrame*>("frameFeeSelection")
-        ->findChild<QCheckBox*>("optInRBF")
-        ->setCheckState(rbf ? Qt::Checked : Qt::Unchecked);
     uint256 txid;
     boost::signals2::scoped_connection c(wallet.NotifyTransactionChanged.connect([&txid](CWallet*, const uint256& hash, ChangeType status) {
         if (status == CT_NEW) txid = hash;

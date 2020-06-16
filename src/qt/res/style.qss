@@ -290,6 +290,7 @@ QWidget#ReceiveCoinsDialog QComboBox#unit {
     padding: 0px 10px 0px 10px;
     height: 25px;
     font: 11pt "Lato Light";
+
 }
 
 QWidget#ReceiveCoinsDialog QComboBox#unit::drop-down {
@@ -573,4 +574,139 @@ QPushButton#exportButton {
     background-color: white;
     color: #46505A;
     margin-right: 9px;
+}
+
+/** Send Coin **/
+QDialog#SendCoinsDialog QScrollArea#scrollArea,
+QDialog#SendCoinsDialog QFrame#frameFee,
+QDialog#SendCoinsDialog QFrame#frameCoinControl {
+    border-radius: 5px;
+    background-color: white;
+    padding: 5px 2px 5px 0px;
+}
+
+QDialog#SendCoinsDialog QLabel,
+QDialog#SendCoinsDialog QScrollArea#scrollArea QLabelQCheckBox {
+    font: 10pt "Lato";
+    color: #46505A;
+}
+
+QDialog#SendCoinsDialog QLineEdit,
+QDialog#SendCoinsDialog QAbstractSpinBox {
+    border: no;
+    border-bottom: 2px solid gray;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+    background-color: #e6e6e6;
+    height: 25px;
+    padding: 0 4px;
+    color: black;
+    font: 11pt "Lato Light";
+}
+
+QDialog#SendCoinsDialog QLineEdit::focus,
+QDialog#SendCoinsDialog QAbstractSpinBox::focus {
+    background-color: #dcdcdc;
+    border-bottom: 4px solid #418bca;
+}
+
+QDialog#SendCoinsDialog QAbstractSpinBox {
+    max-width: 150px;
+    padding-right: 0px;
+}
+
+QDialog#SendCoinsDialog QAbstractSpinBox::up-button,
+QDialog#SendCoinsDialog QAbstractSpinBox::down-button {
+    border: no;
+}
+
+QDialog#SendCoinsDialog QComboBox#unit {
+    border: no;
+    border-bottom: 2px solid gray;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+    background-color: #e6e6e6;
+    padding: 0px 10px 0px 10px;
+    height: 25px;
+    font: 11pt "Lato Light";
+}
+
+QDialog#SendCoinsDialog QComboBox#unit::drop-down {
+    background-color: #e6e6e6;
+    background-image: url(:/icons/arrow-dark);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+QDialog#SendCoinsDialog QComboBox#unit QAbstractItemView {
+    background-color: #e6e6e6;
+    selection-color: #586A7A;
+    border: no;
+}
+
+QDialog#SendCoinsDialog QPushButton {
+    border: no;
+    border-radius: 3px;
+    height: 25px;
+    padding: 5px 10px;
+    background-color: #418bca;
+    color: white;
+    font: 10pt "Lato";
+    font-weight: bold;
+}
+
+QDialog#SendCoinsDialog QPushButton:hover {
+    background-color: #2d6a9f;
+}
+
+/** coin entry **/
+QDialog#SendCoinsDialog QWidget#scrollAreaWidgetContents {
+    background-color: white;
+}
+
+QDialog#SendCoinsDialog QStackedWidget QFrame#SendCoins {
+    margin: 5px 4px 0px 10px;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 5px 2px 5px 0px;
+    border: 1px solid #e6e6e6;
+}
+
+QDialog#SendCoinsDialog QPushButton#sendButton,
+QDialog#SendCoinsDialog QPushButton#addButton {
+    border: no;
+    border-radius: 3px;
+    height: 25px;
+    padding: 3px 10px;
+    font: 10pt "Lato";
+    font-weight: bold;
+    background-color: white;
+    color: #46505A;
+    margin-right: 9px;
+}
+
+/** SendCoin Bottom button **/
+QDialog#SendCoinsDialog QPushButton#clearButton {
+    margin-right: 9px;
+    background-color: #e93a5d;
+}
+
+QDialog#SendCoinsDialog QPushButton#clearButton:hover {
+    background-color: #e61942;
+}
+
+
+/** SendCoin Bottom Balance **/
+QDialog#SendCoinsDialog QLabel#label {
+    margin-top: 2px;
+    color: white;
+    font: 11pt "Lato";
+    font-weight: bold;
+}
+
+QDialog#SendCoinsDialog QLabel#labelBalance {
+    color: white;
+    font: 13pt "Lato";
+    font-weight: bold;
 }

@@ -206,13 +206,6 @@
       </property>
      </widget>
     </item>
-    <item row="4" column="0" colspan="2">
-     <widget class="Line" name="line">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-     </widget>
-    </item>
    </layout>
   </widget>
   <widget class="QFrame" name="SendCoins_UnauthenticatedPaymentRequest">

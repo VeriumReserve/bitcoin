@@ -14,6 +14,9 @@
    <string>Send Coins</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1,0,0">
+   <property name="topMargin">
+    <number>4</number>
+   </property>
    <property name="bottomMargin">
     <number>8</number>
    </property>
@@ -579,6 +582,9 @@
    </item>
    <item>
     <widget class="QScrollArea" name="scrollArea">
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
      <property name="widgetResizable">
       <bool>true</bool>
      </property>
@@ -875,36 +881,6 @@ Note:  Since the fee is calculated on a per-byte basis, a fee of "100 satoshis p
                  </item>
                 </layout>
                </item>
-               <item>
-                <layout class="QHBoxLayout" name="horizontalLayoutFee8">
-                 <item>
-                  <widget class="QLabel" name="labelCustomFeeWarning">
-                   <property name="enabled">
-                    <bool>true</bool>
-                   </property>
-                   <property name="toolTip">
-                    <string>When there is less transaction volume than space in the blocks, miners as well as relaying nodes may enforce a minimum fee. Paying only this minimum fee is just fine, but be aware that this can result in a never confirming transaction once there is more demand for verium transactions than the network can process.</string>
-                   </property>
-                   <property name="text">
-                    <string>A too low fee might result in a never confirming transaction (read the tooltip)</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <spacer name="horizontalSpacer_2">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>1</width>
-                     <height>1</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                </layout>
-               </item>
               </layout>
              </item>
              <item row="0" column="0">
@@ -972,115 +948,9 @@ Note:  Since the fee is calculated on a per-byte basis, a fee of "100 satoshis p
                <property name="topMargin">
                 <number>2</number>
                </property>
-               <item>
-                <layout class="QHBoxLayout" name="horizontalLayoutFee12">
-                 <item>
-                  <widget class="QLabel" name="labelSmartFee">
-                   <property name="text">
-                    <string/>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="labelFeeEstimation">
-                   <property name="text">
-                    <string/>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="labelSmartFee2">
-                   <property name="text">
-                    <string>(Smart fee not initialized yet. This usually takes a few blocks...)</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <spacer name="horizontalSpacer_5">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>1</width>
-                     <height>1</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                </layout>
-               </item>
-               <item>
-                <layout class="QHBoxLayout" name="horizontalLayoutFee9">
-                 <item>
-                  <layout class="QVBoxLayout" name="verticalLayoutFee6">
-                   <item>
-                    <widget class="QLabel" name="labelSmartFee3">
-                     <property name="text">
-                      <string>Confirmation time target:</string>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </item>
-                 <item>
-                  <layout class="QVBoxLayout" name="verticalLayoutFee5">
-                   <property name="rightMargin">
-                    <number>30</number>
-                   </property>
-                   <item>
-                    <layout class="QHBoxLayout" name="horizontalLayoutConfTarget">
-                     <property name="bottomMargin">
-                      <number>0</number>
-                     </property>
-                     <item>
-                      <widget class="QComboBox" name="confTargetSelector"/>
-                     </item>
-                     <item>
-                      <spacer name="horizontalSpacerConfTarget">
-                       <property name="orientation">
-                        <enum>Qt::Horizontal</enum>
-                       </property>
-                       <property name="sizeHint" stdset="0">
-                        <size>
-                         <width>40</width>
-                         <height>20</height>
-                        </size>
-                       </property>
-                      </spacer>
-                     </item>
-                    </layout>
-                   </item>
-                  </layout>
-                 </item>
-                </layout>
-               </item>
-               <item>
-                <spacer name="verticalSpacer_4">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>1</width>
-                   <height>1</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
               </layout>
              </item>
             </layout>
-           </item>
-           <item>
-            <widget class="QCheckBox" name="optInRBF">
-             <property name="text">
-              <string>Enable Replace-By-Fee</string>
-             </property>
-             <property name="toolTip">
-              <string>With Replace-By-Fee (BIP-125) you can increase a transaction's fee after it is sent. Without this, a higher fee may be recommended to compensate for increased transaction delay risk.</string>
-             </property>
-            </widget>
            </item>
           </layout>
          </widget>
