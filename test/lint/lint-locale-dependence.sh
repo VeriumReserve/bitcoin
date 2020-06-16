@@ -10,6 +10,7 @@ KNOWN_VIOLATIONS=(
     "src/init.cpp:.*atoi"
     "src/bignum.h:.*isxdigit"
     "src/qt/rpcconsole.cpp:.*atoi"
+    "src/qt/updatedialog.cpp:.*stoi"
     "src/rest.cpp:.*strtol"
     "src/test/dbwrapper_tests.cpp:.*snprintf"
     "src/torcontrol.cpp:.*atoi"
