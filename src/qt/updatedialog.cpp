@@ -100,7 +100,7 @@ std::string getUpdatedClient()
 
         if (versionData.isEmpty())
         {
-            printf("Error: Version data is empty.\n");
+            LogPrintf("Error: Version data is empty.\n");
             return clientFileName;
         }
 
@@ -154,7 +154,7 @@ std::string getUpdatedClient()
     }
     else
     {
-        printf("Error: Unable to read version file.\n");
+        LogPrintf("Error: Unable to read version file.\n");
     }
     return clientFileName;
 }
