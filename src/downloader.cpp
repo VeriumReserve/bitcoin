@@ -123,7 +123,7 @@ void validateBootstrapContent() {
 
 }
 
-void ApplyBootstrap() {
+void applyBootstrap() {
     boost::filesystem::remove_all(GetDataDir() / "blocks");
     boost::filesystem::remove_all(GetDataDir() / "chainstate");
     boost::filesystem::rename(GetDataDir() / "bootstrap" / "blocks", GetDataDir() / "blocks");
@@ -139,7 +139,7 @@ void ApplyBootstrap() {
 	}
 }
 
-void DownloadBootstrap() {
+void downloadBootstrap() {
     LogPrintf("bootstrap: Starting bootstrap process.\n");
 
     boost::filesystem::path pathBootstrapZip = GetDataDir() / "bootstrap_VRM.zip";
@@ -153,4 +153,32 @@ void DownloadBootstrap() {
     LogPrintf("bootstrap: bootstrap process finished.\n");
 
     return;
+}
+
+// check for update
+void downloadVersionFile() {
+    LogPrintf("Check for update: Getting version file.\n");
+
+    boost::filesystem::path pathVersionFile = GetDataDir() / "VERSION_VRM.json";
+
+    downloadFile(VERSIONFILE_URL, pathVersionFile);
+
+    return;
+}
+
+void downloadClient(std::string fileName) {
+    LogPrintf("Check for update: Downloading new client.\n");
+
+    boost::filesystem::path pathClientFile = GetDataDir() / fileName;
+    std::string clientFileUrl = CLIENT_URL + fileName;
+
+    downloadFile(clientFileUrl, pathClientFile);
+
+    return;
+}
+
+int getArchitecture()
+{
+    int *i;
+    return sizeof(i) * 8; // 8 bits/byte
 }

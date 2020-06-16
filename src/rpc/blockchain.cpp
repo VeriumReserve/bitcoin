@@ -142,7 +142,7 @@ UniValue bootstrap(const JSONRPCRequest& request)
     UniValue ret(UniValue::VOBJ);
 
     try {
-        DownloadBootstrap();
+        downloadBootstrap();
     } catch (const std::exception &e) {
         ret.pushKV("success", false);
         ret.pushKV("message", e.what());

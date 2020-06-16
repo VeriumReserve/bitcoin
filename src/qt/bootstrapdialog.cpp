@@ -10,6 +10,7 @@ BootstrapDialog::BootstrapDialog(QWidget *parent) :
     ui(new Ui::BootstrapDialog)
 {
     ui->setupUi(this);
+    setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
     setWindowTitle(tr("Chain Bootstrap"));
     ui->checkBox->setVisible(false);
 }
@@ -34,7 +35,7 @@ void BootstrapDialog::on_startButton_clicked()
 
     QMessageBox::information(this, "Bootstrap", "The client will now bootstrap the chain. \n\nThe Verium vault will exit after extracting the bootstrap and need to be restarted.", QMessageBox::Ok, QMessageBox::Ok);
     try {
-        DownloadBootstrap();
+        downloadBootstrap();
     } catch (const std::runtime_error& e) {
         QMessageBox::critical(this, tr("Bootstrap failed"), e.what());
     }
@@ -42,6 +43,11 @@ void BootstrapDialog::on_startButton_clicked()
     bootstrap_callback_instance = nullptr;
     this->close();
     QApplication::quit();
+}
+
+void BootstrapDialog::on_closeButton_clicked()
+{
+    this->close();
 }
 
 void BootstrapDialog::setProgress(curl_off_t total, curl_off_t now)

@@ -282,7 +282,7 @@ void Shutdown(InitInterfaces& interfaces)
 
     if(fBootstrap) {
         try {
-            ApplyBootstrap();
+            applyBootstrap();
         } catch(std::exception &e) {
 			LogPrintf("%s: Unable to change databse: %s\n",__func__,e.what());
 		}

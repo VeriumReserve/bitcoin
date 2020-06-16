@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>The client will bootstrap the chain. Please be patient.</string>
+    <string>Checking for update....</string>
    </property>
   </widget>
   <widget class="QProgressBar" name="progressBar">
@@ -45,7 +45,7 @@
     <bool>false</bool>
    </property>
   </widget>
-  <widget class="QPushButton" name="startButton">
+  <widget class="QPushButton" name="updateButton">
    <property name="geometry">
     <rect>
      <x>353</x>
@@ -55,7 +55,20 @@
     </rect>
    </property>
    <property name="text">
-    <string>Start</string>
+    <string>Update</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="closeButton">
+   <property name="geometry">
+    <rect>
+     <x>175</x>
+     <y>140</y>
+     <width>88</width>
+     <height>34</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Close</string>
    </property>
   </widget>
  </widget>

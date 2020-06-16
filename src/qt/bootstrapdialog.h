@@ -24,6 +24,7 @@ public:
 private Q_SLOTS:
 
     void on_startButton_clicked();
+    void on_closeButton_clicked();
 
 };
 #endif // BITCOIN_QT_BOOTSTRAPDIALOG_H
