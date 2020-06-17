@@ -26,8 +26,7 @@ UpdateDialog::UpdateDialog(QWidget *parent) :
     if (clientName.compare(" ") != 0){
 
         ui->updateButton->setVisible(true);
-        std::string stdstr = "Update is available! Click update to download " +clientName;
-        QString qstr = QString::fromStdString(stdstr);
+        QString qstr = QString(QObject::tr("Update is available! Click update to download %1")).arg(QString::fromStdString(clientName));
         ui->progressBar->setVisible(true);
         ui->label->setText(qstr);
     }
