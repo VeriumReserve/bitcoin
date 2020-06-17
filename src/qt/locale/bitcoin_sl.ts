@@ -3819,6 +3819,10 @@ Opomba: Ker se provizija izračuna na bajt, bi provizija "100 satoshijev na kB" 
         <translation>Nalagam denarnico ...</translation>
     </message>
     <message>
+        <source>Loading...</source>
+        <translation>Nalaganje...</translation>
+    </message>
+    <message>
         <source>Cannot downgrade wallet</source>
         <translation>Ne morem</translation>
     </message>

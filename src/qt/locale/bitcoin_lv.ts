@@ -1266,6 +1266,10 @@
         <translation>Ielādē maciņu...</translation>
     </message>
     <message>
+        <source>Loading...</source>
+        <translation>Ielādē...</translation>
+    </message>
+    <message>
         <source>Cannot downgrade wallet</source>
         <translation>Nevar maciņa formātu padarīt vecāku</translation>
     </message>

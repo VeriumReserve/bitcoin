@@ -716,6 +716,10 @@
         <translation>Ucitavanje novcanika...</translation>
     </message>
     <message>
+        <source>Loading...</source>
+        <translation>Ucitavanje...</translation>
+    </message>
+    <message>
         <source>Rescanning...</source>
         <translation>Ponovno skeniranje...</translation>
     </message>

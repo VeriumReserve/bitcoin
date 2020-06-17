@@ -3745,6 +3745,10 @@ Notera: Då avgiften beräknas per byte kommer en avgift på 50 satoshi tas ut f
         <translation>Läser in plånbok...</translation>
     </message>
     <message>
+        <source>Loading...</source>
+        <translation>Läser in...</translation>
+    </message>
+    <message>
         <source>Cannot downgrade wallet</source>
         <translation>Kan inte nedgradera plånboken</translation>
     </message>

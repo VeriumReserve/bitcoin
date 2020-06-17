@@ -3664,6 +3664,10 @@ Note:  Since the fee is calculated on a per-byte basis, a fee of "100 satoshis p
         <translation>지갑을 불러오는 중...</translation>
     </message>
     <message>
+        <source>Loading...</source>
+        <translation>불러오는 중 ...</translation>
+    </message>
+    <message>
         <source>Cannot downgrade wallet</source>
         <translation>지갑을 다운그레이드 할 수 없습니다</translation>
     </message>

@@ -3737,6 +3737,10 @@ Note:  Since the fee is calculated on a per-byte basis, a fee of "100 satoshis p
         <translation>Загрузка электронного кошелька...</translation>
     </message>
     <message>
+        <source>Loading...</source>
+        <translation>Загрузка...</translation>
+    </message>
+    <message>
         <source>Cannot downgrade wallet</source>
         <translation>Не удаётся понизить версию электронного кошелька</translation>
     </message>

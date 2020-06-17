@@ -3820,6 +3820,10 @@ Note:  Since the fee is calculated on a per-byte basis, a fee of "100 satoshis p
         <translation>正在加载钱包...</translation>
     </message>
     <message>
+        <source>Loading...</source>
+        <translation>载入中...</translation>
+    </message>
+    <message>
         <source>Cannot downgrade wallet</source>
         <translation>无法降级钱包</translation>
     </message>

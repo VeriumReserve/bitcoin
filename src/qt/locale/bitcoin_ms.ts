@@ -651,6 +651,10 @@ Alihkan fail data ke dalam tab semasa</translation>
         <translation>Sedang baca wallet...</translation>
     </message>
     <message>
+        <source>Loading...</source>
+        <translation>Memuat...</translation>
+    </message>
+    <message>
         <source>Done loading</source>
         <translation>Baca Selesai</translation>
     </message>

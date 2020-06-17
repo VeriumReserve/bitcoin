@@ -1265,6 +1265,10 @@
         <translation>Новчаник се учитава...</translation>
     </message>
     <message>
+        <source>Loading...</source>
+        <translation>Учитавање...</translation>
+    </message>
+    <message>
         <source>Rescanning...</source>
         <translation>Ponovo skeniram...</translation>
     </message>

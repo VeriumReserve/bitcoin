@@ -3214,6 +3214,10 @@
         <translation>Cargando cartera...</translation>
     </message>
     <message>
+        <source>Loading...</source>
+        <translation>Cargando...</translation>
+    </message>
+    <message>
         <source>Cannot downgrade wallet</source>
         <translation>No es posible desactualizar la billetera</translation>
     </message>

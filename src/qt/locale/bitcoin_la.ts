@@ -870,6 +870,10 @@
         <translation>Legens cassidile...</translation>
     </message>
     <message>
+        <source>Loading...</source>
+        <translation>Legens...</translation>
+    </message>
+    <message>
         <source>Cannot downgrade wallet</source>
         <translation>Non posse cassidile regredi</translation>
     </message>

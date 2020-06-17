@@ -3820,6 +3820,10 @@ Note:  Since the fee is calculated on a per-byte basis, a fee of "100 satoshis p
         <translation>Loading wallet ...</translation>
     </message>
     <message>
+        <source>Loading...</source>
+        <translation>Loading...</translation>
+    </message>
+    <message>
         <source>Cannot downgrade wallet</source>
         <translation>Cannot downgrade wallet</translation>
     </message>

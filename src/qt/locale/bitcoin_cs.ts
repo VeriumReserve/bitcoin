@@ -3648,6 +3648,10 @@ Poznámka: Jelikož je poplatek počítaný za bajt, poplatek o hodnotě "100 sa
         <translation>Načítám peněženku...</translation>
     </message>
     <message>
+        <source>Loading...</source>
+        <translation>Načítám...</translation>
+    </message>
+    <message>
         <source>Cannot downgrade wallet</source>
         <translation>Nemohu převést peněženku do staršího formátu</translation>
     </message>

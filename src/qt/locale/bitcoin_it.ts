@@ -3821,6 +3821,10 @@ Nota: poiché la commissione è calcolata su base per byte, una commissione di "
         <translation>Caricamento portafoglio...</translation>
     </message>
     <message>
+        <source>Loading...</source>
+        <translation>Caricamento...</translation>
+    </message>
+    <message>
         <source>Cannot downgrade wallet</source>
         <translation>Non è possibile effettuare il downgrade del portafoglio</translation>
     </message>

@@ -3823,6 +3823,10 @@ A pasta de blocos especificados "%s" não existe.</translation>
         <translation>A carregar a carteira...</translation>
     </message>
     <message>
+        <source>Loading...</source>
+        <translation>Carregamento...</translation>
+    </message>
+    <message>
         <source>Cannot downgrade wallet</source>
         <translation>Impossível mudar a carteira para uma versão anterior</translation>
     </message>

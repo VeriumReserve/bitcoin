@@ -3217,6 +3217,10 @@ Exportar los datos en la pestaña actual a un archivo</translation>
         <translation>Cargando billetera...</translation>
     </message>
     <message>
+        <source>Loading...</source>
+        <translation>Cargando...</translation>
+    </message>
+    <message>
         <source>Cannot downgrade wallet</source>
         <translation>No es posible desactualizar la billetera</translation>
     </message>

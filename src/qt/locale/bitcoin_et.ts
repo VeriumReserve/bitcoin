@@ -1992,6 +1992,10 @@
         <translation>Rahakoti laadimine...</translation>
     </message>
     <message>
+        <source>Loading...</source>
+        <translation>Rahakoti...</translation>
+    </message>
+    <message>
         <source>Cannot downgrade wallet</source>
         <translation>Rahakoti vanandamine ebaõnnestus</translation>
     </message>

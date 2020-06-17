@@ -3820,6 +3820,10 @@ Note : Les frais étant calculés par octet, des frais de « 100 satoshis par
         <translation>Chargement du porte-monnaie…</translation>
     </message>
     <message>
+        <source>Loading...</source>
+        <translation>Chargement...</translation>
+    </message>
+    <message>
         <source>Cannot downgrade wallet</source>
         <translation>Impossible de revenir à une version inférieure du porte-monnaie</translation>
     </message>

@@ -810,6 +810,10 @@
         <translation>Lo-load dane ing wallet...</translation>
     </message>
     <message>
+        <source>Loading...</source>
+        <translation>Lo-load dane ing...</translation>
+    </message>
+    <message>
         <source>Cannot downgrade wallet</source>
         <translation>Ali ya magsilbing i-downgrade ing wallet</translation>
     </message>

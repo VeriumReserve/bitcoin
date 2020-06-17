@@ -3821,6 +3821,10 @@ Diretório de blocos especificados "%s" não existe.</translation>
         <translation>Carregando carteira...</translation>
     </message>
     <message>
+        <source>Loading...</source>
+        <translation>Carregamento...</translation>
+    </message>
+    <message>
         <source>Cannot downgrade wallet</source>
         <translation>Não é possível fazer downgrade da carteira</translation>
     </message>

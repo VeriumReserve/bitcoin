@@ -3578,6 +3578,10 @@ Note:  Since the fee is calculated on a per-byte basis, a fee of "100 satoshis p
         <translation>வாலட் லோடிங் செய்யப்படுகிறது...</translation>
     </message>
     <message>
+        <source>Loading</source>
+        <translation>กำลังโหลด...</translation>
+    </message>
+    <message>
         <source>Cannot downgrade wallet</source>
         <translation>வாலட்டை தரமிறக்க முடியாது</translation>
     </message>

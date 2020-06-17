@@ -3822,6 +3822,10 @@ Hinweis: Eine Gebühr von "100 Satoshis pro kB" bei einer Größe der Transaktio
         <translation>Lade Wallet...</translation>
     </message>
     <message>
+        <source>Loading...</source>
+        <translation>Lade...</translation>
+    </message>
+    <message>
         <source>Cannot downgrade wallet</source>
         <translation>Wallet kann nicht auf eine ältere Version herabgestuft werden</translation>
     </message>

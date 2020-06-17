@@ -1222,6 +1222,10 @@
         <translation>Ҳамён юкланмоқда...</translation>
     </message>
     <message>
+        <source>Loading...</source>
+        <translation>юкланмоқда...</translation>
+    </message>
+    <message>
         <source>Rescanning...</source>
         <translation>Қайта текшириб чиқилмоқда...</translation>
     </message>

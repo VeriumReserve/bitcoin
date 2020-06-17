@@ -606,6 +606,10 @@
         <translation>Түрүйвчийг ачааллаж байна...</translation>
     </message>
     <message>
+        <source>Loading...</source>
+        <translation>Ачаалж байна ...</translation>
+    </message>
+    <message>
         <source>Rescanning...</source>
         <translation>Ахин уншиж байна...</translation>
     </message>

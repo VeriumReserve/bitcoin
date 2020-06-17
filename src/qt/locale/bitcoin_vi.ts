@@ -3681,7 +3681,11 @@ Lưu ý: Vì phí được tính trên cơ sở mỗi byte, nên phí "100 satos
     </message>
     <message>
         <source>Loading wallet...</source>
-        <translation>Loading wallet...</translation>
+        <translation>Đang tải ví...</translation>
+    </message>
+    <message>
+        <source>Loading...</source>
+        <translation>Đang tải...</translation>
     </message>
     <message>
         <source>Cannot downgrade wallet</source>

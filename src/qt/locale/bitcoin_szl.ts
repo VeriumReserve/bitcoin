@@ -2050,6 +2050,10 @@
         <translation>Wgrŏwanie portmanyja...</translation>
     </message>
     <message>
+        <source>Loading...</source>
+        <translation>Ładowanie...</translation>
+    </message>
+    <message>
         <source>Rescanning...</source>
         <translation>Pōnowne skanowanie</translation>
     </message>

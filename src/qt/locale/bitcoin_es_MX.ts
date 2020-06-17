@@ -893,6 +893,10 @@ Solicitar pagos (genera códigos QR y verium: URI)
         <translation>Cargando billetera...</translation>
     </message>
     <message>
+        <source>Loading...</source>
+        <translation>Cargando...</translation>
+    </message>
+    <message>
         <source>Done loading</source>
         <translation>Carga completa</translation>
     </message>

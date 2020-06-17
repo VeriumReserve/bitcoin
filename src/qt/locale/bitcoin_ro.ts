@@ -2096,7 +2096,7 @@
         <source>Specify a custom fee per kB (1,000 bytes) of the transaction's virtual size.
 
 Note:  Since the fee is calculated on a per-byte basis, a fee of "100 satoshis per kB" for a transaction size of 500 bytes (half of 1 kB) would ultimately yield a fee of only 50 satoshis.</source>
-        <translation>Specificati o taxa anume pe kB (1000 byte) din marimea virtuala a tranzactiei. 
+        <translation>Specificati o taxa anume pe kB (1000 byte) din marimea virtuala a tranzactiei.
 
 Nota: Cum taxa este calculata per byte, o taxa de "100 satoshi per kB" pentru o tranzactie de 500 byte (jumatate de kB) va produce o taxa de doar 50 satoshi.</translation>
     </message>
@@ -3528,6 +3528,10 @@ Nota: Cum taxa este calculata per byte, o taxa de "100 satoshi per kB" pentru o 
     <message>
         <source>Loading wallet...</source>
         <translation>Încărcare portofel...</translation>
+    </message>
+    <message>
+        <source>Loading...</source>
+        <translation>Încărcare...</translation>
     </message>
     <message>
         <source>Cannot downgrade wallet</source>

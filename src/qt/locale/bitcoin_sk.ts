@@ -3821,6 +3821,10 @@ Poznámka: Keďže poplatok je počítaný za bajt, poplatok o hodnote "100 sato
         <translation>Načítavam peňaženku...</translation>
     </message>
     <message>
+        <source>Loading...</source>
+        <translation>Načítava...</translation>
+    </message>
+    <message>
         <source>Cannot downgrade wallet</source>
         <translation>Nie je možné prejsť na nižšiu verziu peňaženky</translation>
     </message>

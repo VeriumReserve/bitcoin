@@ -3326,6 +3326,10 @@ Pastaba: Kadangi mokestis apskaičiuojamas pagal baitą, mokestis už „100 sat
         <translation>Užkraunama piniginė...</translation>
     </message>
     <message>
+        <source>Loading...</source>
+        <translation>Įkeliamas...</translation>
+    </message>
+    <message>
         <source>Cannot downgrade wallet</source>
         <translation>Negalima sumažinti piniginės versijos</translation>
     </message>

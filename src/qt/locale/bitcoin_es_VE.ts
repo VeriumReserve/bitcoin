@@ -1494,6 +1494,10 @@
         <translation>Cargando monedero...</translation>
     </message>
     <message>
+        <source>Loading...</source>
+        <translation>Cargando...</translation>
+    </message>
+    <message>
         <source>Cannot downgrade wallet</source>
         <translation>No se puede rebajar el monedero</translation>
     </message>

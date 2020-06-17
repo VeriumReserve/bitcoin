@@ -3524,6 +3524,10 @@
         <translation>Laster lommebok...</translation>
     </message>
     <message>
+        <source>Loading...</source>
+        <translation>Laster...</translation>
+    </message>
+    <message>
         <source>Cannot downgrade wallet</source>
         <translation>Kan ikke nedgradere lommebok</translation>
     </message>

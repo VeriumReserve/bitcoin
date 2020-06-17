@@ -3184,6 +3184,10 @@ Catatan: Karena biaya dihitung berdasarkan per byte, biaya "100 satoshi per kB" 
         <translation>Memuat dompet...</translation>
     </message>
     <message>
+        <source>Loading...</source>
+        <translation>Memuat...</translation>
+    </message>
+    <message>
         <source>Cannot downgrade wallet</source>
         <translation>Tidak dapat menurunkan versi dompet</translation>
     </message>

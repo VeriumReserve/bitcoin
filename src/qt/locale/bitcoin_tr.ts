@@ -3491,6 +3491,10 @@
         <translation>Cüzdan Bekleniyor...</translation>
     </message>
     <message>
+        <source>Loading...</source>
+        <translation>Yükleniyor...</translation>
+    </message>
+    <message>
         <source>Cannot downgrade wallet</source>
         <translation>Cüzdan indirgenememektedir</translation>
     </message>

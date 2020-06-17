@@ -3708,6 +3708,10 @@ Huom: Koska siirtomaksu lasketaan tavujen mukaan, niin määrittelemällä 500 t
         <translation>Ladataan lompakkoa...</translation>
     </message>
     <message>
+        <source>Loading...</source>
+        <translation>Ladataan...</translation>
+    </message>
+    <message>
         <source>Cannot downgrade wallet</source>
         <translation>Et voi päivittää lompakkoasi vanhempaan versioon</translation>
     </message>

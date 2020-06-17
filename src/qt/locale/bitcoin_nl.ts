@@ -3821,6 +3821,10 @@ Notitie: Omdat de vergoeding per byte wordt gerekend, zal een vergoeding van "10
         <translation>Portemonnee aan het laden...</translation>
     </message>
     <message>
+        <source>Loading...</source>
+        <translation>Bezig met laden...</translation>
+    </message>
+    <message>
         <source>Cannot downgrade wallet</source>
         <translation>Kan portemonnee niet downgraden</translation>
     </message>
