@@ -93,12 +93,12 @@ BitcoinGUI::BitcoinGUI(interfaces::Node& node, const PlatformStyle *_platformSty
         mainHeight = 480;
 
     int mainWidth = screenSize.width() * 0.6f;
-    if( mainWidth < 800)
-        mainWidth = 800;
+    if( mainWidth < 860)
+        mainWidth = 860;
 
     // For Development, use the smallest size :)
     // this->setFixedSize(QSize(mainWidth, mainHeight));
-    this->setFixedSize(QSize(800, 480));
+    this->setFixedSize(QSize(860, 480));
 
     QSettings settings;
     if (!restoreGeometry(settings.value("MainWindowGeometry").toByteArray())) {
