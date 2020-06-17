@@ -692,7 +692,7 @@
              <number>0</number>
             </property>
             <item>
-             <spacer name="verticalSpacerSmartFee">
+             <spacer name="verticalSpacerMinimumFee">
               <property name="orientation">
                <enum>Qt::Vertical</enum>
               </property>
@@ -708,7 +708,7 @@
              </spacer>
             </item>
             <item>
-             <layout class="QHBoxLayout" name="horizontalLayoutSmartFee">
+             <layout class="QHBoxLayout" name="horizontalLayoutMinimumFee">
               <property name="spacing">
                <number>10</number>
               </property>
@@ -764,25 +764,6 @@
              </spacer>
             </item>
            </layout>
-          </item>
-          <item>
-           <widget class="QLabel" name="fallbackFeeWarningLabel">
-            <property name="toolTip">
-             <string>Using the fallbackfee can result in sending a transaction that will take several hours or days (or never) to confirm. Consider choosing your fee manually or wait until you have validated the complete chain.</string>
-            </property>
-            <property name="font">
-            <font>
-                <weight>75</weight>
-                <bold>true</bold>
-            </font>
-            </property>
-            <property name="text">
-             <string>Warning: Fee estimation is currently not possible.</string>
-            </property>
-            <property name="wordWrap">
-             <bool>false</bool>
-            </property>
-           </widget>
           </item>
           <item>
            <spacer name="horizontalSpacer_4">
@@ -886,9 +867,9 @@ Note:  Since the fee is calculated on a per-byte basis, a fee of "100 satoshis p
              <item row="0" column="0">
               <layout class="QVBoxLayout" name="verticalLayoutFee4" stretch="0,1">
                <item>
-                <widget class="QRadioButton" name="radioSmartFee">
+                <widget class="QRadioButton" name="radioMinimumFee">
                  <property name="text">
-                  <string>Recommended:</string>
+                  <string>Minimum:</string>
                  </property>
                  <property name="checked">
                   <bool>true</bool>
@@ -948,6 +929,17 @@ Note:  Since the fee is calculated on a per-byte basis, a fee of "100 satoshis p
                <property name="topMargin">
                 <number>2</number>
                </property>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayoutFee12">
+                 <item>
+                  <widget class="QLabel" name="labelMinimumFee">
+                   <property name="text">
+                    <string/>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
               </layout>
              </item>
             </layout>

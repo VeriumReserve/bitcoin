@@ -93,6 +93,7 @@ private Q_SLOTS:
     void coinControlClipboardLowOutput();
     void coinControlClipboardChange();
     void updateFeeSectionControls();
+    void updateMinimumFeeLabel();
 
 Q_SIGNALS:
     // Fired when a message should be reported to the user
