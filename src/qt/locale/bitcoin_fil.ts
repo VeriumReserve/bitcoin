@@ -1270,12 +1270,16 @@
         <translation>Ang ipinapakitang impormasyon ay maaaring luma na. Kusang mag-sy-synchronize ang iyong walet sa Verium network pagkatapos maitatag ang koneksyon, ngunit hindi pa nakukumpleto ang prosesong ito.</translation>
     </message>
     <message>
-        <source>Watch-only:</source>
-        <translation>Watch-only:</translation>
+        <source>(Watch-only)</source>
+        <translation>(Watch-only)</translation>
     </message>
     <message>
-        <source>Available:</source>
-        <translation>Magagamit:</translation>
+        <source>Available</source>
+        <translation>Magagamit</translation>
+    </message>
+    <message>
+        <source>Unconfirmed</source>
+        <translation>Hindi nakumpirma</translation>
     </message>
     <message>
         <source>Your current spendable balance</source>
@@ -1290,8 +1294,8 @@
         <translation>Ang kabuuan ng mga transaksyon na naghihintay makumpirma, at hindi pa napapabilang sa balanse na puedeng gastusin</translation>
     </message>
     <message>
-        <source>Immature:</source>
-        <translation>Hindi pa ligtas gastusin:</translation>
+        <source>Immature</source>
+        <translation>Hindi pa ligtas gastusin</translation>
     </message>
     <message>
         <source>Mined balance that has not yet matured</source>
@@ -1302,8 +1306,8 @@
         <translation>Mga balanse</translation>
     </message>
     <message>
-        <source>Total:</source>
-        <translation>Ang kabuuan:</translation>
+        <source>Total</source>
+        <translation>Ang kabuuan</translation>
     </message>
     <message>
         <source>Your current total balance</source>

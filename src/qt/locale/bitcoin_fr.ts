@@ -1398,12 +1398,16 @@
         <translation>Les informations affichées peuvent être obsolètes. Votre porte-monnaie se synchronise automatiquement avec le réseau Verium dès qu’une connexion est établie, mais ce processus n’est pas encore achevé.</translation>
     </message>
     <message>
-        <source>Watch-only:</source>
-        <translation>Juste-regarder :</translation>
+        <source>(Watch-only)</source>
+        <translation>(Juste-regarder)</translation>
     </message>
     <message>
-        <source>Available:</source>
-        <translation>Disponible :</translation>
+        <source>Available</source>
+        <translation>Disponible</translation>
+    </message>
+    <message>
+        <source>Unconfirmed</source>
+        <translation>Non confirmée</translation>
     </message>
     <message>
         <source>Your current spendable balance</source>
@@ -1418,8 +1422,8 @@
         <translation>Total des transactions qui doivent encore être confirmées et qui ne sont pas prises en compte dans le solde disponible</translation>
     </message>
     <message>
-        <source>Immature:</source>
-        <translation>Immature :</translation>
+        <source>Immature</source>
+        <translation>Immature</translation>
     </message>
     <message>
         <source>Mined balance that has not yet matured</source>
@@ -1430,8 +1434,8 @@
         <translation>Soldes</translation>
     </message>
     <message>
-        <source>Total:</source>
-        <translation>Total :</translation>
+        <source>Total</source>
+        <translation>Total</translation>
     </message>
     <message>
         <source>Your current total balance</source>

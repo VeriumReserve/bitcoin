@@ -770,8 +770,8 @@
         <translation>La información mostrada puede estar desactualizada. Su monedero se sincroniza automáticamente con la red Verium después de que se haya establecido una conexión, pero este proceso aún no se ha completado.</translation>
     </message>
     <message>
-        <source>Available:</source>
-        <translation>Disponible:</translation>
+        <source>Available</source>
+        <translation>Disponible</translation>
     </message>
     <message>
         <source>Your current spendable balance</source>
@@ -786,16 +786,16 @@
         <translation>Total de transacciones que deben ser confirmadas, y que no cuentan con el balance gastable necesario</translation>
     </message>
     <message>
-        <source>Immature:</source>
-        <translation>No disponible:</translation>
+        <source>Immature</source>
+        <translation>No disponible</translation>
     </message>
     <message>
         <source>Mined balance that has not yet matured</source>
         <translation>Saldo recién minado que aún no está disponible.</translation>
     </message>
     <message>
-        <source>Total:</source>
-        <translation>Total:</translation>
+        <source>Total</source>
+        <translation>Total</translation>
     </message>
     <message>
         <source>Your current total balance</source>
@@ -922,7 +922,7 @@
     </message>
     <message>
         <source>Totals</source>
-        <translation>Total:</translation>
+        <translation>Total</translation>
     </message>
     <message>
         <source>In:</source>

@@ -1398,12 +1398,16 @@
         <translation>The displayed information may be out of date. Your Wallet automatically synchronises with the Verium Network after a connection is established, but this process has not been completed yet.</translation>
     </message>
     <message>
-        <source>Watch-only:</source>
-        <translation>Watch-only:</translation>
+        <source>(Watch-only)</source>
+        <translation>(Watch-only)</translation>
     </message>
     <message>
-        <source>Available:</source>
-        <translation>Available:</translation>
+        <source>Available</source>
+        <translation>Available</translation>
+    </message>
+    <message>
+        <source>Unconfirmed</source>
+        <translation>Unconfirmed</translation>
     </message>
     <message>
         <source>Your current spendable balance</source>
@@ -1418,8 +1422,8 @@
         <translation>Total of transactions that have yet to be confirmed, and do not yet count toward the spendable balance</translation>
     </message>
     <message>
-        <source>Immature:</source>
-        <translation>Immature:</translation>
+        <source>Immature</source>
+        <translation>Immature</translation>
     </message>
     <message>
         <source>Mined balance that has not yet matured</source>
@@ -1430,8 +1434,8 @@
         <translation>Balances</translation>
     </message>
     <message>
-        <source>Total:</source>
-        <translation>Total:</translation>
+        <source>Total</source>
+        <translation>Total</translation>
     </message>
     <message>
         <source>Your current total balance</source>

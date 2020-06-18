@@ -1394,12 +1394,16 @@
         <translation>காட்டப்படும் தகவல் காலாவதியானதாக இருக்கலாம். ஒரு இணைப்பு நிறுவப்பட்ட பிறகு, உங்கள் பணப்பை தானாக பிட்கோடு நெட்வொர்க்குடன் ஒத்திசைக்கிறது, ஆனால் இந்த செயல்முறை இன்னும் முடிவடையவில்லை.</translation>
     </message>
     <message>
-        <source>Watch-only:</source>
-        <translation>பார்க்க மட்டுமே:</translation>
+        <source>(Watch-only)</source>
+        <translation>(பார்க்க மட்டுமே)</translation>
     </message>
     <message>
-        <source>Available:</source>
-        <translation>கிடைக்ககூடிய:</translation>
+        <source>Available</source>
+        <translation>கிடைக்ககூடிய</translation>
+    </message>
+    <message>
+        <source>Unconfirmed</source>
+        <translation>உறுதிப்படுத்தப்படாதது</translation>
     </message>
     <message>
         <source>Your current spendable balance</source>
@@ -1414,8 +1418,8 @@
         <translation>இன்னும் உறுதிப்படுத்தப்பட வேண்டிய பரிவர்த்தனைகளின் மொத்த அளவு, இன்னும் செலவழித்த சமநிலையை நோக்கி கணக்கிடவில்லை</translation>
     </message>
     <message>
-        <source>Immature:</source>
-        <translation>முதிராத:</translation>
+        <source>Immature</source>
+        <translation>முதிராத</translation>
     </message>
     <message>
         <source>Mined balance that has not yet matured</source>
@@ -1426,8 +1430,8 @@
         <translation>மீதி</translation>
     </message>
     <message>
-        <source>Total:</source>
-        <translation>மொத்தம்:</translation>
+        <source>Total</source>
+        <translation>மொத்தம்</translation>
     </message>
     <message>
         <source>Your current total balance</source>

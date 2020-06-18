@@ -1298,12 +1298,16 @@
         <translation>顯示的資訊可能是過期的。跟 Verium 網路的連線建立後，你的錢包會自動和網路同步，但是這個步驟還沒完成。</translation>
     </message>
     <message>
-        <source>Watch-only:</source>
-        <translation>只能看:</translation>
+        <source>(Watch-only)</source>
+        <translation>(只能看)</translation>
     </message>
     <message>
-        <source>Available:</source>
-        <translation>可用金額:</translation>
+        <source>Available</source>
+        <translation>可用金額</translation>
+    </message>
+    <message>
+        <source>Unconfirmed</source>
+        <translation>未確認</translation>
     </message>
     <message>
         <source>Your current spendable balance</source>
@@ -1318,8 +1322,8 @@
         <translation>還沒被確認的交易的總金額，可用餘額不包含這些金額</translation>
     </message>
     <message>
-        <source>Immature:</source>
-        <translation>未成熟金額:</translation>
+        <source>Immature</source>
+        <translation>未成熟金額</translation>
     </message>
     <message>
         <source>Mined balance that has not yet matured</source>
@@ -1330,8 +1334,8 @@
         <translation>餘額</translation>
     </message>
     <message>
-        <source>Total:</source>
-        <translation>總金額:</translation>
+        <source>Total</source>
+        <translation>總金額</translation>
     </message>
     <message>
         <source>Your current total balance</source>

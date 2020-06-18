@@ -1399,12 +1399,16 @@ Dit is ideaal voor alleen-lezen portommonees.</translation>
         <translation>De weergegeven informatie kan verouderd zijn. Uw portemonnee synchroniseert automatisch met het Veriumnetwerk nadat een verbinding is gelegd, maar dit proces is nog niet voltooid.</translation>
     </message>
     <message>
-        <source>Watch-only:</source>
-        <translation>Alleen-bekijkbaar:</translation>
+        <source>(Watch-only)</source>
+        <translation>(Alleen-bekijkbaar)</translation>
     </message>
     <message>
-        <source>Available:</source>
-        <translation>Beschikbaar:</translation>
+        <source>Available</source>
+        <translation>Beschikbaar</translation>
+    </message>
+    <message>
+        <source>Unconfirmed</source>
+        <translation>Onbevestigd</translation>
     </message>
     <message>
         <source>Your current spendable balance</source>
@@ -1419,8 +1423,8 @@ Dit is ideaal voor alleen-lezen portommonees.</translation>
         <translation>De som van de transacties die nog bevestigd moeten worden, en nog niet meetellen in uw beschikbare saldo</translation>
     </message>
     <message>
-        <source>Immature:</source>
-        <translation>Immatuur:</translation>
+        <source>Immature</source>
+        <translation>Immatuur</translation>
     </message>
     <message>
         <source>Mined balance that has not yet matured</source>
@@ -1431,8 +1435,8 @@ Dit is ideaal voor alleen-lezen portommonees.</translation>
         <translation>Saldi</translation>
     </message>
     <message>
-        <source>Total:</source>
-        <translation>Totaal:</translation>
+        <source>Total</source>
+        <translation>Totaal</translation>
     </message>
     <message>
         <source>Your current total balance</source>

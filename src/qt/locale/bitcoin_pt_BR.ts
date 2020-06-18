@@ -1398,12 +1398,16 @@
         <translation>A informação mostrada pode estar desatualizada. Sua carteira sincroniza automaticamente com a rede Verium depois que a conexão é estabelecida, mas este processo ainda não está completo.</translation>
     </message>
     <message>
-        <source>Watch-only:</source>
-        <translation>Monitorados:</translation>
+        <source>(Watch-only)</source>
+        <translation>(Monitorados)</translation>
     </message>
     <message>
-        <source>Available:</source>
-        <translation>Disponível:</translation>
+        <source>Available</source>
+        <translation>Disponível</translation>
+    </message>
+    <message>
+        <source>Unconfirmed</source>
+        <translation>Não confirmado</translation>
     </message>
     <message>
         <source>Your current spendable balance</source>
@@ -1418,8 +1422,8 @@
         <translation>Total de transações que ainda têm de ser confirmados, e ainda não estão disponíveis para gasto</translation>
     </message>
     <message>
-        <source>Immature:</source>
-        <translation>Imaturo:</translation>
+        <source>Immature</source>
+        <translation>Imaturo</translation>
     </message>
     <message>
         <source>Mined balance that has not yet matured</source>
@@ -1430,8 +1434,8 @@
         <translation>Saldos</translation>
     </message>
     <message>
-        <source>Total:</source>
-        <translation>Total:</translation>
+        <source>Total</source>
+        <translation>Total</translation>
     </message>
     <message>
         <source>Your current total balance</source>

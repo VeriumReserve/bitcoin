@@ -173,7 +173,7 @@
     </message>
     <message>
         <source>Remember that encrypting your wallet cannot fully protect your veriums from being stolen by malware infecting your computer.</source>
-        <translation>والت رمز بندی شد . 
+        <translation>والت رمز بندی شد .
 یاد داشته باشید که پنجره رمز شده نمی تواند کلا از سرقت نرم افزارهای مخرب محافظ کند</translation>
     </message>
     <message>
@@ -1112,12 +1112,16 @@
         <translation>اطلاعات نمایش داده شده ممکن است روزآمد نباشد. wallet شما به صورت خودکار بعد از برقراری اتصال با شبکه verium به روز می شود اما این فرایند هنوز تکمیل نشده است.</translation>
     </message>
     <message>
-        <source>Watch-only:</source>
-        <translation>فقط قابل-مشاهده:</translation>
+        <source>(Watch-only)</source>
+        <translation>(فقط قابل-مشاهده)</translation>
     </message>
     <message>
-        <source>Available:</source>
-        <translation>در دسترس:</translation>
+        <source>Available</source>
+        <translation>در دسترس</translation>
+    </message>
+    <message>
+        <source>Unconfirmed</source>
+        <translation>تایید نشده</translation>
     </message>
     <message>
         <source>Your current spendable balance</source>
@@ -1132,8 +1136,8 @@
         <translation>تعداد تراکنشهایی که نیاز به تایید دارند و هنوز در مانده حساب جاری شما به حساب نیامده اند</translation>
     </message>
     <message>
-        <source>Immature:</source>
-        <translation>نارسیده:</translation>
+        <source>Immature</source>
+        <translation>نارسیده</translation>
     </message>
     <message>
         <source>Mined balance that has not yet matured</source>
@@ -1144,8 +1148,8 @@
         <translation>موجودی ها</translation>
     </message>
     <message>
-        <source>Total:</source>
-        <translation>کل:</translation>
+        <source>Total</source>
+        <translation>کل</translation>
     </message>
     <message>
         <source>Your current total balance</source>

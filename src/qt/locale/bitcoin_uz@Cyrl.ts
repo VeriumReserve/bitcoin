@@ -590,12 +590,12 @@
         <translation>Кўрсатилган маълумот эскирган бўлиши мумкин. Ҳамёнингиз алоқа ўрнатилгандан сўнг Verium тармоқ билан автоматик тарзда синхронланади, аммо жараён ҳалигача тугалланмади.</translation>
     </message>
     <message>
-        <source>Watch-only:</source>
-        <translation>Фақат кўришга</translation>
+        <source>(Watch-only)</source>
+        <translation>(Фақат кўришга)</translation>
     </message>
     <message>
-        <source>Available:</source>
-        <translation>Мавжуд:</translation>
+        <source>Available</source>
+        <translation>Мавжуд</translation>
     </message>
     <message>
         <source>Your current spendable balance</source>
@@ -610,8 +610,8 @@
         <translation>Жами ўтказмалар ҳозиргача тасдиқланган ва сафланадиган баланс томонга ҳали ҳам ҳисобланмади</translation>
     </message>
     <message>
-        <source>Immature:</source>
-        <translation>Тайёр эмас:</translation>
+        <source>Immature</source>
+        <translation>Тайёр эмас</translation>
     </message>
     <message>
         <source>Mined balance that has not yet matured</source>
@@ -622,8 +622,8 @@
         <translation>Баланслар</translation>
     </message>
     <message>
-        <source>Total:</source>
-        <translation>Жами:</translation>
+        <source>Total</source>
+        <translation>Жами</translation>
     </message>
     <message>
         <source>Your current total balance</source>

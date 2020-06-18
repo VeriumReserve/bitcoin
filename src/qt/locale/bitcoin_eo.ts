@@ -820,6 +820,10 @@
         <translation>Formularo</translation>
     </message>
     <message>
+        <source>Unconfirmed</source>
+        <translation>Nekonfirmita</translation>
+    </message>
+    <message>
         <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Verium network after a connection is established, but this process has not completed yet.</source>
         <translation>Eblas, ke la informoj videblaj ĉi tie estas eksdataj. Via monujo aŭtomate sinkoniĝas kun la bitmona reto kiam ili konektiĝas, sed tiu procezo ankoraŭ ne finfariĝis.</translation>
     </message>
@@ -832,8 +836,8 @@
         <translation>la sumo de transakcioj ankoraŭ ne konfirmitaj, kiuj ankoraŭ ne elspezeblas</translation>
     </message>
     <message>
-        <source>Immature:</source>
-        <translation>Nematura:</translation>
+        <source>Immature</source>
+        <translation>Nematura</translation>
     </message>
     <message>
         <source>Mined balance that has not yet matured</source>
@@ -844,8 +848,8 @@
         <translation>Saldoj</translation>
     </message>
     <message>
-        <source>Total:</source>
-        <translation>Totalo:</translation>
+        <source>Total</source>
+        <translation>Totalo</translation>
     </message>
     <message>
         <source>Your current total balance</source>

@@ -1870,52 +1870,52 @@
         <translation>Form</translation>
     </message>
     <message>
-        <location line="+52"/>
+        <location line="+58"/>
         <source>Immature</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+50"/>
         <location line="+31"/>
-        <location line="+151"/>
+        <location line="+157"/>
         <location line="+31"/>
-        <location line="+111"/>
+        <location line="+117"/>
         <location line="+31"/>
-        <location line="+111"/>
+        <location line="+117"/>
         <location line="+31"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-456"/>
-        <location line="+182"/>
-        <location line="+142"/>
-        <location line="+142"/>
+        <location line="-474"/>
+        <location line="+188"/>
+        <location line="+148"/>
+        <location line="+148"/>
         <source>(watch only)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-420"/>
+        <location line="-438"/>
         <source>RECEIVE</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+45"/>
+        <location line="+51"/>
         <source>Unconfirmed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+142"/>
+        <location line="+148"/>
         <source>Total</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+142"/>
+        <location line="+148"/>
         <source>Available</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+134"/>
+        <location line="+140"/>
         <source>Miner</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1931,7 +1931,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+78"/>
+        <location line="+84"/>
         <source>Est. Next Reward</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1941,7 +1941,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+43"/>
+        <location line="+49"/>
         <source>Miner Hashrate</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1951,7 +1951,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+34"/>
         <source>Last Transactions</source>
         <translation type="unfinished"></translation>
     </message>

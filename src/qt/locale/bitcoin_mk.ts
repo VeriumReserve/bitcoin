@@ -352,8 +352,8 @@
 <context>
     <name>OverviewPage</name>
     <message>
-        <source>Total:</source>
-        <translation>Вкупно:</translation>
+        <source>Total</source>
+        <translation>Вкупно</translation>
     </message>
     </context>
 <context>

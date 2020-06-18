@@ -1266,12 +1266,16 @@
         <translation>Informasjonen som vises kan være foreldet. Din lommebok synkroniseres automatisk med Verium-nettverket etter at tilkobling er opprettet, men denne prosessen er ikke ferdig enda.</translation>
     </message>
     <message>
-        <source>Watch-only:</source>
-        <translation>Kun observerbar:</translation>
+        <source>(Watch-only)</source>
+        <translation>(Kun observerbar)</translation>
     </message>
     <message>
-        <source>Available:</source>
-        <translation>Tilgjengelig:</translation>
+        <source>Available</source>
+        <translation>Tilgjengelig</translation>
+    </message>
+    <message>
+        <source>Unconfirmed</source>
+        <translation>Ubekreftet</translation>
     </message>
     <message>
         <source>Your current spendable balance</source>
@@ -1286,8 +1290,8 @@
         <translation>Totalt antall ubekreftede transaksjoner som ikke teller med i saldo</translation>
     </message>
     <message>
-        <source>Immature:</source>
-        <translation>Umoden:</translation>
+        <source>Immature</source>
+        <translation>Umoden</translation>
     </message>
     <message>
         <source>Mined balance that has not yet matured</source>
@@ -1298,8 +1302,8 @@
         <translation>Saldoer</translation>
     </message>
     <message>
-        <source>Total:</source>
-        <translation>Totalt:</translation>
+        <source>Total</source>
+        <translation>Totalt</translation>
     </message>
     <message>
         <source>Your current total balance</source>

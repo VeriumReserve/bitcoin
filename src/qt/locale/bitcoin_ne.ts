@@ -244,12 +244,12 @@
         <translation>देखाइएको सूचना पूरानो हुन सक्छ । कनेक्सन स्थापित भएपछि, तपाईंको वालेट बिटकोइन नेटवर्कमा स्वचालित रूपमा समिकरण हुन्छ , तर यो प्रक्रिया अहिले सम्म पूरा भएको छैन ।</translation>
     </message>
     <message>
-        <source>Watch-only:</source>
-        <translation>हेर्ने-मात्र:</translation>
+        <source>(Watch-only)</source>
+        <translation>(हेर्ने-मात्र)</translation>
     </message>
     <message>
-        <source>Available:</source>
-        <translation>उपलब्ध:</translation>
+        <source>Available</source>
+        <translation>उपलब्ध</translation>
     </message>
     <message>
         <source>Your current spendable balance</source>
@@ -264,8 +264,8 @@
         <translation>अझै पुष्टि हुन बाँकी र खर्च गर्न मिल्ने ब्यालेन्समा गणना गर्न नमिल्ने जम्मा कारोबार</translation>
     </message>
     <message>
-        <source>Immature:</source>
-        <translation>अपरिपक्व:</translation>
+        <source>Immature</source>
+        <translation>अपरिपक्व</translation>
     </message>
     <message>
         <source>Mined balance that has not yet matured</source>

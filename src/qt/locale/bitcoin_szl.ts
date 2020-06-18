@@ -1138,8 +1138,8 @@
         <translation>Wyświytlanŏ informacyjŏ może być niyterŏźnŏ. Twōj portmanyj synchrōnizuje sie autōmatycznie z necym verium zarŏz po tym, jak zrychtowane je skuplowanie, ale proces tyn niy ôstoł jeszcze skōńczōny.</translation>
     </message>
     <message>
-        <source>Available:</source>
-        <translation>Dostympne:</translation>
+        <source>Available</source>
+        <translation>Dostympne</translation>
     </message>
     <message>
         <source>Pending:</source>
@@ -1150,8 +1150,8 @@
         <translation>Salda</translation>
     </message>
     <message>
-        <source>Total:</source>
-        <translation>Cuzamyn:</translation>
+        <source>Total</source>
+        <translation>Cuzamyn</translation>
     </message>
     <message>
         <source>Your current total balance</source>

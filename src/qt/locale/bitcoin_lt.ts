@@ -1286,12 +1286,16 @@
         <translation>Rodoma informacija gali būti pasenusi. Piniginė automatiškai sinchronizuojasi su „Verium“ tinklu po ryšio užmezgimo, tačiau šis procesas dar nebaigtas.</translation>
     </message>
     <message>
-        <source>Watch-only:</source>
-        <translation>Tik stebėti</translation>
+        <source>(Watch-only)</source>
+        <translation>(Tik stebėti)</translation>
     </message>
     <message>
-        <source>Available:</source>
-        <translation>Galimi:</translation>
+        <source>Available</source>
+        <translation>Galimi</translation>
+    </message>
+    <message>
+        <source>Unconfirmed</source>
+        <translation>Nepatvirtintas</translation>
     </message>
     <message>
         <source>Your current spendable balance</source>
@@ -1306,8 +1310,8 @@
         <translation>Iš viso sandorių, kurie dar turi būti patvirtinti ir kurie dar neįskaičiuojami į išleidžiamą balansą</translation>
     </message>
     <message>
-        <source>Immature:</source>
-        <translation>Nepribrendę:</translation>
+        <source>Immature</source>
+        <translation>Nepribrendę</translation>
     </message>
     <message>
         <source>Mined balance that has not yet matured</source>
@@ -1318,8 +1322,8 @@
         <translation>Balansai</translation>
     </message>
     <message>
-        <source>Total:</source>
-        <translation>Viso:</translation>
+        <source>Total</source>
+        <translation>Viso</translation>
     </message>
     <message>
         <source>Your current total balance</source>

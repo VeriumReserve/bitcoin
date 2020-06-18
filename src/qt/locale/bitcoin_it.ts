@@ -1399,12 +1399,16 @@ Per specificare più URL separarli con una barra verticale "|".</translation>
         <translation>Le informazioni visualizzate potrebbero non essere aggiornate. Il portafoglio si sincronizza automaticamente con la rete Verium una volta stabilita una connessione, ma questo processo non è ancora stato completato.</translation>
     </message>
     <message>
-        <source>Watch-only:</source>
-        <translation>Sola lettura:</translation>
+        <source>(Watch-only)</source>
+        <translation>(Sola lettura)</translation>
     </message>
     <message>
-        <source>Available:</source>
-        <translation>Disponibile:</translation>
+        <source>Available</source>
+        <translation>Disponibile</translation>
+    </message>
+    <message>
+        <source>Unconfirmed</source>
+        <translation>Non confermato</translation>
     </message>
     <message>
         <source>Your current spendable balance</source>
@@ -1419,8 +1423,8 @@ Per specificare più URL separarli con una barra verticale "|".</translation>
         <translation>Totale delle transazioni in corso di conferma e che non sono ancora conteggiate nel saldo spendibile</translation>
     </message>
     <message>
-        <source>Immature:</source>
-        <translation>Immaturo:</translation>
+        <source>Immature</source>
+        <translation>Immaturo</translation>
     </message>
     <message>
         <source>Mined balance that has not yet matured</source>
@@ -1431,8 +1435,8 @@ Per specificare più URL separarli con una barra verticale "|".</translation>
         <translation>Saldo</translation>
     </message>
     <message>
-        <source>Total:</source>
-        <translation>Totale:</translation>
+        <source>Total</source>
+        <translation>Totale</translation>
     </message>
     <message>
         <source>Your current total balance</source>

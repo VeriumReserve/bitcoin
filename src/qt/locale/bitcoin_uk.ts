@@ -1366,12 +1366,16 @@
         <translation>Показана інформація вже може бути застарілою. Ваш гаманець буде автоматично синхронізовано з мережею Verium після встановлення підключення, але цей процес ще не завершено.</translation>
     </message>
     <message>
-        <source>Watch-only:</source>
-        <translation>Тільки спостереження:</translation>
+        <source>(Watch-only)</source>
+        <translation>(Тільки спостереження)</translation>
     </message>
     <message>
-        <source>Available:</source>
-        <translation>Наявно:</translation>
+        <source>Available</source>
+        <translation>Наявно</translation>
+    </message>
+    <message>
+        <source>Unconfirmed</source>
+        <translation>Не підтверджено</translation>
     </message>
     <message>
         <source>Your current spendable balance</source>
@@ -1386,8 +1390,8 @@
         <translation>Сума монет у непідтверджених транзакціях</translation>
     </message>
     <message>
-        <source>Immature:</source>
-        <translation>Незрілі:</translation>
+        <source>Immature</source>
+        <translation>Незрілі</translation>
     </message>
     <message>
         <source>Mined balance that has not yet matured</source>
@@ -1398,8 +1402,8 @@
         <translation>Баланси</translation>
     </message>
     <message>
-        <source>Total:</source>
-        <translation>Всього:</translation>
+        <source>Total</source>
+        <translation>Всього</translation>
     </message>
     <message>
         <source>Your current total balance</source>

@@ -1230,12 +1230,16 @@
         <translation>Informaţiile afişate pot fi neactualizate. Portofelul dvs. se sincronizează automat cu reţeaua Verium după ce o conexiune este stabilită, dar acest proces nu a fost finalizat încă.</translation>
     </message>
     <message>
-        <source>Watch-only:</source>
-        <translation>Doar-supraveghere:</translation>
+        <source>(Watch-only)</source>
+        <translation>(Doar-supraveghere)</translation>
     </message>
     <message>
-        <source>Available:</source>
-        <translation>Disponibil:</translation>
+        <source>Available</source>
+        <translation>Disponibil</translation>
+    </message>
+    <message>
+        <source>Unconfirmed</source>
+        <translation>Neconfirmat</translation>
     </message>
     <message>
         <source>Your current spendable balance</source>
@@ -1250,8 +1254,8 @@
         <translation>Totalul tranzacţiilor care nu sunt confirmate încă şi care nu sunt încă adunate la balanţa de cheltuieli</translation>
     </message>
     <message>
-        <source>Immature:</source>
-        <translation>Nematurizat:</translation>
+        <source>Immature</source>
+        <translation>Nematurizat</translation>
     </message>
     <message>
         <source>Mined balance that has not yet matured</source>
@@ -1262,8 +1266,8 @@
         <translation>Balanţă</translation>
     </message>
     <message>
-        <source>Total:</source>
-        <translation>Total:</translation>
+        <source>Total</source>
+        <translation>Total</translation>
     </message>
     <message>
         <source>Your current total balance</source>

@@ -1215,12 +1215,16 @@ Exportar los datos en la pestaña actual a un archivo</translation>
         <translation>La información mostrada puede estar desactualizada. Su billetera se sincroniza automáticamente con la red de Verium después de establecer una conexión, pero este proceso aún no se ha completado.</translation>
     </message>
     <message>
-        <source>Watch-only:</source>
-        <translation>Ver-solo:</translation>
+        <source>(Watch-only)</source>
+        <translation>(Ver-solo)</translation>
     </message>
     <message>
-        <source>Available:</source>
+        <source>Available</source>
         <translation>Disponible</translation>
+    </message>
+    <message>
+        <source>Unconfirmed</source>
+        <translation>Sin confirmar</translation>
     </message>
     <message>
         <source>Your current spendable balance</source>
@@ -1235,8 +1239,8 @@ Exportar los datos en la pestaña actual a un archivo</translation>
         <translation>Total de transacciones que aún no se han confirmado y aún no cuentan para el saldo disponible</translation>
     </message>
     <message>
-        <source>Immature:</source>
-        <translation>Inmaduro:</translation>
+        <source>Immature</source>
+        <translation>Inmaduro</translation>
     </message>
     <message>
         <source>Mined balance that has not yet matured</source>
@@ -1247,8 +1251,8 @@ Exportar los datos en la pestaña actual a un archivo</translation>
         <translation>Balances</translation>
     </message>
     <message>
-        <source>Total:</source>
-        <translation>Total:</translation>
+        <source>Total</source>
+        <translation>Total</translation>
     </message>
     <message>
         <source>Your current total balance</source>

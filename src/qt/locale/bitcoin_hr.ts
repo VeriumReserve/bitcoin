@@ -1397,12 +1397,16 @@
         <translation>Prikazani podatci mogu biti zastarjeli. Vaš novčanik se automatski sinkronizira s Verium mrežom kada je veza uspostavljena, ali taj proces još nije završen.</translation>
     </message>
     <message>
-        <source>Watch-only:</source>
-        <translation>Isključivno promatrane adrese:</translation>
+        <source>(Watch-only)</source>
+        <translation>(Isključivno promatrane adrese)</translation>
     </message>
     <message>
-        <source>Available:</source>
-        <translation>Dostupno:</translation>
+        <source>Available</source>
+        <translation>Dostupno</translation>
+    </message>
+    <message>
+        <source>Unconfirmed</source>
+        <translation>Nepotvrđeno</translation>
     </message>
     <message>
         <source>Your current spendable balance</source>
@@ -1417,8 +1421,8 @@
         <translation>Ukupan iznos transakcija koje se još moraju potvrditi te se ne računa kao stanje koje se može trošiti</translation>
     </message>
     <message>
-        <source>Immature:</source>
-        <translation>Nezrelo:</translation>
+        <source>Immature</source>
+        <translation>Nezrelo</translation>
     </message>
     <message>
         <source>Mined balance that has not yet matured</source>
@@ -1429,8 +1433,8 @@
         <translation>Stanja</translation>
     </message>
     <message>
-        <source>Total:</source>
-        <translation>Ukupno:</translation>
+        <source>Total</source>
+        <translation>Ukupno</translation>
     </message>
     <message>
         <source>Your current total balance</source>

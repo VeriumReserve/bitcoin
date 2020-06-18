@@ -438,8 +438,8 @@
         <translation>Monstrata informatio fortasse non recentissima est.  Tuum cassidile per se synchronizat cum rete Verium postquam conexio constabilita est, sed hoc actio nondum perfecta est.</translation>
     </message>
     <message>
-        <source>Immature:</source>
-        <translation>Immatura:</translation>
+        <source>Immature</source>
+        <translation>Immatura</translation>
     </message>
     <message>
         <source>Mined balance that has not yet matured</source>

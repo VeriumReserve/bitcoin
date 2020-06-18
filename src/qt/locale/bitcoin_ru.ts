@@ -1394,12 +1394,16 @@
         <translation>Отображаемая информация может быть устаревшей. Ваш кошелёк автоматически синхронизируется с сетью Биткойн после подключения, но этот процесс пока не завершён.</translation>
     </message>
     <message>
-        <source>Watch-only:</source>
-        <translation>Только просмотр:</translation>
+        <source>(Watch-only)</source>
+        <translation>(Только просмотр)</translation>
     </message>
     <message>
-        <source>Available:</source>
-        <translation>Доступно:</translation>
+        <source>Available</source>
+        <translation>Доступно</translation>
+    </message>
+    <message>
+        <source>Unconfirmed</source>
+        <translation>Неподтвержденный</translation>
     </message>
     <message>
         <source>Your current spendable balance</source>
@@ -1414,8 +1418,8 @@
         <translation>Общая сумма всех транзакций, которые до сих пор не подтверждены, и до сих пор не учитываются в расходном балансе</translation>
     </message>
     <message>
-        <source>Immature:</source>
-        <translation>Незрелые:</translation>
+        <source>Immature</source>
+        <translation>Незрелые</translation>
     </message>
     <message>
         <source>Mined balance that has not yet matured</source>
@@ -1426,8 +1430,8 @@
         <translation>Балансы</translation>
     </message>
     <message>
-        <source>Total:</source>
-        <translation>Всего:</translation>
+        <source>Total</source>
+        <translation>Всего</translation>
     </message>
     <message>
         <source>Your current total balance</source>

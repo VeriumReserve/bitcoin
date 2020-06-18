@@ -154,7 +154,7 @@
 <context>
     <name>OverviewPage</name>
     <message>
-        <source>Total:</source>
+        <source>Total</source>
         <translation>گشتی</translation>
     </message>
     </context>

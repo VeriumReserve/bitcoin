@@ -1286,12 +1286,16 @@
         <translation>Zobrazené informace nemusí být aktuální. Tvá peněženka se automaticky sesynchronizuje s veriumovou sítí, jakmile se s ní spojí. Zatím ale ještě není synchronizace dokončena.</translation>
     </message>
     <message>
-        <source>Watch-only:</source>
-        <translation>Sledované:</translation>
+        <source>(Watch-only)</source>
+        <translation>(Sledované)</translation>
     </message>
     <message>
-        <source>Available:</source>
-        <translation>K dispozici:</translation>
+        <source>Available</source>
+        <translation>K dispozici</translation>
+    </message>
+    <message>
+        <source>Unconfirmed</source>
+        <translation>Nepotvrzeno</translation>
     </message>
     <message>
         <source>Your current spendable balance</source>
@@ -1306,8 +1310,8 @@
         <translation>Souhrn transakcí, které ještě nejsou potvrzené a které se ještě nezapočítávají do celkového disponibilního stavu účtu</translation>
     </message>
     <message>
-        <source>Immature:</source>
-        <translation>Nedozráno:</translation>
+        <source>Immature</source>
+        <translation>Nedozráno</translation>
     </message>
     <message>
         <source>Mined balance that has not yet matured</source>
@@ -1318,8 +1322,8 @@
         <translation>Stavy účtů</translation>
     </message>
     <message>
-        <source>Total:</source>
-        <translation>Celkem:</translation>
+        <source>Total</source>
+        <translation>Celkem</translation>
     </message>
     <message>
         <source>Your current total balance</source>

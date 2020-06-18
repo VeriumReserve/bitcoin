@@ -1399,12 +1399,16 @@
         <translation>表示されている情報は古い可能性があります。ウォレットは接続確立後に Verium ネットワークと自動的に同期しますが、同期処理はまだ完了していません。</translation>
     </message>
     <message>
-        <source>Watch-only:</source>
-        <translation>ウォッチ限定:</translation>
+        <source>(Watch-only)</source>
+        <translation>(ウォッチ限定)</translation>
     </message>
     <message>
-        <source>Available:</source>
-        <translation>利用可能:</translation>
+        <source>Available</source>
+        <translation>利用可能</translation>
+    </message>
+    <message>
+        <source>Unconfirmed</source>
+        <translation>未承認</translation>
     </message>
     <message>
         <source>Your current spendable balance</source>
@@ -1419,8 +1423,8 @@
         <translation>取引が未承認で残高に反映されていない総額</translation>
     </message>
     <message>
-        <source>Immature:</source>
-        <translation>未成熟:</translation>
+        <source>Immature</source>
+        <translation>未成熟</translation>
     </message>
     <message>
         <source>Mined balance that has not yet matured</source>
@@ -1431,8 +1435,8 @@
         <translation>残高</translation>
     </message>
     <message>
-        <source>Total:</source>
-        <translation>合計:</translation>
+        <source>Total</source>
+        <translation>合計</translation>
     </message>
     <message>
         <source>Your current total balance</source>

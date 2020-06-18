@@ -886,8 +886,8 @@
         <translation>ნაჩვენები ინფორმაცია შეიძლება მოძველებული იყოს. თქვენი საფულე ავტომატურად სინქრონიზდება Verium-ის ქსელთან კავშირის დამყარების შემდეგ, ეს პროცესი ჯერ არ არის დასრულებული.</translation>
     </message>
     <message>
-        <source>Available:</source>
-        <translation>ხელმისაწვდომია:</translation>
+        <source>Available</source>
+        <translation>ხელმისაწვდომია</translation>
     </message>
     <message>
         <source>Your current spendable balance</source>
@@ -902,16 +902,16 @@
         <translation>დასადასტურებელი ტრანსაქციების საერთო რაოდენობა, რომლებიც ჯერ არ არის ასახული ბალანსში</translation>
     </message>
     <message>
-        <source>Immature:</source>
-        <translation>მოუმზადებელია:</translation>
+        <source>Immature</source>
+        <translation>მოუმზადებელია</translation>
     </message>
     <message>
         <source>Mined balance that has not yet matured</source>
         <translation>მოპოვებული თანხა, რომელიც ჯერ არ არის მზადყოფნაში</translation>
     </message>
     <message>
-        <source>Total:</source>
-        <translation>სულ:</translation>
+        <source>Total</source>
+        <translation>სულ</translation>
     </message>
     <message>
         <source>Your current total balance</source>

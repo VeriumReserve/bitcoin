@@ -1367,12 +1367,16 @@ Försök igen.</translation>
         <translation>Den visade informationen kan vara inaktuell. Plånboken synkroniseras automatiskt med Verium-nätverket efter att anslutningen är upprättad, men denna process har inte slutförts ännu.</translation>
     </message>
     <message>
-        <source>Watch-only:</source>
-        <translation>Granska-bara:</translation>
+        <source>(Watch-only)</source>
+        <translation>(Granska-bara)</translation>
     </message>
     <message>
-        <source>Available:</source>
-        <translation>Tillgängligt:</translation>
+        <source>Available</source>
+        <translation>Tillgängligt</translation>
+    </message>
+    <message>
+        <source>Unconfirmed</source>
+        <translation>Obekräftade</translation>
     </message>
     <message>
         <source>Your current spendable balance</source>
@@ -1387,8 +1391,8 @@ Försök igen.</translation>
         <translation>Totalt antal transaktioner som ännu inte bekräftats, och som ännu inte räknas med i aktuellt saldo</translation>
     </message>
     <message>
-        <source>Immature:</source>
-        <translation>Omogen:</translation>
+        <source>Immature</source>
+        <translation>Omogen</translation>
     </message>
     <message>
         <source>Mined balance that has not yet matured</source>
@@ -1399,8 +1403,8 @@ Försök igen.</translation>
         <translation>Saldon</translation>
     </message>
     <message>
-        <source>Total:</source>
-        <translation>Totalt:</translation>
+        <source>Total</source>
+        <translation>Totalt</translation>
     </message>
     <message>
         <source>Your current total balance</source>

@@ -278,8 +278,8 @@
 <context>
     <name>OverviewPage</name>
     <message>
-        <source>Available:</source>
-        <translation>Хэрэглэж болох хэмжээ:</translation>
+        <source>Available</source>
+        <translation>Хэрэглэж болох хэмжээ</translation>
     </message>
     </context>
 <context>

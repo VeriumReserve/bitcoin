@@ -1294,12 +1294,12 @@
         <translation>Thông tin được hiển thị có thể đã lỗi thời. Cái wallet tự động đồng bộ với Verium network sau một connection được thiết lập, nhưng quá trình này vẫn chưa completed yet.</translation>
     </message>
     <message>
-        <source>Watch-only:</source>
-        <translation>Chỉ-xem:</translation>
+        <source>(Watch-only)</source>
+        <translation>(Chỉ-xem)</translation>
     </message>
     <message>
-        <source>Available:</source>
-        <translation>Có hiệu lực:</translation>
+        <source>Available</source>
+        <translation>Có hiệu lực</translation>
     </message>
     <message>
         <source>Your current spendable balance</source>
@@ -1314,8 +1314,8 @@
         <translation>Tất cả giao dịch vẫn chưa được confirmed, và chưa tính vào số dư có thể chi tiêu</translation>
     </message>
     <message>
-        <source>Immature:</source>
-        <translation>Chưa hoàn thiện:</translation>
+        <source>Immature</source>
+        <translation>Chưa hoàn thiện</translation>
     </message>
     <message>
         <source>Mined balance that has not yet matured</source>
@@ -1326,8 +1326,8 @@
         <translation>Số dư</translation>
     </message>
     <message>
-        <source>Total:</source>
-        <translation>Tổng cộng:</translation>
+        <source>Total</source>
+        <translation>Tổng cộng</translation>
     </message>
     <message>
         <source>Your current total balance</source>

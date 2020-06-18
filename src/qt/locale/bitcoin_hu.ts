@@ -1353,12 +1353,16 @@
         <translation>A kijelzett információ lehet, hogy elavult. A kapcsolat létrehozatalát követően tárcája automatikusan szinkronba kerül a Verium hálózattal, de ez a folyamat még nem fejeződött be.</translation>
     </message>
     <message>
-        <source>Watch-only:</source>
-        <translation>Csak megfigyelés</translation>
+        <source>(Watch-only)</source>
+        <translation>(Csak megfigyelés)</translation>
     </message>
     <message>
-        <source>Available:</source>
-        <translation>Elérhető:</translation>
+        <source>Available</source>
+        <translation>Elérhető</translation>
+    </message>
+    <message>
+        <source>Unconfirmed</source>
+        <translation>Megerősítetlen</translation>
     </message>
     <message>
         <source>Your current spendable balance</source>
@@ -1373,8 +1377,8 @@
         <translation>Még megerősítésre váró, a jelenlegi egyenlegbe be nem számított tranzakciók</translation>
     </message>
     <message>
-        <source>Immature:</source>
-        <translation>Éretlen:</translation>
+        <source>Immature</source>
+        <translation>Éretlen</translation>
     </message>
     <message>
         <source>Mined balance that has not yet matured</source>
@@ -1385,8 +1389,8 @@
         <translation>Egyenlegek</translation>
     </message>
     <message>
-        <source>Total:</source>
-        <translation>Összesen:</translation>
+        <source>Total</source>
+        <translation>Összesen</translation>
     </message>
     <message>
         <source>Your current total balance</source>

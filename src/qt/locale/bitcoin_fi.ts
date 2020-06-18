@@ -1378,12 +1378,16 @@
         <translation>Näytetyt tiedot eivät välttämättä ole ajantasalla. Lompakkosi synkronoituu Verium-verkon kanssa automaattisesti yhteyden muodostamisen jälkeen, mutta synkronointi on vielä meneillään.</translation>
     </message>
     <message>
-        <source>Watch-only:</source>
-        <translation>Seuranta:</translation>
+        <source>(Watch-only)</source>
+        <translation>(Seuranta)</translation>
     </message>
     <message>
-        <source>Available:</source>
-        <translation>Käytettävissä:</translation>
+        <source>Available</source>
+        <translation>Käytettävissä</translation>
+    </message>
+    <message>
+        <source>Unconfirmed</source>
+        <translation>Varmistamaton</translation>
     </message>
     <message>
         <source>Your current spendable balance</source>
@@ -1398,8 +1402,8 @@
         <translation>Varmistamattomien rahansiirtojen summa, jota ei lasketa käytettävissä olevaan taseeseen.</translation>
     </message>
     <message>
-        <source>Immature:</source>
-        <translation>Epäkypsää:</translation>
+        <source>Immature</source>
+        <translation>Epäkypsää</translation>
     </message>
     <message>
         <source>Mined balance that has not yet matured</source>
@@ -1410,8 +1414,8 @@
         <translation>Saldot</translation>
     </message>
     <message>
-        <source>Total:</source>
-        <translation>Yhteensä:</translation>
+        <source>Total</source>
+        <translation>Yhteensä</translation>
     </message>
     <message>
         <source>Your current total balance</source>

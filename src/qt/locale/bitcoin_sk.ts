@@ -1398,12 +1398,16 @@
         <translation>Zobrazené informácie môžu byť neaktuálne. Vaša peňaženka sa automaticky synchronizuje so sieťou Verium po nadviazaní spojenia, ale tento proces ešte nie je ukončený.</translation>
     </message>
     <message>
-        <source>Watch-only:</source>
-        <translation>Iba sledované:</translation>
+        <source>(Watch-only)</source>
+        <translation>(Iba sledované)</translation>
     </message>
     <message>
-        <source>Available:</source>
-        <translation>Disponibilné:</translation>
+        <source>Available</source>
+        <translation>Disponibilné</translation>
+    </message>
+    <message>
+        <source>Unconfirmed</source>
+        <translation>Nepotvrdené</translation>
     </message>
     <message>
         <source>Your current spendable balance</source>
@@ -1418,8 +1422,8 @@
         <translation>Suma transakcií ktoré ešte neboli potvrdené a ešte sa nepočítajú do disponibilného zostatku</translation>
     </message>
     <message>
-        <source>Immature:</source>
-        <translation>Nezrelé:</translation>
+        <source>Immature</source>
+        <translation>Nezrelé</translation>
     </message>
     <message>
         <source>Mined balance that has not yet matured</source>
@@ -1430,8 +1434,8 @@
         <translation>Stav účtu</translation>
     </message>
     <message>
-        <source>Total:</source>
-        <translation>Celkovo:</translation>
+        <source>Total</source>
+        <translation>Celkovo</translation>
     </message>
     <message>
         <source>Your current total balance</source>

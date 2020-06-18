@@ -1398,12 +1398,16 @@
         <translation>Informasi terlampir mungkin sudah kedaluwarsa. Dompet Anda secara otomatis mensinkronisasi dengan jaringan Verium ketika sebuah hubungan terbentuk, namun proses ini belum selesai.</translation>
     </message>
     <message>
-        <source>Watch-only:</source>
-        <translation>Hanya lihat:</translation>
+        <source>(Watch-only)</source>
+        <translation>(Hanya lihat)</translation>
     </message>
     <message>
-        <source>Available:</source>
-        <translation>Tersedia:</translation>
+        <source>Available</source>
+        <translation>Tersedia</translation>
+    </message>
+    <message>
+        <source>Unconfirmed</source>
+        <translation>Belum dikonfirmasi</translation>
     </message>
     <message>
         <source>Your current spendable balance</source>
@@ -1418,8 +1422,8 @@
         <translation>Jumlah keseluruhan transaksi yang belum dikonfirmasi, dan belum saatnya dihitung sebagai pengeluaran saldo yang telah dibelanjakan.</translation>
     </message>
     <message>
-        <source>Immature:</source>
-        <translation>Terlalu Muda:</translation>
+        <source>Immature</source>
+        <translation>Terlalu Muda</translation>
     </message>
     <message>
         <source>Mined balance that has not yet matured</source>
@@ -1430,7 +1434,7 @@
         <translation>Saldo:</translation>
     </message>
     <message>
-        <source>Total:</source>
+        <source>Total</source>
         <translation>Jumlah:</translation>
     </message>
     <message>

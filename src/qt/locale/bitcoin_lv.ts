@@ -646,8 +646,8 @@
         <translation>Attēlotā informācija var būt novecojusi. Jūsu maciņš pēc savienojuma izveides automātiski sinhronizējas ar Verium tīklu, taču šis process vēl nav beidzies.</translation>
     </message>
     <message>
-        <source>Available:</source>
-        <translation>Pieejams:</translation>
+        <source>Available</source>
+        <translation>Pieejams</translation>
     </message>
     <message>
         <source>Your current spendable balance</source>
@@ -662,12 +662,12 @@
         <translation>Kopējā apstiprināmo transakciju vērtība, vēl nav ieskaitīta tērējamajā bilancē</translation>
     </message>
     <message>
-        <source>Immature:</source>
-        <translation>Nenobriedušu:</translation>
+        <source>Immature</source>
+        <translation>Nenobriedušu</translation>
     </message>
     <message>
-        <source>Total:</source>
-        <translation>Kopsumma:</translation>
+        <source>Total</source>
+        <translation>Kopsumma</translation>
     </message>
     <message>
         <source>Your current total balance</source>

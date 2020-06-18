@@ -1302,12 +1302,16 @@
         <translation>표시된 정보가 오래된 것 같습니다. 비트코인 네트워크에 연결하고 난 다음에 지갑을 자동으로 동기화 하지만, 아직 과정이 끝나지는 않았습니다.</translation>
     </message>
     <message>
-        <source>Watch-only:</source>
-        <translation>조회전용:</translation>
+        <source>(Watch-only)</source>
+        <translation>(조회전용)</translation>
     </message>
     <message>
-        <source>Available:</source>
-        <translation>사용 가능:</translation>
+        <source>Available</source>
+        <translation>사용 가능</translation>
+    </message>
+    <message>
+        <source>Unconfirmed</source>
+        <translation>미확인</translation>
     </message>
     <message>
         <source>Your current spendable balance</source>
@@ -1322,8 +1326,8 @@
         <translation>아직 확인되지 않아 사용가능한 잔액에 반영되지 않은 거래 총액</translation>
     </message>
     <message>
-        <source>Immature:</source>
-        <translation>아직 사용 불가능:</translation>
+        <source>Immature</source>
+        <translation>아직 사용 불가능</translation>
     </message>
     <message>
         <source>Mined balance that has not yet matured</source>
@@ -1334,8 +1338,8 @@
         <translation>잔액</translation>
     </message>
     <message>
-        <source>Total:</source>
-        <translation>총액:</translation>
+        <source>Total</source>
+        <translation>총액</translation>
     </message>
     <message>
         <source>Your current total balance</source>

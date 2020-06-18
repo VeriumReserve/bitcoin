@@ -414,16 +414,16 @@
         <translation>Ing kabuuan dareng transaksion a kasalungsungan ali pa me-kumpirma, at kasalungsungan ali pa mebilang kareng kekang balanseng malyari mung gastusan</translation>
     </message>
     <message>
-        <source>Immature:</source>
-        <translation>Immature:</translation>
+        <source>Immature</source>
+        <translation>Immature</translation>
     </message>
     <message>
         <source>Mined balance that has not yet matured</source>
         <translation>Reng me-minang balanse a epa meg-matured</translation>
     </message>
     <message>
-        <source>Total:</source>
-        <translation>Kabuuan:</translation>
+        <source>Total</source>
+        <translation>Kabuuan</translation>
     </message>
     <message>
         <source>Your current total balance</source>

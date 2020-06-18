@@ -1006,12 +1006,12 @@
         <translation>Οι πληροφορίες που εμφανίζονται μπορεί να είναι ξεπερασμένες. Το πορτοφόλι σας συγχρονίζεται αυτόματα με το δίκτυο Verium μετά από μια σύνδεση, αλλά αυτή η διαδικασία δεν έχει ακόμη ολοκληρωθεί.</translation>
     </message>
     <message>
-        <source>Watch-only:</source>
-        <translation>Επίβλεψη μόνο:</translation>
+        <source>(Watch-only)</source>
+        <translation>(Επίβλεψη μόνο)</translation>
     </message>
     <message>
-        <source>Available:</source>
-        <translation>Διαθέσιμο:</translation>
+        <source>Available</source>
+        <translation>Διαθέσιμο</translation>
     </message>
     <message>
         <source>Your current spendable balance</source>
@@ -1026,7 +1026,7 @@
         <translation>Το άθροισμα των συναλλαγών που δεν έχουν ακόμα επιβεβαιωθεί και δεν προσμετρώνται στο τρέχον διαθέσιμο υπόλοιπό σας</translation>
     </message>
     <message>
-        <source>Immature:</source>
+        <source>Immature</source>
         <translation>Ανώριμος</translation>
     </message>
     <message>
@@ -1038,8 +1038,8 @@
         <translation>Υπόλοιπο:</translation>
     </message>
     <message>
-        <source>Total:</source>
-        <translation>Σύνολο:</translation>
+        <source>Total</source>
+        <translation>Σύνολο</translation>
     </message>
     <message>
         <source>Your current total balance</source>

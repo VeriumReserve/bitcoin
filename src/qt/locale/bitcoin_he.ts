@@ -1294,12 +1294,16 @@
         <translation>המידע המוצג עשוי להיות מיושן. הארנק שלך מסתנכרן באופן אוטומטי עם רשת הביטקוין לאחר יצירת החיבור, אך התהליך טרם הסתיים.</translation>
     </message>
     <message>
-        <source>Watch-only:</source>
-        <translation>צפייה בלבד:</translation>
+        <source>(Watch-only)</source>
+        <translation>(צפייה בלבד)</translation>
     </message>
     <message>
-        <source>Available:</source>
-        <translation>זמין:</translation>
+        <source>Available</source>
+        <translation>זמין</translation>
+    </message>
+    <message>
+        <source>Unconfirmed</source>
+        <translation>לא מאושרת</translation>
     </message>
     <message>
         <source>Your current spendable balance</source>
@@ -1314,8 +1318,8 @@
         <translation>הסכום הכולל של העברות שטרם אושרו ועדיין אינן נספרות בחישוב היתרה הזמינה</translation>
     </message>
     <message>
-        <source>Immature:</source>
-        <translation>לא בשל:</translation>
+        <source>Immature</source>
+        <translation>לא בשל</translation>
     </message>
     <message>
         <source>Mined balance that has not yet matured</source>
@@ -1326,8 +1330,8 @@
         <translation>מאזנים</translation>
     </message>
     <message>
-        <source>Total:</source>
-        <translation>סך הכול:</translation>
+        <source>Total</source>
+        <translation>סך הכול</translation>
     </message>
     <message>
         <source>Your current total balance</source>

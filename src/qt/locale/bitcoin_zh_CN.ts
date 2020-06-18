@@ -1398,12 +1398,16 @@
         <translation>现在显示的消息可能是过期的。在连接上比特币网络节点后，您的钱包将自动与网络同步，但是这个过程还没有完成。</translation>
     </message>
     <message>
-        <source>Watch-only:</source>
-        <translation>仅观察:</translation>
+        <source>(Watch-only)</source>
+        <translation>(仅观察)</translation>
     </message>
     <message>
-        <source>Available:</source>
-        <translation>可使用的余额:</translation>
+        <source>Available</source>
+        <translation>可使用的余额</translation>
+    </message>
+    <message>
+        <source>Unconfirmed</source>
+        <translation>未确认</translation>
     </message>
     <message>
         <source>Your current spendable balance</source>
@@ -1418,8 +1422,8 @@
         <translation>尚未确认的交易总额，未计入当前余额</translation>
     </message>
     <message>
-        <source>Immature:</source>
-        <translation>未成熟的:</translation>
+        <source>Immature</source>
+        <translation>未成熟的</translation>
     </message>
     <message>
         <source>Mined balance that has not yet matured</source>
@@ -1430,8 +1434,8 @@
         <translation>余额</translation>
     </message>
     <message>
-        <source>Total:</source>
-        <translation>总额:</translation>
+        <source>Total</source>
+        <translation>总额</translation>
     </message>
     <message>
         <source>Your current total balance</source>

@@ -832,20 +832,24 @@
         <translation>Kuvatav info ei pruugi olla ajakohane. Ühenduse loomisel süngitakse sinu rahakott automaatselt Bitconi võrgustikuga, kuid see toiming on hetkel lõpetamata.</translation>
     </message>
     <message>
+        <source>Unconfirmed</source>
+        <translation>Kinnitamata</translation>
+    </message>
+    <message>
         <source>Pending:</source>
         <translation>Ootel:</translation>
     </message>
     <message>
-        <source>Immature:</source>
-        <translation>Ebaküps:</translation>
+        <source>Immature</source>
+        <translation>Ebaküps</translation>
     </message>
     <message>
         <source>Mined balance that has not yet matured</source>
         <translation>Mitte aegunud mine'itud jääk</translation>
     </message>
     <message>
-        <source>Total:</source>
-        <translation>Kokku:</translation>
+        <source>Total</source>
+        <translation>Kokku</translation>
     </message>
     <message>
         <source>Recent transactions</source>

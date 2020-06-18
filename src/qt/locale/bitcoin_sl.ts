@@ -1398,12 +1398,16 @@
         <translation>Prikazani podatki so morda zastareli. Program ob vzpostavitvi povezave samodejno sinhronizira denarnico z omrežjem Verium, a trenutno ta proces še ni zaključen.</translation>
     </message>
     <message>
-        <source>Watch-only:</source>
-        <translation>Opazovano:</translation>
+        <source>(Watch-only)</source>
+        <translation>(Opazovano)</translation>
     </message>
     <message>
-        <source>Available:</source>
-        <translation>Na voljo:</translation>
+        <source>Available</source>
+        <translation>Na voljo</translation>
+    </message>
+    <message>
+        <source>Unconfirmed</source>
+        <translation>Nepotrjeno</translation>
     </message>
     <message>
         <source>Your current spendable balance</source>
@@ -1418,8 +1422,8 @@
         <translation>Skupni znesek sredstev s katerimi še ne razpolagate prosto, ker so del še nepotrjenih transakcij.</translation>
     </message>
     <message>
-        <source>Immature:</source>
-        <translation>Nedozorelo:</translation>
+        <source>Immature</source>
+        <translation>Nedozorelo</translation>
     </message>
     <message>
         <source>Mined balance that has not yet matured</source>
@@ -1430,8 +1434,8 @@
         <translation>Stanje sredstev</translation>
     </message>
     <message>
-        <source>Total:</source>
-        <translation>Skupaj:</translation>
+        <source>Total</source>
+        <translation>Skupaj</translation>
     </message>
     <message>
         <source>Your current total balance</source>

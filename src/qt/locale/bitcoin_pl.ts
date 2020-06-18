@@ -1398,12 +1398,16 @@
         <translation>Wyświetlana informacja może być nieaktualna. Twój portfel synchronizuje się automatycznie z siecią verium, zaraz po tym jak uzyskano połączenie, ale proces ten nie został jeszcze ukończony.</translation>
     </message>
     <message>
-        <source>Watch-only:</source>
-        <translation>Tylko podglądaj:</translation>
+        <source>(Watch-only)</source>
+        <translation>(Tylko podglądaj)</translation>
     </message>
     <message>
-        <source>Available:</source>
-        <translation>Dostępne:</translation>
+        <source>Available</source>
+        <translation>Dostępne</translation>
+    </message>
+    <message>
+        <source>Unconfirmed</source>
+        <translation>Niepotwierdzone</translation>
     </message>
     <message>
         <source>Your current spendable balance</source>
@@ -1418,8 +1422,8 @@
         <translation>Suma transakcji, które nie zostały jeszcze potwierdzone, a które nie zostały wliczone do twojego obecnego salda</translation>
     </message>
     <message>
-        <source>Immature:</source>
-        <translation>Niedojrzały:</translation>
+        <source>Immature</source>
+        <translation>Niedojrzały</translation>
     </message>
     <message>
         <source>Mined balance that has not yet matured</source>
@@ -1430,8 +1434,8 @@
         <translation>Salda</translation>
     </message>
     <message>
-        <source>Total:</source>
-        <translation>Ogółem:</translation>
+        <source>Total</source>
+        <translation>Ogółem</translation>
     </message>
     <message>
         <source>Your current total balance</source>

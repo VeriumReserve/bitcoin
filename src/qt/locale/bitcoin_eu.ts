@@ -772,8 +772,8 @@
         <translation>Zai:</translation>
     </message>
     <message>
-        <source>Total:</source>
-        <translation>Guztira:</translation>
+        <source>Total</source>
+        <translation>Guztira</translation>
     </message>
     </context>
 <context>

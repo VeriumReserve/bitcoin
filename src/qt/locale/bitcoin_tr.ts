@@ -1246,12 +1246,16 @@
         <translation>Gösterilen bilgi geçerli olmayabilir. Bağlantı tekrar sağlandıktan sonra cüzdanınız otomatik olarak senkronize olacaktır. Henüz senkronize olma işlemi tamamlanmadı.</translation>
     </message>
     <message>
-        <source>Watch-only:</source>
-        <translation>Sadece görüntülenebilir:</translation>
+        <source>(Watch-only)</source>
+        <translation>(Sadece görüntülenebilir)</translation>
     </message>
     <message>
-        <source>Available:</source>
-        <translation>Kullanılabilir:</translation>
+        <source>Available</source>
+        <translation>Kullanılabilir</translation>
+    </message>
+    <message>
+        <source>Unconfirmed</source>
+        <translation>Doğrulanmamış</translation>
     </message>
     <message>
         <source>Your current spendable balance</source>
@@ -1266,8 +1270,8 @@
         <translation>Henüz doğrulanmamış ve harcanabilir bakiyeye eklenmemiş işlemlerin toplamı</translation>
     </message>
     <message>
-        <source>Immature:</source>
-        <translation>Olgunlaşmamış:</translation>
+        <source>Immature</source>
+        <translation>Olgunlaşmamış</translation>
     </message>
     <message>
         <source>Mined balance that has not yet matured</source>
@@ -1278,8 +1282,8 @@
         <translation>Bakiyeler</translation>
     </message>
     <message>
-        <source>Total:</source>
-        <translation>Toplam:</translation>
+        <source>Total</source>
+        <translation>Toplam</translation>
     </message>
     <message>
         <source>Your current total balance</source>

@@ -899,16 +899,16 @@
         <translation>Форма</translation>
     </message>
     <message>
-        <source>Available:</source>
-        <translation>Доступно:</translation>
+        <source>Available</source>
+        <translation>Доступно</translation>
     </message>
     <message>
         <source>Pending:</source>
         <translation>На чекању:</translation>
     </message>
     <message>
-        <source>Total:</source>
-        <translation>Укупно:</translation>
+        <source>Total</source>
+        <translation>Укупно</translation>
     </message>
     </context>
 <context>
