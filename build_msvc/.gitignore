@@ -11,4 +11,4 @@ packages/*
 *.vcxproj
 */Win32
 libbitcoin_qt/QtGeneratedFiles/*
-test_bitcoin-qt/QtGeneratedFiles/*
+test_verium-qt/QtGeneratedFiles/*

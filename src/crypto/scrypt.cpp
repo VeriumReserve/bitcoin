@@ -256,7 +256,7 @@ static inline void PBKDF2_SHA256_80_128(const uint32_t *tstate,
 
 	memcpy(istate, tstate, 32);
 	sha256_transform(istate, salt, 0);
-	
+
 	memcpy(ibuf, salt + 16, 16);
 	memcpy(ibuf + 5, innerpad, 44);
 	memcpy(obuf + 8, outerpad, 32);
@@ -278,7 +278,7 @@ static inline void PBKDF2_SHA256_128_32(uint32_t *tstate, uint32_t *ostate,
 {
 	uint32_t buf[16];
 	int i;
-	
+
 	sha256_transform(tstate, salt, 1);
 	sha256_transform(tstate, salt + 16, 1);
 	sha256_transform(tstate, finalblk, 0);
@@ -388,7 +388,6 @@ static inline void PBKDF2_SHA256_80_128_4way(const uint32_t *tstate,
 
 	memcpy(istate, tstate, 4 * 32);
 	sha256_transform_4way(istate, salt, 0);
-	
 	memcpy(ibuf, salt + 4 * 16, 4 * 16);
 	memcpy(ibuf + 4 * 5, innerpad_4way, 4 * 44);
 	memcpy(obuf + 4 * 8, outerpad_4way, 4 * 32);
@@ -413,7 +412,7 @@ static inline void PBKDF2_SHA256_128_32_4way(uint32_t *tstate,
 {
 	uint32_t buf[4 * 16] __attribute__((aligned(16)));
 	int i;
-	
+
 	sha256_transform_4way(tstate, salt, 1);
 	sha256_transform_4way(tstate, salt + 4 * 16, 1);
 	sha256_transform_4way(tstate, finalblk_4way, 0);
@@ -455,7 +454,7 @@ static inline void HMAC_SHA256_80_init_8way(const uint32_t *key,
 	uint32_t ihash[8 * 8] __attribute__((aligned(32)));
 	uint32_t pad[8 * 16] __attribute__((aligned(32)));
 	int i;
-	
+
 	/* tstate is assumed to contain the midstate of key */
 	memcpy(pad, key + 8 * 16, 8 * 16);
 	for (i = 0; i < 8; i++)
@@ -465,14 +464,14 @@ static inline void HMAC_SHA256_80_init_8way(const uint32_t *key,
 		pad[8 * 15 + i] = 0x00000280;
 	sha256_transform_8way(tstate, pad, 0);
 	memcpy(ihash, tstate, 8 * 32);
-	
+
 	sha256_init_8way(ostate);
 	for (i = 0; i < 8 * 8; i++)
 		pad[i] = ihash[i] ^ 0x5c5c5c5c;
 	for (; i < 8 * 16; i++)
 		pad[i] = 0x5c5c5c5c;
 	sha256_transform_8way(ostate, pad, 0);
-	
+
 	sha256_init_8way(tstate);
 	for (i = 0; i < 8 * 8; i++)
 		pad[i] = ihash[i] ^ 0x36363636;
@@ -489,23 +488,23 @@ static inline void PBKDF2_SHA256_80_128_8way(const uint32_t *tstate,
 	uint32_t ibuf[8 * 16] __attribute__((aligned(32)));
 	uint32_t obuf[8 * 16] __attribute__((aligned(32)));
 	int i, j;
-	
+
 	memcpy(istate, tstate, 8 * 32);
 	sha256_transform_8way(istate, salt, 0);
-	
+
 	memcpy(ibuf, salt + 8 * 16, 8 * 16);
 	for (i = 0; i < 8; i++)
 		ibuf[8 * 5 + i] = 0x80000000;
 	memset(ibuf + 8 * 6, 0x00, 8 * 36);
 	for (i = 0; i < 8; i++)
 		ibuf[8 * 15 + i] = 0x000004a0;
-	
+
 	for (i = 0; i < 8; i++)
 		obuf[8 * 8 + i] = 0x80000000;
 	memset(obuf + 8 * 9, 0x00, 8 * 24);
 	for (i = 0; i < 8; i++)
 		obuf[8 * 15 + i] = 0x00000300;
-	
+
 	for (i = 0; i < 4; i++) {
 		memcpy(obuf, istate, 8 * 32);
 		ibuf[8 * 4 + 0] = i + 1;
@@ -517,7 +516,7 @@ static inline void PBKDF2_SHA256_80_128_8way(const uint32_t *tstate,
 		ibuf[8 * 4 + 6] = i + 1;
 		ibuf[8 * 4 + 7] = i + 1;
 		sha256_transform_8way(obuf, ibuf, 0);
-		
+
 		memcpy(ostate2, ostate, 8 * 32);
 		sha256_transform_8way(ostate2, obuf, 0);
 		for (j = 0; j < 8 * 8; j++)
@@ -530,11 +529,11 @@ static inline void PBKDF2_SHA256_128_32_8way(uint32_t *tstate,
 {
 	uint32_t buf[8 * 16] __attribute__((aligned(32)));
 	int i;
-	
+
 	sha256_transform_8way(tstate, salt, 1);
 	sha256_transform_8way(tstate, salt + 8 * 16, 1);
 	sha256_transform_8way(tstate, finalblk_8way, 0);
-	
+
 	memcpy(buf, tstate, 8 * 32);
 	for (i = 0; i < 8; i++)
 		buf[8 * 8 + i] = 0x80000000;
@@ -542,7 +541,7 @@ static inline void PBKDF2_SHA256_128_32_8way(uint32_t *tstate,
 	for (i = 0; i < 8; i++)
 		buf[8 * 15 + i] = 0x00000300;
 	sha256_transform_8way(ostate, buf, 0);
-	
+
 	for (i = 0; i < 8 * 8; i++)
 		output[i] = swab32(ostate[i]);
 }
@@ -562,9 +561,15 @@ unsigned char *scrypt_buffer_alloc()
 static void scrypt_N_1_1_256(const uint32_t *input, uint32_t *output, uint32_t *midstate, unsigned char *scratchpad)
 {
 	uint32_t tstate[8], ostate[8];
-	uint32_t X[32] __attribute__((aligned(128)));
+
+#ifdef _MSC_VER
+    __declspec(align(128)) uint32_t X[32];
+#else
+   uint32_t X[32] __attribute__((aligned(128)));
+#endif
+
 	uint32_t *V;
-	
+
 	V = (uint32_t *)(((uintptr_t)(scratchpad) + 63) & ~ (uintptr_t)(63));
 
 	memcpy(tstate, midstate, 32);
@@ -586,7 +591,7 @@ static void scrypt_N_1_1_256_4way(const uint32_t *input,
 	uint32_t X[4 * 32] __attribute__((aligned(128)));
 	uint32_t *V;
 	int i, k;
-	
+
 	V = (uint32_t *)(((uintptr_t)(scratchpad) + 63) & ~ (uintptr_t)(63));
 
 	for (i = 0; i < 20; i++)
@@ -622,7 +627,7 @@ static void scrypt_N_1_1_256_3way(const uint32_t *input,
 	uint32_t tstate[3 * 8], ostate[3 * 8];
 	uint32_t X[3 * 32] __attribute__((aligned(64)));
 	uint32_t *V;
-	
+
 	V = (uint32_t *)(((uintptr_t)(scratchpad) + 63) & ~ (uintptr_t)(63));
 
 	memcpy(tstate +  0, midstate, 32);
@@ -652,7 +657,7 @@ static void scrypt_N_1_1_256_12way(const uint32_t *input,
     uint32_t X[12 * 32] __attribute__((aligned(128)));
 	uint32_t *V;
 	int i, j, k;
-	
+
 	V = (uint32_t *)(((uintptr_t)(scratchpad) + 63) & ~ (uintptr_t)(63));
 
 	for (j = 0; j < 3; j++)
@@ -703,10 +708,10 @@ static void scrypt_N_1_1_256_24way(const uint32_t *input,
 	uint32_t X[24 * 32] __attribute__((aligned(128)));
 	uint32_t *V;
 	int i, j, k;
-	
+
 	V = (uint32_t *)(((uintptr_t)(scratchpad) + 63) & ~ (uintptr_t)(63));
-	
-	for (j = 0; j < 3; j++) 
+
+	for (j = 0; j < 3; j++)
 		for (i = 0; i < 20; i++)
 			for (k = 0; k < 8; k++)
 				W[8 * 32 * j + 8 * i + k] = input[8 * 20 * j + k * 20 + i];
@@ -770,21 +775,21 @@ bool scrypt_N_1_1_256_multi(void *input, uint256 hashTarget, int *nHashesDone, u
 	for (int i = 0; i < 20; i++)
 		pdata[i] = be32dec(&((const uint32_t *)input)[i]);
 	n = pdata[19];
-	
+
 #ifdef HAVE_SHA256_4WAY
 	if (sha256_use_4way())
 		throughput *= 4;
 #endif
-	
+
 	for (i = 0; i < throughput; i++)
 		memcpy(data + i * 20, pdata, 80);
-	
+
 	sha256_init(midstate);
 	sha256_transform(midstate, data, 0);
-	
+
 	for (i = 1; i < throughput; i++)
 		data[i * 20 + 19] = ++n;
-		
+
 #if defined(HAVE_SHA256_4WAY)
 	if (throughput == 4)
         scrypt_N_1_1_256_4way(data, dhash, midstate, scratchbuf, N);
@@ -806,7 +811,7 @@ bool scrypt_N_1_1_256_multi(void *input, uint256 hashTarget, int *nHashesDone, u
 	else
 #endif
 		scrypt_N_1_1_256(data, dhash, midstate, scratchbuf);
-		
+
 	*nHashesDone = throughput;
 
 	for (i = 0; i < throughput; i++) {
