@@ -66,7 +66,7 @@ after_script:
 jobs:
   include:
     # We keep the lint even if we do nothing with it, at least, for now ...
-    - stage: lint 
+    - stage: lint
       name: 'lint'
       env:
       cache: false
@@ -93,10 +93,10 @@ jobs:
         FILE_ENV="./ci/test/00_setup_env_arm.sh"
         QEMU_USER_CMD=""
 
-#    - stage: test
-#      name: 'Win64  [GOAL: deploy]  [unit tests, no gui, no functional tests]'
-#      env: >-
-#        FILE_ENV="./ci/test/00_setup_env_win64.sh"
+    - stage: test
+      name: 'Win64  [GOAL: deploy]  [unit tests, no gui, no functional tests]'
+      env: >-
+        FILE_ENV="./ci/test/00_setup_env_win64.sh"
 
     - stage: test
       name: '32-bit + dash  [GOAL: install]  [CentOS 7]  [gui]'

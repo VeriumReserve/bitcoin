@@ -1,4 +1,4 @@
-/* 
+/*
    Modified from sample part of the MiniZip project
    Copyright (C) 2017 The Verium developers
      Modifications for Verium
@@ -22,6 +22,7 @@
 #include <sys/stat.h>
 
 #ifdef _WIN32
+#include <direct.h>
 #  define MKDIR(d) _mkdir(d)
 #else
 #  define MKDIR(d) mkdir(d, 0775)
@@ -32,7 +33,7 @@
 #endif
 
 
-int is_file_within_path(boost::filesystem::path file_path, boost::filesystem::path dir_path)
+int is_file_within_path(const fs::path& file_path, const fs::path& dir_path)
 {
     boost::filesystem::path file_path_abs = absolute(file_path);
     boost::filesystem::path dir_path_abs = absolute(dir_path);
@@ -41,11 +42,11 @@ int is_file_within_path(boost::filesystem::path file_path, boost::filesystem::pa
     int dir_len = std::distance(dir_path.begin(), dir_path.end());
     if (dir_len > file_len)
         return 0;
-    
+
     return std::equal(dir_path.begin(), dir_path.end(), file_path_abs.begin());
 }
 
-int zip_extract_currentfile(unzFile uf, boost::filesystem::path root_file_path, const char * allowed_dir)
+int zip_extract_currentfile(unzFile uf, const fs::path& root_file_path, const char * allowed_dir)
 {
     unz_file_info64 file_info = unz_file_info64();
     FILE* fout = NULL;
@@ -74,7 +75,7 @@ int zip_extract_currentfile(unzFile uf, boost::filesystem::path root_file_path, 
     }
 
     std::string curr_filename_str = file_path.string();
-    curr_filename = file_path.c_str();
+    curr_filename = file_path.string().c_str();
 
     int curr_filename_len = curr_filename_str.length();
     if (curr_filename_len > 0)
@@ -144,7 +145,7 @@ int zip_extract_currentfile(unzFile uf, boost::filesystem::path root_file_path, 
     return err;
 }
 
-int zip_extract_all(unzFile uf, boost::filesystem::path root_file_path, const char * allowed_dir)
+int zip_extract_all(unzFile uf, const fs::path& root_file_path, const char * allowed_dir)
 {
     int err = unzGoToFirstFile(uf);
     if (err != UNZ_OK)

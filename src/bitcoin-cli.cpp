@@ -17,6 +17,7 @@
 #include <util/system.h>
 #include <util/translation.h>
 
+#define CURL_STATICLIB
 #include <curl/curl.h>
 #include <functional>
 #include <memory>

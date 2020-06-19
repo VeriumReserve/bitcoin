@@ -46,8 +46,6 @@
 #include <univalue.h>
 
 #include <boost/thread/thread.hpp>
-#include <curl/curl.h>
-#include <openssl/ssl.h>
 
 struct CUpdatedBlock
 {

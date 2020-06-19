@@ -5,6 +5,7 @@
 #include <util/system.h>
 
 #include <util/miniunz.h>
+#define CURL_STATICLIB
 #include <curl/curl.h>
 #include <openssl/ssl.h>
 
@@ -41,7 +42,7 @@ void downloadFile(std::string url, const fs::path& target_file_path) {
 
     FILE *file = fsbridge::fopen(target_file_path, "wb");
     if( ! file )
-        throw std::runtime_error(strprintf("Download: error: Unable to open output file for writing: %s.", target_file_path.c_str()));
+        throw std::runtime_error(strprintf("Download: error: Unable to open output file for writing: %s.", target_file_path.string().c_str()));
 
     CURL *curlHandle = curl_easy_init();
 
