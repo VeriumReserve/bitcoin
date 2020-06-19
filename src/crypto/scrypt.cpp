@@ -251,6 +251,9 @@ static inline void PBKDF2_SHA256_80_128(const uint32_t *tstate,
     const uint32_t *ostate, const uint32_t *salt, uint32_t *output)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Fix tab indentation
     uint32_t istate[8], ostate2[8];
     uint32_t ibuf[16], obuf[16];
     int i, j;
@@ -272,6 +275,7 @@ static inline void PBKDF2_SHA256_80_128(const uint32_t *tstate,
         for (j = 0; j < 8; j++)
             output[8 * i + j] = swab32(ostate2[j]);
     }
+<<<<<<< HEAD
 =======
 	uint32_t istate[8], ostate2[8];
 	uint32_t ibuf[16], obuf[16];
@@ -295,12 +299,17 @@ static inline void PBKDF2_SHA256_80_128(const uint32_t *tstate,
 			output[8 * i + j] = swab32(ostate2[j]);
 	}
 >>>>>>> Prepare win build
+=======
+>>>>>>> Fix tab indentation
 }
 
 static inline void PBKDF2_SHA256_128_32(uint32_t *tstate, uint32_t *ostate,
     const uint32_t *salt, uint32_t *output)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Fix tab indentation
     uint32_t buf[16];
     int i;
 
@@ -313,6 +322,7 @@ static inline void PBKDF2_SHA256_128_32(uint32_t *tstate, uint32_t *ostate,
     sha256_transform(ostate, buf, 0);
     for (i = 0; i < 8; i++)
         output[i] = swab32(ostate[i]);
+<<<<<<< HEAD
 =======
 	uint32_t buf[16];
 	int i;
@@ -327,6 +337,8 @@ static inline void PBKDF2_SHA256_128_32(uint32_t *tstate, uint32_t *ostate,
 	for (i = 0; i < 8; i++)
 		output[i] = swab32(ostate[i]);
 >>>>>>> Prepare win build
+=======
+>>>>>>> Fix tab indentation
 }
 
 
@@ -420,6 +432,9 @@ static inline void PBKDF2_SHA256_80_128_4way(const uint32_t *tstate,
     const uint32_t *ostate, const uint32_t *salt, uint32_t *output)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Fix tab indentation
     uint32_t istate[4 * 8] __attribute__((aligned(16)));
     uint32_t ostate2[4 * 8] __attribute__((aligned(16)));
     uint32_t ibuf[4 * 16] __attribute__((aligned(16)));
@@ -445,6 +460,7 @@ static inline void PBKDF2_SHA256_80_128_4way(const uint32_t *tstate,
         for (j = 0; j < 4 * 8; j++)
             output[4 * 8 * i + j] = swab32(ostate2[j]);
     }
+<<<<<<< HEAD
 =======
 	uint32_t istate[4 * 8] __attribute__((aligned(16)));
 	uint32_t ostate2[4 * 8] __attribute__((aligned(16)));
@@ -472,12 +488,17 @@ static inline void PBKDF2_SHA256_80_128_4way(const uint32_t *tstate,
 			output[4 * 8 * i + j] = swab32(ostate2[j]);
 	}
 >>>>>>> Prepare win build
+=======
+>>>>>>> Fix tab indentation
 }
 
 static inline void PBKDF2_SHA256_128_32_4way(uint32_t *tstate,
     uint32_t *ostate, const uint32_t *salt, uint32_t *output)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Fix tab indentation
     uint32_t buf[4 * 16] __attribute__((aligned(16)));
     int i;
 
@@ -490,6 +511,7 @@ static inline void PBKDF2_SHA256_128_32_4way(uint32_t *tstate,
     sha256_transform_4way(ostate, buf, 0);
     for (i = 0; i < 4 * 8; i++)
         output[i] = swab32(ostate[i]);
+<<<<<<< HEAD
 =======
 	uint32_t buf[4 * 16] __attribute__((aligned(16)));
 	int i;
@@ -504,6 +526,8 @@ static inline void PBKDF2_SHA256_128_32_4way(uint32_t *tstate,
 	for (i = 0; i < 4 * 8; i++)
 		output[i] = swab32(ostate[i]);
 >>>>>>> Prepare win build
+=======
+>>>>>>> Fix tab indentation
 }
 
 #endif /* HAVE_SHA256_4WAY */
@@ -534,6 +558,9 @@ static inline void HMAC_SHA256_80_init_8way(const uint32_t *key,
     uint32_t *tstate, uint32_t *ostate)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Fix tab indentation
     uint32_t ihash[8 * 8] __attribute__((aligned(32)));
     uint32_t pad[8 * 16] __attribute__((aligned(32)));
     int i;
@@ -561,6 +588,7 @@ static inline void HMAC_SHA256_80_init_8way(const uint32_t *key,
     for (; i < 8 * 16; i++)
         pad[i] = 0x36363636;
     sha256_transform_8way(tstate, pad, 0);
+<<<<<<< HEAD
 =======
 	uint32_t ihash[8 * 8] __attribute__((aligned(32)));
 	uint32_t pad[8 * 16] __attribute__((aligned(32)));
@@ -590,12 +618,17 @@ static inline void HMAC_SHA256_80_init_8way(const uint32_t *key,
 		pad[i] = 0x36363636;
 	sha256_transform_8way(tstate, pad, 0);
 >>>>>>> Prepare win build
+=======
+>>>>>>> Fix tab indentation
 }
 
 static inline void PBKDF2_SHA256_80_128_8way(const uint32_t *tstate,
     const uint32_t *ostate, const uint32_t *salt, uint32_t *output)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Fix tab indentation
     uint32_t istate[8 * 8] __attribute__((aligned(32)));
     uint32_t ostate2[8 * 8] __attribute__((aligned(32)));
     uint32_t ibuf[8 * 16] __attribute__((aligned(32)));
@@ -635,6 +668,7 @@ static inline void PBKDF2_SHA256_80_128_8way(const uint32_t *tstate,
         for (j = 0; j < 8 * 8; j++)
             output[8 * 8 * i + j] = swab32(ostate2[j]);
     }
+<<<<<<< HEAD
 =======
 	uint32_t istate[8 * 8] __attribute__((aligned(32)));
 	uint32_t ostate2[8 * 8] __attribute__((aligned(32)));
@@ -676,12 +710,17 @@ static inline void PBKDF2_SHA256_80_128_8way(const uint32_t *tstate,
 			output[8 * 8 * i + j] = swab32(ostate2[j]);
 	}
 >>>>>>> Prepare win build
+=======
+>>>>>>> Fix tab indentation
 }
 
 static inline void PBKDF2_SHA256_128_32_8way(uint32_t *tstate,
     uint32_t *ostate, const uint32_t *salt, uint32_t *output)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Fix tab indentation
     uint32_t buf[8 * 16] __attribute__((aligned(32)));
     int i;
 
@@ -699,6 +738,7 @@ static inline void PBKDF2_SHA256_128_32_8way(uint32_t *tstate,
 
     for (i = 0; i < 8 * 8; i++)
         output[i] = swab32(ostate[i]);
+<<<<<<< HEAD
 =======
 	uint32_t buf[8 * 16] __attribute__((aligned(32)));
 	int i;
@@ -718,6 +758,8 @@ static inline void PBKDF2_SHA256_128_32_8way(uint32_t *tstate,
 	for (i = 0; i < 8 * 8; i++)
 		output[i] = swab32(ostate[i]);
 >>>>>>> Prepare win build
+=======
+>>>>>>> Fix tab indentation
 }
 
 #endif /* HAVE_SHA256_8WAY */
@@ -735,10 +777,14 @@ unsigned char *scrypt_buffer_alloc()
 static void scrypt_N_1_1_256(const uint32_t *input, uint32_t *output, uint32_t *midstate, unsigned char *scratchpad)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
     uint32_t tstate[8], ostate[8];
 =======
 	uint32_t tstate[8], ostate[8];
 >>>>>>> Prepare win build
+=======
+    uint32_t tstate[8], ostate[8];
+>>>>>>> Fix tab indentation
 
 #ifdef _MSC_VER
     __declspec(align(128)) uint32_t X[32];
@@ -748,8 +794,9 @@ static void scrypt_N_1_1_256(const uint32_t *input, uint32_t *output, uint32_t *
 <<<<<<< HEAD
 =======
 
-	uint32_t *V;
+    uint32_t *V;
 
+<<<<<<< HEAD
 	V = (uint32_t *)(((uintptr_t)(scratchpad) + 63) & ~ (uintptr_t)(63));
 >>>>>>> Prepare win build
 
@@ -763,6 +810,16 @@ static void scrypt_N_1_1_256(const uint32_t *input, uint32_t *output, uint32_t *
 
     scrypt_core(X, V, N);
 
+=======
+    V = (uint32_t *)(((uintptr_t)(scratchpad) + 63) & ~ (uintptr_t)(63));
+
+    memcpy(tstate, midstate, 32);
+    HMAC_SHA256_80_init(input, tstate, ostate);
+    PBKDF2_SHA256_80_128(tstate, ostate, input, X);
+
+    scrypt_core(X, V, N);
+
+>>>>>>> Fix tab indentation
     PBKDF2_SHA256_128_32(tstate, ostate, X, output);
 }
 
@@ -771,6 +828,9 @@ static void scrypt_N_1_1_256_4way(const uint32_t *input,
     uint32_t *output, uint32_t *midstate, unsigned char *scratchpad, int N)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Fix tab indentation
     uint32_t tstate[4 * 8] __attribute__((aligned(128)));
     uint32_t ostate[4 * 8] __attribute__((aligned(128)));
     uint32_t W[4 * 32] __attribute__((aligned(128)));
@@ -802,6 +862,7 @@ static void scrypt_N_1_1_256_4way(const uint32_t *input,
     for (i = 0; i < 8; i++)
         for (k = 0; k < 4; k++)
             output[k * 8 + i] = W[4 * i + k];
+<<<<<<< HEAD
 =======
 	uint32_t tstate[4 * 8] __attribute__((aligned(128)));
 	uint32_t ostate[4 * 8] __attribute__((aligned(128)));
@@ -835,6 +896,8 @@ static void scrypt_N_1_1_256_4way(const uint32_t *input,
 		for (k = 0; k < 4; k++)
 			output[k * 8 + i] = W[4 * i + k];
 >>>>>>> Prepare win build
+=======
+>>>>>>> Fix tab indentation
 }
 #endif /* HAVE_SHA256_4WAY */
 
@@ -844,6 +907,9 @@ static void scrypt_N_1_1_256_3way(const uint32_t *input,
     uint32_t *output, uint32_t *midstate, unsigned char *scratchpad, int N)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Fix tab indentation
     uint32_t tstate[3 * 8], ostate[3 * 8];
     uint32_t X[3 * 32] __attribute__((aligned(64)));
     uint32_t *V;
@@ -865,6 +931,7 @@ static void scrypt_N_1_1_256_3way(const uint32_t *input,
     PBKDF2_SHA256_128_32(tstate +  0, ostate +  0, X +  0, output +  0);
     PBKDF2_SHA256_128_32(tstate +  8, ostate +  8, X + 32, output +  8);
     PBKDF2_SHA256_128_32(tstate + 16, ostate + 16, X + 64, output + 16);
+<<<<<<< HEAD
 =======
 	uint32_t tstate[3 * 8], ostate[3 * 8];
 	uint32_t X[3 * 32] __attribute__((aligned(64)));
@@ -888,6 +955,8 @@ static void scrypt_N_1_1_256_3way(const uint32_t *input,
 	PBKDF2_SHA256_128_32(tstate +  8, ostate +  8, X + 32, output +  8);
 	PBKDF2_SHA256_128_32(tstate + 16, ostate + 16, X + 64, output + 16);
 >>>>>>> Prepare win build
+=======
+>>>>>>> Fix tab indentation
 }
 
 #ifdef HAVE_SHA256_4WAY
@@ -899,6 +968,9 @@ static void scrypt_N_1_1_256_12way(const uint32_t *input,
     uint32_t W[12 * 32] __attribute__((aligned(128)));
     uint32_t X[12 * 32] __attribute__((aligned(128)));
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Fix tab indentation
     uint32_t *V;
     int i, j, k;
 
@@ -937,6 +1009,7 @@ static void scrypt_N_1_1_256_12way(const uint32_t *input,
         for (i = 0; i < 8; i++)
             for (k = 0; k < 4; k++)
                 output[32 * j + k * 8 + i] = W[128 * j + 4 * i + k];
+<<<<<<< HEAD
 =======
 	uint32_t *V;
 	int i, j, k;
@@ -977,6 +1050,8 @@ static void scrypt_N_1_1_256_12way(const uint32_t *input,
 			for (k = 0; k < 4; k++)
 				output[32 * j + k * 8 + i] = W[128 * j + 4 * i + k];
 >>>>>>> Prepare win build
+=======
+>>>>>>> Fix tab indentation
 }
 #endif /* HAVE_SHA256_4WAY */
 
@@ -987,6 +1062,9 @@ static void scrypt_N_1_1_256_24way(const uint32_t *input,
     uint32_t *output, uint32_t *midstate, unsigned char *scratchpad, int N)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Fix tab indentation
     uint32_t tstate[24 * 8] __attribute__((aligned(128)));
     uint32_t ostate[24 * 8] __attribute__((aligned(128)));
     uint32_t W[24 * 32] __attribute__((aligned(128)));
@@ -1029,6 +1107,7 @@ static void scrypt_N_1_1_256_24way(const uint32_t *input,
         for (i = 0; i < 8; i++)
             for (k = 0; k < 8; k++)
                 output[8 * 8 * j + k * 8 + i] = W[8 * 32 * j + 8 * i + k];
+<<<<<<< HEAD
 =======
 	uint32_t tstate[24 * 8] __attribute__((aligned(128)));
 	uint32_t ostate[24 * 8] __attribute__((aligned(128)));
@@ -1073,6 +1152,8 @@ static void scrypt_N_1_1_256_24way(const uint32_t *input,
 			for (k = 0; k < 8; k++)
 				output[8 * 8 * j + k * 8 + i] = W[8 * 32 * j + 8 * i + k];
 >>>>>>> Prepare win build
+=======
+>>>>>>> Fix tab indentation
 }
 #endif /* HAVE_SCRYPT_6WAY */
 
@@ -1094,6 +1175,9 @@ bool fulltest(const uint32_t *hash, const uint32_t *target)
 bool scrypt_N_1_1_256_multi(void *input, uint256 hashTarget, int *nHashesDone, unsigned char *scratchbuf)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Fix tab indentation
     uint32_t pdata[20];
     uint32_t data[SCRYPT_MAX_WAYS * 20];
     uint32_t dhash[SCRYPT_MAX_WAYS * 8];
@@ -1105,6 +1189,7 @@ bool scrypt_N_1_1_256_multi(void *input, uint256 hashTarget, int *nHashesDone, u
     for (int i = 0; i < 20; i++)
         pdata[i] = be32dec(&((const uint32_t *)input)[i]);
     n = pdata[19];
+<<<<<<< HEAD
 =======
 	uint32_t pdata[20];
 	uint32_t data[SCRYPT_MAX_WAYS * 20];
@@ -1118,12 +1203,15 @@ bool scrypt_N_1_1_256_multi(void *input, uint256 hashTarget, int *nHashesDone, u
 		pdata[i] = be32dec(&((const uint32_t *)input)[i]);
 	n = pdata[19];
 >>>>>>> Prepare win build
+=======
+>>>>>>> Fix tab indentation
 
 #ifdef HAVE_SHA256_4WAY
     if (sha256_use_4way())
         throughput *= 4;
 #endif
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     for (i = 0; i < throughput; i++)
         memcpy(data + i * 20, pdata, 80);
@@ -1136,13 +1224,22 @@ bool scrypt_N_1_1_256_multi(void *input, uint256 hashTarget, int *nHashesDone, u
 =======
 	for (i = 0; i < throughput; i++)
 		memcpy(data + i * 20, pdata, 80);
+=======
+    for (i = 0; i < throughput; i++)
+        memcpy(data + i * 20, pdata, 80);
+>>>>>>> Fix tab indentation
 
-	sha256_init(midstate);
-	sha256_transform(midstate, data, 0);
+    sha256_init(midstate);
+    sha256_transform(midstate, data, 0);
 
+<<<<<<< HEAD
 	for (i = 1; i < throughput; i++)
 		data[i * 20 + 19] = ++n;
 >>>>>>> Prepare win build
+=======
+    for (i = 1; i < throughput; i++)
+        data[i * 20 + 19] = ++n;
+>>>>>>> Fix tab indentation
 
 #if defined(HAVE_SHA256_4WAY)
     if (throughput == 4)
@@ -1165,6 +1262,7 @@ bool scrypt_N_1_1_256_multi(void *input, uint256 hashTarget, int *nHashesDone, u
     else
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
         scrypt_N_1_1_256(data, dhash, midstate, scratchbuf);
 
     *nHashesDone = throughput;
@@ -1178,9 +1276,13 @@ bool scrypt_N_1_1_256_multi(void *input, uint256 hashTarget, int *nHashesDone, u
     return false;
 =======
 		scrypt_N_1_1_256(data, dhash, midstate, scratchbuf);
+=======
+        scrypt_N_1_1_256(data, dhash, midstate, scratchbuf);
+>>>>>>> Fix tab indentation
 
-	*nHashesDone = throughput;
+    *nHashesDone = throughput;
 
+<<<<<<< HEAD
 	for (i = 0; i < throughput; i++) {
 		if (fulltest(dhash + i * 8, (uint32_t*)(BEGIN(hashTarget)))) {
 			be32enc(&((uint32_t *)input)[19], data[i * 20 + 19]);
@@ -1189,6 +1291,15 @@ bool scrypt_N_1_1_256_multi(void *input, uint256 hashTarget, int *nHashesDone, u
 	}
 	return false;
 >>>>>>> Prepare win build
+=======
+    for (i = 0; i < throughput; i++) {
+        if (fulltest(dhash + i * 8, (uint32_t*)(BEGIN(hashTarget)))) {
+            be32enc(&((uint32_t *)input)[19], data[i * 20 + 19]);
+            return true;
+        }
+    }
+    return false;
+>>>>>>> Fix tab indentation
 }
 
 void scryptHash(const void *input, char *output)
