@@ -96,9 +96,10 @@ BitcoinGUI::BitcoinGUI(interfaces::Node& node, const PlatformStyle *_platformSty
     if( mainWidth < 860)
         mainWidth = 860;
 
-    // For Development, use the smallest size :)
-    // this->setFixedSize(QSize(mainWidth, mainHeight));
-    this->setFixedSize(QSize(860, 480));
+    // XXX: FOR DEVELOPMENT
+    // this->setFixedSize(QSize(860, 480));
+
+    this->setFixedSize(QSize(mainWidth, mainHeight));
 
     QSettings settings;
     if (!restoreGeometry(settings.value("MainWindowGeometry").toByteArray())) {
@@ -266,17 +267,15 @@ BitcoinGUI::BitcoinGUI(interfaces::Node& node, const PlatformStyle *_platformSty
     m_app_nap_inhibitor = new CAppNapInhibitor;
 #endif
 
-    // apply style
-    // XXX: Use local path for development
-    // XXX: To remove before for release
-    QString strPath(QCoreApplication::applicationDirPath() + "/res/style.qss");
-    QFile f(strPath);
-    //QFile f(":/style");
+    // XXX: FOR DEVELOPMENT
+    // QString strPath(QCoreApplication::applicationDirPath() + "/res/style.qss");
+    // QFile f(strPath);
+
+    QFile f(":/style");
     f.open(QFile::ReadOnly | QFile::Text);
     QTextStream ts(&f);
     setStyleSheet(ts.readAll());
     f.close();
-
 }
 
 BitcoinGUI::~BitcoinGUI()
@@ -495,7 +494,8 @@ void BitcoinGUI::createActions()
 
     connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_C), this), &QShortcut::activated, this, &BitcoinGUI::showDebugWindowActivateConsole);
     connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_D), this), &QShortcut::activated, this, &BitcoinGUI::showDebugWindow);
-    connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_V), this), &QShortcut::activated, this, &BitcoinGUI::refreshStyle);
+    // XXX: FOR DEVELOPMENT
+    // connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_V), this), &QShortcut::activated, this, &BitcoinGUI::refreshStyle);
 }
 
 void BitcoinGUI::createMenuBar()
@@ -947,16 +947,15 @@ void BitcoinGUI::aboutClicked()
     dlg.exec();
 }
 
-// Used for development
-// XXX: Remove before release
-void BitcoinGUI::refreshStyle() {
-    QString strPath(QCoreApplication::applicationDirPath() + "/res/style.qss");
-    QFile f(strPath);
-    f.open(QFile::ReadOnly | QFile::Text);
-    QTextStream ts(&f);
-    setStyleSheet(ts.readAll());
-    f.close();
-}
+// XXX: FOR DEVELOPMENT
+// void BitcoinGUI::refreshStyle() {
+//     QString strPath(QCoreApplication::applicationDirPath() + "/res/style.qss");
+//     QFile f(strPath);
+//     f.open(QFile::ReadOnly | QFile::Text);
+//     QTextStream ts(&f);
+//     setStyleSheet(ts.readAll());
+//     f.close();
+// }
 
 void BitcoinGUI::showDebugWindow()
 {

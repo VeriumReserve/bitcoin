@@ -157,12 +157,11 @@ Intro::Intro(QWidget *parent, uint64_t blockchain_size, uint64_t chain_state_siz
         tr("The wallet will also be stored in this directory.")
     );
 
-    // apply style
-    // XXX: Use local path for development
-    // XXX: To remove before for release
-    QString strPath(QCoreApplication::applicationDirPath() + "/res/style.qss");
-    QFile f(strPath);
-    //QFile f(":/style");
+    // XXX: FOR DEVELOPMENT
+    // QString strPath(QCoreApplication::applicationDirPath() + "/res/style.qss");
+    // QFile f(strPath);
+
+    QFile f(":/style");
     f.open(QFile::ReadOnly | QFile::Text);
     QTextStream ts(&f);
     setStyleSheet(ts.readAll());
@@ -301,7 +300,7 @@ void Intro::setStatus(int status, const QString &message, quint64 bytesAvailable
     /* Don't allow confirm in ERROR state */
     ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(status != FreespaceChecker::ST_ERROR);
     ui->buttonBox->button(QDialogButtonBox::Cancel)->setStyleSheet(QString("QPushButton { background-color: #e93a5d; } QPushButton:hover { background-color: #e61942; }"));
-    ui->buttonBox->button(QDialogButtonBox::Ok)->setStyleSheet(QString("QPushButton { background-color: #359b37; margin-right: 15px; } QPushButton:hover { background-color: #2e852f; }"));
+    ui->buttonBox->button(QDialogButtonBox::Ok)->setStyleSheet(QString("QPushButton { background-color: #359b37 } QPushButton:hover { background-color: #2e852f; }"));
 }
 
 void Intro::on_dataDirectory_textChanged(const QString &dataDirStr)

@@ -289,8 +289,8 @@ public Q_SLOTS:
     void optionsClicked();
     /** Show about dialog */
     void aboutClicked();
-    /** Reload Style XXX: Remove for release*/
-    void refreshStyle();
+    /** XXX: FOR DEVELOPMENT
+    void refreshStyle(); */
     /** Show debug window */
     void showDebugWindow();
     /** Show debug window and set focus to the console */

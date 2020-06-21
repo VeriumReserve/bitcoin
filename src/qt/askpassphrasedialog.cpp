@@ -77,7 +77,7 @@ AskPassphraseDialog::AskPassphraseDialog(Mode _mode, QWidget *parent, SecureStri
     connect(ui->passEdit3, &QLineEdit::textChanged, this, &AskPassphraseDialog::textChanged);
 
     ui->buttonBox->button(QDialogButtonBox::Cancel)->setStyleSheet(QString("QPushButton { background-color: #e93a5d; } QPushButton:hover { background-color: #e61942; }"));
-    ui->buttonBox->button(QDialogButtonBox::Ok)->setStyleSheet(QString("QPushButton { background-color: #359b37; margin-right: 15px; } QPushButton:hover { background-color: #2e852f; }"));
+    ui->buttonBox->button(QDialogButtonBox::Ok)->setStyleSheet(QString("QPushButton { background-color: #359b37; } QPushButton:hover { background-color: #2e852f; }"));
 }
 
 AskPassphraseDialog::~AskPassphraseDialog()
