@@ -230,6 +230,7 @@ RES_ICONS = \
   qt/res/icons/tx_output.png \
   qt/res/icons/verium.ico \
   qt/res/icons/verium.png \
+  qt/res/icons/verium-splash.png \
   qt/res/icons/warning.png \
   qt/res/icons/website.png
 
