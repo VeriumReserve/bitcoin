@@ -159,7 +159,6 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
     coinbaseTx.vout[0].nValue = GetProofOfWorkReward(nFees, pindexPrev);
     coinbaseTx.vin[0].scriptSig = CScript() << nHeight << OP_0;
     pblock->vtx[0] = MakeTransactionRef(std::move(coinbaseTx));
-    pblocktemplate->vchCoinbaseCommitment = GenerateCoinbaseCommitment(*pblock, pindexPrev, chainparams.GetConsensus());
     pblocktemplate->vTxFees[0] = -nFees;
 
     // Fill in header
@@ -536,7 +535,7 @@ bool CheckWork(CBlock* pblock)
 
         pblock->print();
         LogPrintf("New proof-of-work block found with: %s coins generated.\n", FormatMoney(pblock->vtx[0]->vout[0].nValue).c_str());
-	
+
         // Process this block the same as if we had received it from another node
         std::shared_ptr<const CBlock> shared_pblock = std::make_shared<const CBlock>(*pblock);
         if (!ProcessNewBlock(Params(), shared_pblock, true, nullptr))
@@ -615,7 +614,7 @@ void Miner(CWallet *pwallet)
             std::unique_ptr<CBlockTemplate> pblocktemplate = BlockAssembler(Params()).CreateNewBlock(scriptChange);
             if (!pblocktemplate.get())
                 return;
-                
+
             CBlock *pblock = &pblocktemplate->block;
             IncrementExtraNonce(pblock, pindexPrev, nExtraNonce);
             LogPrintf("Miner thread running on block %s (%lu bytes)\n", pindexPrev->nHeight, ::GetSerializeSize(*pblock, PROTOCOL_VERSION));
