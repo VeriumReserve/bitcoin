@@ -16,7 +16,7 @@ VERIUMQT=${VERIUMQT:-$BINDIR/qt/verium-qt}
 [ ! -x $VERIUMD ] && echo "$VERIUMD not found or not executable." && exit 1
 
 # The autodetected version git tag can screw up manpage output a little bit
-read -r -a BTCVER <<< "$($VERIUMCLI --version | head -n1 | awk -F'[ -]' '{ print $6, $7 }')"
+read -r -a BTCVER <<< "$($VERIUMCLI --version | head -n1 | awk -F'[ -]' '{ print $5, $6 }')"
 
 # Create a footer file with copyright content.
 # This gets autodetected fine for veriumd if --version-string is not set,
