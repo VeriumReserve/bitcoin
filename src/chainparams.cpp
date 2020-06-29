@@ -61,7 +61,6 @@ class CMainParams : public CChainParams {
 public:
     CMainParams() {
         strNetworkID = "main";
-        consensus.SegwitHeight = 9999999; // 0000000000000000001c8018d9cb3b742ef25114f27563e3fc4a1902167f9893
         consensus.nPowTargetSpacing = 5 * 60;  // not used for consensus in Verium as it's variable, but used to indicate age of data
         consensus.nPowTargetTimespan = 2 * 24 * 60 * 60; // two days
         consensus.fPowNoRetargeting = false;
