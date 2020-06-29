@@ -21,21 +21,18 @@ earlier versions of Verium, then run the installer.
 
 We recommand before any upgrade that you backup your wallet.
 
-If you are upgrading from version 1.1 or earlier, the first time you run
+If you are upgrading from version 1.2 or earlier, the first time you run
 1.3.0 your blockchain files will be re-indexed, which will take anywhere from
 5 minutes to several hours, depending on the speed of your machine.
 
 Windows 64-bit installer
 -------------------------
 
-New in 0.9.0 is the Windows 64-bit version of the client. There have been
+New in 1.3.0 is the Windows 64-bit version of the client. There have been
 frequent reports of users running out of virtual memory on 32-bit systems
 during the initial sync. Because of this it is recommended to install the
 64-bit version if your system supports it.
 
-NOTE: Release candidate 2 Windows binaries are not code-signed; use PGP
-and the SHA256SUMS.asc file to make sure your binaries are correct.
-In the final 0.9.0 release, Windows setup.exe binaries will be code-signed.
 
 Downgrading warnings
 --------------------
@@ -609,7 +606,7 @@ useful for benchmarks.
 Manual Pruning
 --------------
 
-Bitcoin Core has supported automatically pruning the blockchain since 0.11. Pruning
+Verium Vault has supported automatically pruning the blockchain since 1.3.0 Pruning
 the blockchain allows for significant storage space savings as the vast majority of
 the downloaded data can be discarded after processing so very little of it remains
 on the disk.
@@ -650,7 +647,7 @@ ZMQ On Windows
 
 Previously the ZeroMQ notification system was unavailable on Windows
 due to various issues with ZMQ. These have been fixed upstream and
-now ZMQ can be used on Windows. Please see [this document](https://github.com/bitcoin/bitcoin/blob/master/doc/zmq.md) for
+now ZMQ can be used on Windows. Please see [this document](https://github.com/VeriumReserve/verium/blob/master/doc/zmq.md) for
 help with using ZMQ in general.
 
 Nested RPC Commands in Debug Console

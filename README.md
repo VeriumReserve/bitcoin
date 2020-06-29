@@ -1,8 +1,7 @@
 Verium integration/staging tree
 =====================================
 
-[![Build Status](https://travis-ci.org/VeriumReserve/verium.svg?branch=0.16)](https://travis-ci.org/VeriumReserve/verium) 
-Ubuntu Server Xenial 18.04
+[![Build Status](https://travis-ci.org/VeriumReserve/verium.svg?branch=1.3.0)](https://travis-ci.org/VeriumReserve/verium)
 
 https://www.vericonomy.com
 
@@ -17,6 +16,23 @@ software which enables the use of this currency.
 
 For more information, as well as an immediately useable, binary version of
 the Verium software, see https://www.vericonomy.com.
+
+ChangeLog
+----------
+
+Each release come along with a [Release Notes](doc/release-notes.md). \
+For previous release you can find them in the [Release-Notes Directory](doc/release-notes)
+
+Documentation
+-------------
+
+All the documentation can be found in the [Doc Directory](doc). \
+You will find information such as:
+ - How to build Verium Vault
+ - Release Notes
+ - Development Process
+ - ...
+
 License
 -------
 
@@ -29,8 +45,8 @@ Development Process
 The `master` branch is regularly built and tested, but is not guaranteed to be
 completely stable. [Tags](https://github.com/veriumreserve/verium/tags) are created
 regularly to indicate new official, stable release versions of Verium.
-Current official Verium release is on branch 1.2-(0.8) as we have just migrated the
-default branch to the core 0.19 version (now the master branch).
+
+Current official Verium release is on branch 1.3.0.
 
 The contribution workflow is described in [CONTRIBUTING.md](CONTRIBUTING.md).
 
@@ -67,17 +83,3 @@ Changes should be tested by somebody other than the developer who wrote the
 code. This is especially important for large or high-risk changes. It is useful
 to add a test plan to the pull request description if testing the changes is
 not straightforward.
-
-Translations
-------------
-
-Changes to translations as well as new translations can be submitted to
-[Verium's Transifex page](https://www.transifex.com/projects/p/bitcoin/).
-
-Translations are periodically pulled from Transifex and merged into the git repository. See the
-[translation process](doc/translation_process.md) for details on how this works.
-
-**Important**: We do not accept translation changes as GitHub pull requests because the next
-pull from Transifex would automatically overwrite them again.
-
-Translators should also subscribe to the [mailing list](https://groups.google.com/forum/#!forum/bitcoin-translators).
