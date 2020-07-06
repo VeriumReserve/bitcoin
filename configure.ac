@@ -1223,7 +1223,7 @@ fi
 AC_CHECK_HEADER([curl/curl.h],, AC_MSG_ERROR(curl headers missing),)
 AC_CHECK_LIB([curl],         [main],CURL_LIBS=-lcurl, AC_MSG_ERROR(libcurl missing))
 AC_CHECK_HEADER([minizip/unzip.h],, AC_MSG_ERROR(minizip headers missing),)
-AC_CHECK_LIB([minizip],         [main],MINIZIP_LIBS=-lminizip, AC_MSG_ERROR(libminizip missing))
+AC_CHECK_LIB([minizip],         [main],MINIZIP_LIBS="-Bstatic -lminizip", AC_MSG_ERROR(libminizip missing))
 
 if test x$use_pkgconfig = xyes; then
   : dnl
