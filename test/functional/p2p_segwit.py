@@ -187,9 +187,9 @@ class SegWitTest(BitcoinTestFramework):
         self.num_nodes = 3
         # This test tests SegWit both pre and post-activation, so use the normal BIP9 activation.
         self.extra_args = [
-            ["-whitelist=127.0.0.1", "-acceptnonstdtxn=1", "-segwitheight={}".format(SEGWIT_HEIGHT)],
-            ["-whitelist=127.0.0.1", "-acceptnonstdtxn=0", "-segwitheight={}".format(SEGWIT_HEIGHT)],
-            ["-whitelist=127.0.0.1", "-acceptnonstdtxn=1", "-segwitheight=-1"]
+            ["-whitelist=127.0.0.1", "-acceptnonstdtxn=1"],
+            ["-whitelist=127.0.0.1", "-acceptnonstdtxn=0"],
+            ["-whitelist=127.0.0.1", "-acceptnonstdtxn=1"]
         ]
 
     def skip_test_if_missing_module(self):
@@ -1896,7 +1896,7 @@ class SegWitTest(BitcoinTestFramework):
 
         # Restart with the new binary
         self.stop_node(2)
-        self.start_node(2, extra_args=["-segwitheight={}".format(SEGWIT_HEIGHT)])
+        self.start_node(2)
         connect_nodes(self.nodes[0], 2)
 
         self.sync_blocks()
