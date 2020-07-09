@@ -4,7 +4,6 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include <policy/feerate.h>
-
 #include <tinyformat.h>
 
 const std::string CURRENCY_UNIT = "VRM";
@@ -18,6 +17,9 @@ CFeeRate::CFeeRate(const CAmount& nFeePaid, size_t nBytes_)
         nSatoshisPerK = nFeePaid * 1000 / nSize;
     else
         nSatoshisPerK = 0;
+
+    if (nSatoshisPerK < MIN_RELAY_TX_FEE)
+        nSatoshisPerK = MIN_RELAY_TX_FEE;
 }
 
 CAmount CFeeRate::GetFee(size_t nBytes_) const
@@ -27,12 +29,8 @@ CAmount CFeeRate::GetFee(size_t nBytes_) const
 
     CAmount nFee = nSatoshisPerK * (1 + nSize / 1000);
 
-    if (nFee == 0 && nSize != 0) {
-        if (nSatoshisPerK > 0)
-            nFee = CAmount(1);
-        if (nSatoshisPerK < 0)
-            nFee = CAmount(-1);
-    }
+    if (nFee < MIN_RELAY_TX_FEE )
+        nFee = MIN_RELAY_TX_FEE;
 
     return nFee;
 }

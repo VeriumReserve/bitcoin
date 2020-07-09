@@ -12,7 +12,7 @@
 #include <string>
 
 extern const std::string CURRENCY_UNIT;
-
+static const int MIN_RELAY_TX_FEE = 20000000;
 /**
  * Fee rate in satoshis per kilobyte: CAmount / kB
  */
@@ -23,7 +23,7 @@ private:
 
 public:
     /** Fee rate of 0 satoshis per kB */
-    CFeeRate() : nSatoshisPerK(0) { }
+    CFeeRate() : nSatoshisPerK(MIN_RELAY_TX_FEE) { }
     template<typename I>
     CFeeRate(const I _nSatoshisPerK): nSatoshisPerK(_nSatoshisPerK) {
         // We've previously had bugs creep in from silent double->int conversion...
@@ -38,7 +38,7 @@ public:
     /**
      * Return the fee in satoshis for a size of 1000 bytes
      */
-    CAmount GetFeePerK() const { return GetFee(1000); }
+    CAmount GetFeePerK() const { return GetFee(0); }
     friend bool operator<(const CFeeRate& a, const CFeeRate& b) { return a.nSatoshisPerK < b.nSatoshisPerK; }
     friend bool operator>(const CFeeRate& a, const CFeeRate& b) { return a.nSatoshisPerK > b.nSatoshisPerK; }
     friend bool operator==(const CFeeRate& a, const CFeeRate& b) { return a.nSatoshisPerK == b.nSatoshisPerK; }
