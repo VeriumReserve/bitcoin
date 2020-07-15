@@ -14,7 +14,7 @@ CFeeRate::CFeeRate(const CAmount& nFeePaid, size_t nBytes_)
     int64_t nSize = int64_t(nBytes_);
 
     if (nSize > 0)
-        nSatoshisPerK = nFeePaid * 1000 / nSize;
+        nSatoshisPerK = nFeePaid;
     else
         nSatoshisPerK = 0;
 
