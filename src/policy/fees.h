@@ -41,7 +41,6 @@ enum class FeeReason {
     CONSERVATIVE,
     MEMPOOL_MIN,
     PAYTXFEE,
-    FALLBACK,
     REQUIRED,
 };
 

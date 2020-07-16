@@ -34,9 +34,6 @@ QT_TRANSLATE_NOOP("verium-core", ""
 QT_TRANSLATE_NOOP("verium-core", ""
 "Error: Listening for incoming connections failed (listen returned error %s)"),
 QT_TRANSLATE_NOOP("verium-core", ""
-"Fee estimation failed. Fallbackfee is disabled. Wait a few blocks or enable -"
-"fallbackfee."),
-QT_TRANSLATE_NOOP("verium-core", ""
 "Invalid amount for -maxtxfee=<amount>: '%s' (must be at least the minrelay "
 "fee of %s to prevent stuck transactions)"),
 QT_TRANSLATE_NOOP("verium-core", ""
@@ -133,7 +130,6 @@ QT_TRANSLATE_NOOP("verium-core", "Invalid -proxy address or hostname: '%s'"),
 QT_TRANSLATE_NOOP("verium-core", "Invalid P2P permission: '%s'"),
 QT_TRANSLATE_NOOP("verium-core", "Invalid amount for -%s=<amount>: '%s'"),
 QT_TRANSLATE_NOOP("verium-core", "Invalid amount for -discardfee=<amount>: '%s'"),
-QT_TRANSLATE_NOOP("verium-core", "Invalid amount for -fallbackfee=<amount>: '%s'"),
 QT_TRANSLATE_NOOP("verium-core", "Invalid amount for -paytxfee=<amount>: '%s' (must be at least %s)"),
 QT_TRANSLATE_NOOP("verium-core", "Invalid netmask specified in -whitelist: '%s'"),
 QT_TRANSLATE_NOOP("verium-core", "Loading P2P addresses..."),
