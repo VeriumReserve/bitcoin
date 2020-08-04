@@ -462,7 +462,7 @@ void CoinControlDialog::updateLabels(WalletModel *model, QDialog* dialog)
         std::vector<unsigned char> witnessprogram;
         if (out.txout.scriptPubKey.IsWitnessProgram(witnessversion, witnessprogram))
         {
-            nBytesInputs += (32 + 4 + 1 + (107 / WITNESS_SCALE_FACTOR) + 4);
+            nBytesInputs += (32 + 4 + 1 + 107  + 4);
             fWitness = true;
         }
         else if(ExtractDestination(out.txout.scriptPubKey, address))

@@ -3060,13 +3060,6 @@ static UniValue fundrawtransaction(const JSONRPCRequest& request)
                             "                              Allows this transaction to be replaced by a transaction with higher fees"},
                         },
                         "options"},
-                    {"iswitness", RPCArg::Type::BOOL, /* default */ "depends on heuristic tests", "Whether the transaction hex is a serialized witness transaction.\n"
-                        "If iswitness is not present, heuristic tests will be used in decoding.\n"
-                        "If true, only witness deserialization will be tried.\n"
-                        "If false, only non-witness deserialization will be tried.\n"
-                        "This boolean should reflect whether the transaction has inputs\n"
-                        "(e.g. fully valid, or on-chain transactions), if known by the caller."
-                    },
                 },
                 RPCResult{
                             "{\n"
@@ -3087,13 +3080,11 @@ static UniValue fundrawtransaction(const JSONRPCRequest& request)
                                 },
     }.Check(request);
 
-    RPCTypeCheck(request.params, {UniValue::VSTR, UniValueType(), UniValue::VBOOL});
+    RPCTypeCheck(request.params, {UniValue::VSTR, UniValueType()});
 
     // parse hex string from parameter
     CMutableTransaction tx;
-    bool try_witness = request.params[2].isNull() ? true : request.params[2].get_bool();
-    bool try_no_witness = request.params[2].isNull() ? true : !request.params[2].get_bool();
-    if (!DecodeHexTx(tx, request.params[0].get_str(), try_no_witness, try_witness)) {
+    if (!DecodeHexTx(tx, request.params[0].get_str())) {
         throw JSONRPCError(RPC_DESERIALIZATION_ERROR, "TX decode failed");
     }
 
@@ -3172,7 +3163,7 @@ UniValue signrawtransactionwithwallet(const JSONRPCRequest& request)
     RPCTypeCheck(request.params, {UniValue::VSTR, UniValue::VARR, UniValue::VSTR}, true);
 
     CMutableTransaction mtx;
-    if (!DecodeHexTx(mtx, request.params[0].get_str(), true)) {
+    if (!DecodeHexTx(mtx, request.params[0].get_str())) {
         throw JSONRPCError(RPC_DESERIALIZATION_ERROR, "TX decode failed");
     }
 
@@ -3912,7 +3903,7 @@ UniValue importmulti(const JSONRPCRequest& request);
 static const CRPCCommand commands[] =
 { //  category              name                                actor (function)                argNames
     //  --------------------- ------------------------          -----------------------         ----------
-    { "rawtransactions",    "fundrawtransaction",               &fundrawtransaction,            {"hexstring","options","iswitness"} },
+    { "rawtransactions",    "fundrawtransaction",               &fundrawtransaction,            {"hexstring","options"} },
     { "wallet",             "abortrescan",                      &abortrescan,                   {} },
     { "wallet",             "addmultisigaddress",               &addmultisigaddress,            {"nrequired","keys","label","address_type"} },
     { "wallet",             "backupwallet",                     &backupwallet,                  {"destination"} },
