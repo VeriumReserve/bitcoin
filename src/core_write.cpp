@@ -178,7 +178,9 @@ void ScriptPubKeyToUniv(const CScript& scriptPubKey,
 void TxToUniv(const CTransaction& tx, const uint256& hashBlock, UniValue& entry, bool include_hex)
 {
     entry.pushKV("txid", tx.GetHash().GetHex());
-    entry.pushKV("hash", tx.GetWitnessHash().GetHex());
+     // In bitcoin, it's Witness hash with a fallback on txid
+     // on verium it's always tx id
+    entry.pushKV("hash", tx.GetHash().GetHex());
     entry.pushKV("version", tx.nVersion);
     entry.pushKV("time", (boost::int64_t)tx.nTime);
     entry.pushKV("size", (int)::GetSerializeSize(tx, PROTOCOL_VERSION));

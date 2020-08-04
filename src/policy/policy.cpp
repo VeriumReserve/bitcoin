@@ -26,7 +26,6 @@ CAmount GetDustThreshold(const CTxOut& txout, const CFeeRate& dustRelayFeeIn)
         return 0;
 
     size_t nSize = GetSerializeSize(txout);
-    int witnessversion = 0;
     std::vector<unsigned char> witnessprogram;
 
     nSize += (32 + 4 + 1 + 107 + 4); // the 148 mentioned above

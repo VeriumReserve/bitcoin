@@ -540,7 +540,9 @@ static UniValue getblocktemplate(const JSONRPCRequest& request)
 
         entry.pushKV("data", EncodeHexTx(tx));
         entry.pushKV("txid", txHash.GetHex());
-        entry.pushKV("hash", tx.GetWitnessHash().GetHex());
+        // for bitcoin, it's witness hash with a fallback on txid.
+        // in verium, always use txid
+        entry.pushKV("hash", txHash.GetHex());
 
         UniValue deps(UniValue::VARR);
         for (const CTxIn &in : tx.vin)

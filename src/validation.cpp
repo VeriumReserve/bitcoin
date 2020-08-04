@@ -3249,7 +3249,6 @@ static bool ContextualCheckBlockHeader(const CBlockHeader& block, CValidationSta
 
     // Check proof of work
     // XXX - TODO: maybe create a custom ValidationInvalidReason
-    const Consensus::Params& consensusParams = params.GetConsensus();
     if (block.nBits != GetNextTargetRequired(pindexPrev))
         return state.Invalid(ValidationInvalidReason::BLOCK_MUTATED, false, REJECT_INVALID, "bad-diffbits", strprintf("incorrect proof of work %lu - %lu", block.nBits, GetNextTargetRequired(pindexPrev)));
 
