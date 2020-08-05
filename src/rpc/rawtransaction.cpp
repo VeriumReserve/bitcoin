@@ -103,7 +103,7 @@ static UniValue getrawtransaction(const JSONRPCRequest& request)
             "  \"txid\" : \"id\",        (string) The transaction id (same as provided)\n"
             "  \"hash\" : \"id\",        (string) The transaction hash (identical to txid, keeping it for compatibility)\n"
             "  \"size\" : n,             (numeric) The serialized transaction size\n"
-            "  \"vsize\" : n,            (numeric) The virtual transaction size (differs from size for witness transactions)\n"
+            "  \"vsize\" : n,            (numeric) The virtual transaction size\n"
             "  \"weight\" : n,           (numeric) The transaction's weight (between vsize*4-3 and vsize*4)\n"
             "  \"version\" : n,          (numeric) The version\n"
             "  \"locktime\" : ttt,       (numeric) The lock time\n"
@@ -116,7 +116,6 @@ static UniValue getrawtransaction(const JSONRPCRequest& request)
             "         \"hex\": \"hex\"   (string) hex\n"
             "       },\n"
             "       \"sequence\": n      (numeric) The script sequence number\n"
-            "       \"txinwitness\": [\"hex\", ...] (array of string) hex-encoded witness data (if any)\n"
             "     }\n"
             "     ,...\n"
             "  ],\n"
@@ -427,7 +426,7 @@ static UniValue decoderawtransaction(const JSONRPCRequest& request)
                 RPCResult{
             "{\n"
             "  \"txid\" : \"id\",        (string) The transaction id\n"
-            "  \"hash\" : \"id\",        (string) The transaction hash (differs from txid for witness transactions)\n"
+            "  \"hash\" : \"id\",        (string) The transaction hash\n"
             "  \"size\" : n,             (numeric) The transaction size\n"
             "  \"vsize\" : n,            (numeric) The virtual transaction size (differs from size for witness transactions)\n"
             "  \"weight\" : n,           (numeric) The transaction's weight (between vsize*4 - 3 and vsize*4)\n"
@@ -441,7 +440,6 @@ static UniValue decoderawtransaction(const JSONRPCRequest& request)
             "         \"asm\": \"asm\",  (string) asm\n"
             "         \"hex\": \"hex\"   (string) hex\n"
             "       },\n"
-            "       \"txinwitness\": [\"hex\", ...] (array of string) hex-encoded witness data (if any)\n"
             "       \"sequence\": n     (numeric) The script sequence number\n"
             "     }\n"
             "     ,...\n"
@@ -660,7 +658,6 @@ static UniValue signrawtransactionwithkey(const JSONRPCRequest& request)
                                     {"vout", RPCArg::Type::NUM, RPCArg::Optional::NO, "The output number"},
                                     {"scriptPubKey", RPCArg::Type::STR_HEX, RPCArg::Optional::NO, "script key"},
                                     {"redeemScript", RPCArg::Type::STR_HEX, RPCArg::Optional::OMITTED, "(required for P2SH) redeem script"},
-                                    {"witnessScript", RPCArg::Type::STR_HEX, RPCArg::Optional::OMITTED, "(required for P2WSH or P2SH-P2WSH) witness script"},
                                     {"amount", RPCArg::Type::AMOUNT, RPCArg::Optional::OMITTED, "the amount spent"},
                                 },
                                 },
@@ -920,26 +917,12 @@ UniValue decodepsbt(const JSONRPCRequest& request)
             "      \"non_witness_utxo\" : {   (json object, optional) Decoded network transaction for non-witness UTXOs\n"
             "        ...\n"
             "      },\n"
-            "      \"witness_utxo\" : {            (json object, optional) Transaction output for witness UTXOs\n"
-            "        \"amount\" : x.xxx,           (numeric) The value in " + CURRENCY_UNIT + "\n"
-            "        \"scriptPubKey\" : {          (json object)\n"
-            "          \"asm\" : \"asm\",            (string) The asm\n"
-            "          \"hex\" : \"hex\",            (string) The hex\n"
-            "          \"type\" : \"pubkeyhash\",    (string) The type, eg 'pubkeyhash'\n"
-            "          \"address\" : \"address\"     (string) Verium address if there is one\n"
-            "        }\n"
-            "      },\n"
             "      \"partial_signatures\" : {             (json object, optional)\n"
             "        \"pubkey\" : \"signature\",           (string) The public key and signature that corresponds to it.\n"
             "        ,...\n"
             "      }\n"
             "      \"sighash\" : \"type\",                  (string, optional) The sighash type to be used\n"
             "      \"redeem_script\" : {       (json object, optional)\n"
-            "          \"asm\" : \"asm\",            (string) The asm\n"
-            "          \"hex\" : \"hex\",            (string) The hex\n"
-            "          \"type\" : \"pubkeyhash\",    (string) The type, eg 'pubkeyhash'\n"
-            "        }\n"
-            "      \"witness_script\" : {       (json object, optional)\n"
             "          \"asm\" : \"asm\",            (string) The asm\n"
             "          \"hex\" : \"hex\",            (string) The hex\n"
             "          \"type\" : \"pubkeyhash\",    (string) The type, eg 'pubkeyhash'\n"
@@ -955,7 +938,6 @@ UniValue decodepsbt(const JSONRPCRequest& request)
             "          \"asm\" : \"asm\",            (string) The asm\n"
             "          \"hex\" : \"hex\",            (string) The hex\n"
             "        }\n"
-            "       \"final_scriptwitness\": [\"hex\", ...] (array of string) hex-encoded witness data (if any)\n"
             "      \"unknown\" : {                (json object) The unknown global fields\n"
             "        \"key\" : \"value\"            (key-value pair) An unknown key-value pair\n"
             "         ...\n"
@@ -970,11 +952,6 @@ UniValue decodepsbt(const JSONRPCRequest& request)
             "          \"hex\" : \"hex\",            (string) The hex\n"
             "          \"type\" : \"pubkeyhash\",    (string) The type, eg 'pubkeyhash'\n"
             "        }\n"
-            "      \"witness_script\" : {       (json object, optional)\n"
-            "          \"asm\" : \"asm\",            (string) The asm\n"
-            "          \"hex\" : \"hex\",            (string) The hex\n"
-            "          \"type\" : \"pubkeyhash\",    (string) The type, eg 'pubkeyhash'\n"
-            "      }\n"
             "      \"bip32_derivs\" : [          (array of json objects, optional)\n"
             "        {\n"
             "          \"pubkey\" : \"pubkey\",                     (string) The public key this path corresponds to\n"
@@ -1029,25 +1006,8 @@ UniValue decodepsbt(const JSONRPCRequest& request)
     for (unsigned int i = 0; i < psbtx.inputs.size(); ++i) {
         const PSBTInput& input = psbtx.inputs[i];
         UniValue in(UniValue::VOBJ);
-        // UTXOs
-        if (!input.witness_utxo.IsNull()) {
-            const CTxOut& txout = input.witness_utxo;
 
-            UniValue out(UniValue::VOBJ);
-
-            out.pushKV("amount", ValueFromAmount(txout.nValue));
-            if (MoneyRange(txout.nValue) && MoneyRange(total_in + txout.nValue)) {
-                total_in += txout.nValue;
-            } else {
-                // Hack to just not show fee later
-                have_all_utxos = false;
-            }
-
-            UniValue o(UniValue::VOBJ);
-            ScriptToUniv(txout.scriptPubKey, o, true);
-            out.pushKV("scriptPubKey", o);
-            in.pushKV("witness_utxo", out);
-        } else if (input.non_witness_utxo) {
+        if (input.non_witness_utxo) {
             UniValue non_wit(UniValue::VOBJ);
             TxToUniv(*input.non_witness_utxo, uint256(), non_wit, false);
             in.pushKV("non_witness_utxo", non_wit);
@@ -1076,16 +1036,11 @@ UniValue decodepsbt(const JSONRPCRequest& request)
             in.pushKV("sighash", SighashToStr((unsigned char)input.sighash_type));
         }
 
-        // Redeem script and witness script
+        // Redeem script
         if (!input.redeem_script.empty()) {
             UniValue r(UniValue::VOBJ);
             ScriptToUniv(input.redeem_script, r, false);
             in.pushKV("redeem_script", r);
-        }
-        if (!input.witness_script.empty()) {
-            UniValue r(UniValue::VOBJ);
-            ScriptToUniv(input.witness_script, r, false);
-            in.pushKV("witness_script", r);
         }
 
         // keypaths
@@ -1102,19 +1057,12 @@ UniValue decodepsbt(const JSONRPCRequest& request)
             in.pushKV("bip32_derivs", keypaths);
         }
 
-        // Final scriptSig and scriptwitness
+        // Final scriptSig
         if (!input.final_script_sig.empty()) {
             UniValue scriptsig(UniValue::VOBJ);
             scriptsig.pushKV("asm", ScriptToAsmStr(input.final_script_sig, true));
             scriptsig.pushKV("hex", HexStr(input.final_script_sig));
             in.pushKV("final_scriptSig", scriptsig);
-        }
-        if (!input.final_script_witness.IsNull()) {
-            UniValue txinwitness(UniValue::VARR);
-            for (const auto& item : input.final_script_witness.stack) {
-                txinwitness.push_back(HexStr(item.begin(), item.end()));
-            }
-            in.pushKV("final_scriptwitness", txinwitness);
         }
 
         // Unknown data
@@ -1136,16 +1084,11 @@ UniValue decodepsbt(const JSONRPCRequest& request)
     for (unsigned int i = 0; i < psbtx.outputs.size(); ++i) {
         const PSBTOutput& output = psbtx.outputs[i];
         UniValue out(UniValue::VOBJ);
-        // Redeem script and witness script
+        // Redeem script
         if (!output.redeem_script.empty()) {
             UniValue r(UniValue::VOBJ);
             ScriptToUniv(output.redeem_script, r, false);
             out.pushKV("redeem_script", r);
-        }
-        if (!output.witness_script.empty()) {
-            UniValue r(UniValue::VOBJ);
-            ScriptToUniv(output.witness_script, r, false);
-            out.pushKV("witness_script", r);
         }
 
         // keypaths
@@ -1241,7 +1184,7 @@ UniValue finalizepsbt(const JSONRPCRequest& request)
             RPCHelpMan{"finalizepsbt",
                 "Finalize the inputs of a PSBT. If the transaction is fully signed, it will produce a\n"
                 "network serialized transaction which can be broadcast with sendrawtransaction. Otherwise a PSBT will be\n"
-                "created which has the final_scriptSig and final_scriptWitness fields filled for inputs that are complete.\n"
+                "created which has the final_scriptSig field filled for inputs that are complete.\n"
                 "Implements the Finalizer and Extractor roles.\n",
                 {
                     {"psbt", RPCArg::Type::STR, RPCArg::Optional::NO, "A base64 string of a PSBT"},
@@ -1540,7 +1483,6 @@ UniValue analyzepsbt(const JSONRPCRequest& request)
                 "          \"keyid\"                 (string) Public key ID, hash160 of the public key, of a public key whose signature is missing\n"
                 "        ]\n"
                 "        \"redeemscript\" : \"hash\"   (string, optional) Hash160 of the redeemScript that is missing\n"
-                "        \"witnessscript\" : \"hash\"  (string, optional) SHA256 of the witnessScript that is missing\n"
                 "      }\n"
                 "      \"next\" : \"role\"             (string, optional) Role of the next person that this input needs to go to\n"
                 "    }\n"
@@ -1587,9 +1529,6 @@ UniValue analyzepsbt(const JSONRPCRequest& request)
         }
         if (!input.missing_redeem_script.IsNull()) {
             missing.pushKV("redeemscript", HexStr(input.missing_redeem_script));
-        }
-        if (!input.missing_witness_script.IsNull()) {
-            missing.pushKV("witnessscript", HexStr(input.missing_witness_script));
         }
         if (!input.missing_sigs.empty()) {
             UniValue missing_sigs_univ(UniValue::VARR);

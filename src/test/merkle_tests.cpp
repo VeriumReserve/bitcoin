@@ -327,26 +327,4 @@ BOOST_AUTO_TEST_CASE(merkle_test_LeftSubtreeRightSubtree)
     BOOST_CHECK_EQUAL(root, rootOfLR);
 }
 
-BOOST_AUTO_TEST_CASE(merkle_test_BlockWitness)
-{
-    CBlock block;
-
-    block.vtx.resize(2);
-    for (std::size_t pos = 0; pos < block.vtx.size(); pos++) {
-        CMutableTransaction mtx;
-        mtx.nLockTime = pos;
-        block.vtx[pos] = MakeTransactionRef(std::move(mtx));
-    }
-
-    uint256 blockWitness = BlockWitnessMerkleRoot(block);
-
-    std::vector<uint256> hashes;
-    hashes.resize(block.vtx.size());
-    hashes[0].SetNull();
-    hashes[1] = block.vtx[1]->GetHash();
-
-    uint256 merkelRootofHashes = ComputeMerkleRoot(hashes);
-
-    BOOST_CHECK_EQUAL(merkelRootofHashes, blockWitness);
-}
 BOOST_AUTO_TEST_SUITE_END()

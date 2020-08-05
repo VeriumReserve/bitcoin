@@ -15,7 +15,6 @@ bench_bench_verium_SOURCES = \
   bench/bench_bitcoin.cpp \
   bench/bench.cpp \
   bench/bench.h \
-  bench/block_assemble.cpp \
   bench/checkblock.cpp \
   bench/checkqueue.cpp \
   bench/data.h \
@@ -33,7 +32,6 @@ bench_bench_verium_SOURCES = \
   bench/rpc_blockchain.cpp \
   bench/rpc_mempool.cpp \
   bench/util_time.cpp \
-  bench/verify_script.cpp \
   bench/base58.cpp \
   bench/lockedpool.cpp \
   bench/poly1305.cpp \

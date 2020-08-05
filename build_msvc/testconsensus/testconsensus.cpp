@@ -7,14 +7,13 @@
 #include <..\src\streams.h>
 #include <..\src\version.h>
 
-CMutableTransaction BuildSpendingTransaction(const CScript& scriptSig, const CScriptWitness& scriptWitness, int nValue = 0)
+CMutableTransaction BuildSpendingTransaction(const CScript& scriptSig, int nValue = 0)
 {
     CMutableTransaction txSpend;
     txSpend.nVersion = 1;
     txSpend.nLockTime = 0;
     txSpend.vin.resize(1);
     txSpend.vout.resize(1);
-    txSpend.vin[0].scriptWitness = scriptWitness;
     txSpend.vin[0].prevout.hash = uint256();
     txSpend.vin[0].prevout.n = 0;
     txSpend.vin[0].scriptSig = scriptSig;
@@ -35,8 +34,7 @@ int main()
     int amount = 0; // 600000000;
 
     CScript scriptSig;
-    CScriptWitness scriptWitness;
-    CTransaction vanillaSpendTx = BuildSpendingTransaction(scriptSig, scriptWitness, amount);
+    CTransaction vanillaSpendTx = BuildSpendingTransaction(scriptSig, amount);
     CDataStream stream(SER_NETWORK, PROTOCOL_VERSION);
     stream << vanillaSpendTx;
 

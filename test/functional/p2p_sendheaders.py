@@ -89,7 +89,6 @@ from test_framework.blocktools import create_block, create_coinbase
 from test_framework.messages import CInv
 from test_framework.mininode import (
     CBlockHeader,
-    NODE_WITNESS,
     P2PInterface,
     mininode_lock,
     msg_block,
@@ -241,7 +240,7 @@ class SendHeadersTest(BitcoinTestFramework):
         inv_node = self.nodes[0].add_p2p_connection(BaseNode())
         # Make sure NODE_NETWORK is not set for test_node, so no block download
         # will occur outside of direct fetching
-        test_node = self.nodes[0].add_p2p_connection(BaseNode(), services=NODE_WITNESS)
+        test_node = self.nodes[0].add_p2p_connection(BaseNode())
 
         # Ensure verack's have been processed by our peer
         inv_node.sync_with_ping()

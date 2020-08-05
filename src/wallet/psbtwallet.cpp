@@ -23,7 +23,7 @@ TransactionError FillPSBT(const CWallet* pwallet, PartiallySignedTransaction& ps
         }
 
         // If we have no utxo, grab it from the wallet.
-        if (!input.non_witness_utxo && input.witness_utxo.IsNull()) {
+        if (!input.non_witness_utxo) {
             const uint256& txhash = txin.prevout.hash;
             const auto it = pwallet->mapWallet.find(txhash);
             if (it != pwallet->mapWallet.end()) {
@@ -40,7 +40,7 @@ TransactionError FillPSBT(const CWallet* pwallet, PartiallySignedTransaction& ps
         }
 
         // Backport of #17156 fix, without #17371 refactor
-        if (input.witness_utxo.IsNull() && input.non_witness_utxo) {
+        if (input.non_witness_utxo) {
             if (txin.prevout.n >= input.non_witness_utxo->vout.size()) {
                 return TransactionError::MISSING_INPUTS;
             }

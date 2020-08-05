@@ -25,7 +25,6 @@ from test_framework.messages import (
     CAddress,
     msg_addr,
     NODE_NETWORK,
-    NODE_WITNESS,
 )
 
 def assert_net_servicesnames(servicesflag, servicenames):
@@ -149,7 +148,7 @@ class NetTest(BitcoinTestFramework):
             imported_addrs.append(a)
             addr = CAddress()
             addr.time = 100000000
-            addr.nServices = NODE_NETWORK | NODE_WITNESS
+            addr.nServices = NODE_NETWORK
             addr.ip = a
             addr.port = 8333
             msg.addrs.append(addr)
@@ -161,7 +160,7 @@ class NetTest(BitcoinTestFramework):
         assert_equal(len(node_addresses), REQUEST_COUNT)
         for a in node_addresses:
             assert_greater_than(a["time"], 1527811200) # 1st June 2018
-            assert_equal(a["services"], NODE_NETWORK | NODE_WITNESS)
+            assert_equal(a["services"], NODE_NETWORK)
             assert a["address"] in imported_addrs
             assert_equal(a["port"], 8333)
 

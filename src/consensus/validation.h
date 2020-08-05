@@ -134,10 +134,6 @@ public:
     std::string GetDebugMessage() const { return strDebugMessage; }
 };
 
-// These implement the weight = (stripped_size * 4) + witness_size formula,
-// using only serialization with and without witness data. As witness_size
-// is equal to total_size - stripped_size, this formula is identical to:
-// weight = (stripped_size * 3) + total_size.
 static inline int64_t GetTransactionWeight(const CTransaction& tx)
 {
     return ::GetSerializeSize(tx, PROTOCOL_VERSION | SERIALIZE_TRANSACTION_NO_WITNESS) + ::GetSerializeSize(tx, PROTOCOL_VERSION);
@@ -149,7 +145,7 @@ static inline int64_t GetBlockWeight(const CBlock& block)
 static inline int64_t GetTransactionInputWeight(const CTxIn& txin)
 {
     // scriptWitness size is added here because witnesses and txins are split up in segwit serialization.
-    return ::GetSerializeSize(txin, PROTOCOL_VERSION | SERIALIZE_TRANSACTION_NO_WITNESS) + ::GetSerializeSize(txin, PROTOCOL_VERSION) + ::GetSerializeSize(txin.scriptWitness.stack, PROTOCOL_VERSION);
+    return ::GetSerializeSize(txin, PROTOCOL_VERSION | SERIALIZE_TRANSACTION_NO_WITNESS) + ::GetSerializeSize(txin, PROTOCOL_VERSION);
 }
 
 #endif // BITCOIN_CONSENSUS_VALIDATION_H
