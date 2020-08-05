@@ -52,12 +52,6 @@ enum class ValidationInvalidReason {
     TX_MISSING_INPUTS,        //!< a transaction was missing some of its inputs
     TX_PREMATURE_SPEND,       //!< transaction spends a coinbase too early, or violates locktime/sequence locks
     /**
-     * Transaction might be missing a witness, have a witness prior to SegWit
-     * activation, or witness may have been malleated (which includes
-     * non-standard witnesses).
-     */
-    TX_WITNESS_MUTATED,
-    /**
      * Tx already in mempool or conflicts with a tx in the chain
      * (if it conflicts with another tx in mempool, we use MEMPOOL_POLICY as it failed to reach the RBF threshold)
      * TODO: Currently this is only used if the transaction already exists in the mempool or on chain,
@@ -75,7 +69,6 @@ inline bool IsTransactionReason(ValidationInvalidReason r)
            r == ValidationInvalidReason::TX_NOT_STANDARD ||
            r == ValidationInvalidReason::TX_PREMATURE_SPEND ||
            r == ValidationInvalidReason::TX_MISSING_INPUTS ||
-           r == ValidationInvalidReason::TX_WITNESS_MUTATED ||
            r == ValidationInvalidReason::TX_CONFLICT ||
            r == ValidationInvalidReason::TX_MEMPOOL_POLICY;
 }

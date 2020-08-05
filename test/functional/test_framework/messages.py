@@ -50,7 +50,6 @@ NODE_NETWORK_LIMITED = (1 << 10)
 
 MSG_TX = 1
 MSG_BLOCK = 2
-MSG_WITNESS_FLAG = 1 << 30
 MSG_TYPE_MASK = 0xffffffff >> 2
 
 # Serialization/deserialization tools
@@ -226,8 +225,6 @@ class CInv:
         0: "Error",
         1: "TX",
         2: "Block",
-        1|MSG_WITNESS_FLAG: "WitnessTx",
-        2|MSG_WITNESS_FLAG : "WitnessBlock",
         4: "CompactBlock"
     }
 
@@ -1109,14 +1106,6 @@ class msg_tx:
 
     def __repr__(self):
         return "msg_tx(tx=%s)" % (repr(self.tx))
-
-
-class msg_witness_tx(msg_tx):
-    __slots__ = ()
-
-    def serialize(self):
-        return self.tx.serialize_with_witness()
-
 
 class msg_block:
     __slots__ = ("block",)
