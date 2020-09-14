@@ -45,7 +45,7 @@ Build Verium
 
 1. Clone the verium source code and cd into `verium`
 
-        git clone https://github.com/VeriumReserve/verium.git
+        git clone -b 1.3.1 https://github.com/VeriumReserve/verium.git
         cd verium
 
 2.  Build verium-core:

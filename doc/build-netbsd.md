@@ -25,7 +25,7 @@ python27
 
 Download the source code:
 ```
-git clone https://github.com/VeriumReserve/verium.git
+git clone -b 1.3.1 https://github.com/VeriumReserve/verium.git
 ```
 
 See [dependencies.md](dependencies.md) for a complete overview.
