@@ -8,6 +8,8 @@
 #include <hash.h>
 #include <tinyformat.h>
 #include <util/strencodings.h>
+// For GetAdjustedTime() on nTime()
+#include <timedata.h>
 
 std::string COutPoint::ToString() const
 {
